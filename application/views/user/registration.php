@@ -1,7 +1,7 @@
 <div class="row-fluid">
     <div class="dialog">
         <div class="block">
-            <p class="block-heading">Sign Up</p>
+            <p class="block-heading">User Register</p>
             	<div class="block-body">
                 <form>
                     
@@ -36,6 +36,14 @@
                        	<option value="">-- select cabang dulu --</option>
                    	</select>
                                     
+                    <label>Jabatan</label>
+                    <select name="jabatan" id="jabatan">
+                        <option value="staff">Staff</option>
+                        <option value="supv">Supervisor</option>
+                        <option value="assman">Assistant Manager</option>
+                        <option value="mgr">Manager</option>
+                        <option value="gm">General Manager</option>
+                    </select>
                     
                     <label>Password</label>
                     <input type="password" class="span12">
