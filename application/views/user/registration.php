@@ -33,7 +33,7 @@
                     
                     <label>Unit</label>
                     <select name="unit" id="unit_id">
-                       	<option value="">-- select cabang dulu --</option>
+                       	<option value="gm">general manager</option>
                    	</select>
                                     
                     <label>Jabatan</label>
