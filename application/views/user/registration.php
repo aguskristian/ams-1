@@ -3,8 +3,7 @@
         <div class="block">
             <p class="block-heading">User Register</p>
             	<div class="block-body">
-                <form>
-                    
+                <?php echo form_open('user/register'); ?>
                     <label>Nama</label>
                     <input type="text" class="span12" name="nama" size="50" width="50">
                     <font color="#FF0000" size="-1"><?php echo form_error('nama'); ?></font>
@@ -18,22 +17,23 @@
                     <font color="#FF0000" size="-1"><?php echo form_error('hp'); ?></font>
                     
                     <label>Email</label>
-                    <input type="text" class="span12">
+                    <input type="text" class="span12" name="email">
                     
                     <label>Cabang</label>
                     <select name="cabang" id="cabang_id">
-                        <option value="">-- select cabang --</option>
-                        <?php
-                        foreach ( $query_cabang_combo as $row_cabang_combo )
-                        {
-                            echo "<option value='$row_cabang_combo[uc_code]'>$row_cabang_combo[uc_name]</option>";
-                        }
-                        ?>
+                        <option value="dps">DPS</option>
                    	</select>
                     
                     <label>Unit</label>
                     <select name="unit" id="unit_id">
-                       	<option value="gm">general manager</option>
+                       	<option value="gm">General Manager</option>
+                        <option value="mc">Customer Service</option>
+                        <option value="mi">Internal Service</option>
+                        <option value="mf">Finance</option>
+                        <option value="mo" selected="selected">Operation</option>
+                        <option value="mt">Technic</option>
+                        <option value="mw">Cargo</option>
+                        <option value="mq">SSQ</option>
                    	</select>
                                     
                     <label>Jabatan</label>
@@ -51,97 +51,10 @@
                     <a href="index.html" class="btn btn-primary pull-right">Sign Up!</a>
                     <label class="remember-me"><input type="checkbox"> I agree with the <a href="terms-and-conditions.html">Terms and Conditions</a></label>
                     <div class="clearfix"></div>
-                </form>
-                
-                <?php echo form_open('user/register'); ?>
-						
-                        <table align="center">
-                       
-                        	<tr>
-                            	<td>Nama</td>
-                                <td>&nbsp;:&nbsp;</td>
-                                <td><input type="text" name="nama" value="" /></td>
-                                <font color="#FF0000" size="-1"><?php echo form_error('nama'); ?></font>
-                                <td>&nbsp;<font color="#FF0000"><b>*</b></font> </td>
-                            </tr>
-                            <tr>
-                            	<td>NIPP</td>
-                                <td>&nbsp;:&nbsp;</td>
-                                <td><input type="text" name="nipp" value="" /></td>
-                                <font color="#FF0000" size="-1"><?php echo form_error('nipp'); ?></font>
-                                <td>&nbsp;<font color="#FF0000"><b>*</b></font></td>
-                                
-                            </tr>
-                            <tr>
-                            	<td>No Handphone</td>
-                                <td>&nbsp;:&nbsp;</td>
-                                <td><input type="text" name="hp" value="" /></td>
-                                <font color="#FF0000" size="-1"><?php echo form_error('hp'); ?></font>
-                                <td>&nbsp;<font color="#FF0000"><b>*</b></font></td>
-                            </tr>
-                            <tr>
-                            	<td>Email</td>
-                                <td>&nbsp;:&nbsp;</td>
-                                <td><input type="text" name="email" 
-                                value="" /></td>
-                                <font color="#FF0000" size="-1"><?php echo form_error('email'); ?></font>
-                                <td><b>@gapura.co.id</b>&nbsp;<font color="#FF0000"><b>*</b></font></td>
-                            </tr>
-                            <tr>
-                            	<td>Cabang</td>
-                                <td>&nbsp;:&nbsp;</td>
-                                <td>
-                                    <select name="cabang" id="cabang_id">
-                                        <option value="">-- select cabang --</option>
-                                        <?php
-                                        foreach ( $query_cabang_combo as $row_cabang_combo )
-                                        {
-                                            echo "<option value='$row_cabang_combo[uc_code]'>$row_cabang_combo[uc_name]</option>";
-                                        }
-                                        ?>
-                                    </select>
-                                </td>
-                                <td>&nbsp;<font color="#FF0000"><b>*</b></font></td>
-                            </tr>
-                            <tr>
-                            	<td>Unit</td>
-                                <td>&nbsp;:&nbsp;</td>
-                                <td>
-                                	<select name="unit" id="unit_id">
-                                	<option value="">-- select cabang dulu --</option>
-                                    </select>
-                                </td>
-                                <td>&nbsp;<font color="#FF0000"><b>*</b></font></td>
-                            </tr>
-                            <tr>
-                            	<td>Jabatan</td>
-                                <td>&nbsp;:&nbsp;</td>
-                                <td>
-                                	<select name="jabatan" id="jabatan">
-                                    	<option value="staff">Staff</option>
-                                    	<option value="gm">General Manager</option>
-                                        <option value="mgr">Manager</option>
-                                        <option value="assman">Assistant Manager</option>
-                                        <option value="supv">Supervisor</option>
-                                    </select>
-                                 </td>
-                                <td>&nbsp;<font color="#FF0000"><b>*</b></font></td>
-                            </tr>
-                        	<tr>
-                            	<td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td><?php echo form_reset('reset','Reset','class = "btn btn-danger"'); ?>&nbsp;&nbsp;<?php echo form_submit('submit', 'Register', 'class = "btn btn-primary pull-right"');?></td>
-                                <td>&nbsp;</td>
-                                
-                            </tr>
-                        </table>
-                        
-                        <?php //echo validation_errors(); ?>
-                        
-						<?php echo form_close(); ?>
+                <?php echo form_close(); ?>
                 
             	</div>
         </div>
-        <p><a href="privacy-policy.html">Privacy Policy</a></p>
+        <p><a href="#">Privacy Policy</a></p>
     </div>
 </div>
