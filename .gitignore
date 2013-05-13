@@ -4,8 +4,7 @@
 */cache/*
 */cache/!index.html
 .DS_Store
-application/config/config.php
-application/config/database.php
+
 application/config/environment_settings.php
 application/config/autoresponderlib_config.php
 application/logs/log-*.php
