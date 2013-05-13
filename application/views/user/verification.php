@@ -3,12 +3,13 @@
         <div class="block">
             <p class="block-heading">User Verification</p>
             	<div class="block-body">
-                <?php echo form_open('user/register'); ?>
+                <?php echo form_open('user/do_pin_verification'); ?>
+                <?PHP echo form_hidden('ads_code', $ads_code); ?>
                     <label>Pin</label>
                     <input type="text" class="span12" name="email">
                     <font color="#FF0000" size="-1"><?php echo form_error('hp'); ?></font>
                     
-                    <a href="index.html" class="btn btn-primary pull-right">Verify</a>
+                    <?php echo form_submit('submit', 'verify', 'class = "btn btn-primary pull-right"'); ?>
                    
                     <div class="clearfix"></div>
                 <?php echo form_close(); ?>

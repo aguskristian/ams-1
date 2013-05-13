@@ -1,9 +1,10 @@
 <div class="row-fluid">
+	<?php echo $message; ?>
     <div class="dialog">
         <div class="block">
             <p class="block-heading">User Register</p>
             	<div class="block-body">
-                <?php echo form_open('user/register'); ?>
+                <?php echo form_open('user/do_registration'); ?>
                     <label>Nama</label>
                     <input type="text" class="span12" name="nama" size="50" width="50">
                     <font color="#FF0000" size="-1"><?php echo form_error('nama'); ?></font>
@@ -17,7 +18,7 @@
                     <font color="#FF0000" size="-1"><?php echo form_error('hp'); ?></font>
                     
                     <label>Email</label>
-                    <input type="text" class="span12" name="email">
+                    <input type="text" name="email" width="50%">@gapura.co.id
                     
                     <label>Cabang</label>
                     <select name="cabang" id="cabang_id">
@@ -48,7 +49,8 @@
                     <label>Password</label>
                     <input type="password" class="span12">
                     
-                    <a href="index.html" class="btn btn-primary pull-right">Sign Up!</a>
+                    <?php echo form_submit('submit', 'Sign Up!', 'class = "btn btn-primary pull-right"'); ?>
+                    
                     <label class="remember-me"><input type="checkbox"> I agree with the <a href="terms-and-conditions.html">Terms and Conditions</a></label>
                     <div class="clearfix"></div>
                 <?php echo form_close(); ?>
