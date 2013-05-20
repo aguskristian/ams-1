@@ -1,6 +1,11 @@
 <div class="row-fluid">
-	<?php echo $message; ?>
+	
     <div class="dialog">
+    
+    <div class="alert alert-error">
+		<?php echo $message; ?>
+  	</div>
+    
         <div class="block">
             <p class="block-heading">User Register</p>
             	<div class="block-body">
@@ -21,12 +26,12 @@
                     <input type="text" name="email" width="50%">@gapura.co.id
                     
                     <label>Cabang</label>
-                    <select name="cabang" id="cabang_id">
+                    <select name="cabang">
                         <option value="dps">DPS</option>
                    	</select>
                     
                     <label>Unit</label>
-                    <select name="unit" id="unit_id">
+                    <select name="unit">
                        	<option value="gm">General Manager</option>
                         <option value="mc">Customer Service</option>
                         <option value="mi">Internal Service</option>
@@ -46,12 +51,12 @@
                         <option value="gm">General Manager</option>
                     </select>
                     
-                    <label>Password</label>
-                    <input type="password" class="span12">
+                   <!-- <label>Password</label>
+                    <input type="password" class="span12">-->
                     
                     <?php echo form_submit('submit', 'Sign Up!', 'class = "btn btn-primary pull-right"'); ?>
                     
-                    <label class="remember-me"><input type="checkbox"> I agree with the <a href="terms-and-conditions.html">Terms and Conditions</a></label>
+                    
                     <div class="clearfix"></div>
                 <?php echo form_close(); ?>
                 

@@ -145,7 +145,7 @@ class User extends CI_Controller {
 					$this->email->send();
 					
 					# show link for develope mode only, please disable on run mode
-					#echo $email_link;
+					echo $email_link;
 					
 					# call views
 					$data['user_email'] = $user_email;
@@ -184,6 +184,7 @@ class User extends CI_Controller {
 		$email = $this->encrypt->decode($email, 'liame');
 		$email = $email . '@gapura.co.id';
 		$pin = $this->input->post('kode');
+		echo $email . $pin ;
 		
 		# later : check previous verification request and delete it
 		
@@ -326,7 +327,7 @@ class User extends CI_Controller {
 					
 					$this->email->from('admin@gapura.co.id', 'Team Sigap');
 					$this->email->to($full_email); 
-					$this->email->subject('PT Gapura Angkasa Online Document System Registration Verification');
+					$this->email->subject('PT Gapura Angkasa Registration Verification System');
 					$this->email->message('
 					
 					<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -340,7 +341,7 @@ class User extends CI_Controller {
 					<p>Your verification code : ' . $pin . '</p>
 					<p>or</p>
 					<p>Please click link below to verify your request :</p>
-					<p>{unwrap}' . anchor("login/verification_link/" . $email_link, 'http://ods.gapura.co.id/login/verification_link/' . $email_link) . '{/unwrap}</p>
+					<p>{unwrap}' . anchor("login/verification_link/" . $email_link, 'http://ams.gapura.co.id/user/verification_link/' . $email_link) . '{/unwrap}</p>
 					<p>Thank you</p>
 					<p>Best regards</p>
 					<p>SIGAP Team</p>
