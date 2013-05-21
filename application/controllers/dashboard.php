@@ -31,7 +31,13 @@ class Dashboard extends CI_Controller {
 
 	function index()
 	{
-		echo 'dashboard';
+		$data['title'] = 'Dashboard';
+		
+		$this->load->view('template/header');
+		$this->load->view('template/sidebar');
+		$this->load->view('template/breadcumb');
+		$this->load->view('ams/dashboard', $data);
+		$this->load->view('template/footer');
 	}
 
 }

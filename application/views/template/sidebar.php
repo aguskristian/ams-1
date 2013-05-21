@@ -1,12 +1,8 @@
  <div class="sidebar-nav">
-        <a href="#dashboard-menu" class="nav-header" data-toggle="collapse"><i class="icon-dashboard"></i>AMS Dashboard</a>
+        
+        <a href="#dashboard-menu" class="nav-header" data-toggle="collapse"><i class="icon-dashboard"></i>Administration Man System</a>
         <ul id="dashboard-menu" class="nav nav-list collapse in">
-            <li><a href="index.html">Home</a></li>
-            <li ><a href="users.html">Sample List</a></li>
-            <li ><a href="user.html">Sample Item</a></li>
-            <li ><a href="media.html">Media</a></li>
-            <li ><a href="calendar.html">Calendar</a></li>
-            
+            <li><?php echo anchor('dashboard', 'Home', 'Home'); ?></li>
         </ul>
 
         <a href="#accounts-menu" class="nav-header" data-toggle="collapse"><i class="icon-briefcase"></i>Account<span class="label label-info">+3</span></a>
@@ -30,6 +26,5 @@
             <li ><a href="terms-and-conditions.html">Terms and Conditions</a></li>
         </ul>
 
-        <a href="help.html" class="nav-header" ><i class="icon-question-sign"></i>Help</a>
-        <a href="faq.html" class="nav-header" ><i class="icon-comment"></i>Faq</a>
+      
     </div>
