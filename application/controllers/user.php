@@ -184,7 +184,6 @@ class User extends CI_Controller {
 		$email = $this->encrypt->decode($email, 'liame');
 		$email = $email . '@gapura.co.id';
 		$pin = $this->input->post('kode');
-		echo $email . $pin ;
 		
 		# later : check previous verification request and delete it
 		
