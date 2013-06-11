@@ -39,7 +39,7 @@ class User extends CI_Controller {
 	 
 	public function index()
 	{
-		redirect('user/login');
+		redirect('dashboard');
 	}
 	
 	
@@ -201,7 +201,6 @@ class User extends CI_Controller {
 				# send mesg to view
 				$data['message']='silahkan melakukan registrasi';
 				
-			
 				# not register user redirect to register page
 				redirect('user/registration/', $data);
 			}
@@ -210,12 +209,25 @@ class User extends CI_Controller {
 # login ------------------------------------
 
 
+# logout -----------------------------------
+	public function logout()
+	{
+		session_start();
+		$this->session->unset_userdata('logged_in');
+   		session_destroy();
+		redirect('dashboard', 'refresh');
+	}
+# logout -----------------------------------
+
 # verification ------------------------------	
 	public function pin_verification()
 	{
+		# set manual email from user
+		$data['email'] = '';
+		
 		# call view
 		$this->load->view('template/header');
-		$this->load->view('user/verification');
+		$this->load->view('user/verification', $data);
 		$this->load->view('template/footer');
 	}
 	

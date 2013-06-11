@@ -1,7 +1,7 @@
 <div class="row-fluid">
     <div class="dialog">
         <div class="block">
-            <p class="block-heading">User Verification</p>
+            <p class="block-heading">PIN Verification</p>
             	<div class="block-body">
                 <?php echo form_open('user/do_pin_verification'); ?>
                 

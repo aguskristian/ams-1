@@ -5,16 +5,16 @@
             <li><?php echo anchor('dashboard', 'Home', 'Home'); ?></li>
         </ul>
 
-        <a href="#accounts-menu" class="nav-header" data-toggle="collapse"><i class="icon-briefcase"></i>Account<span class="label label-info">+3</span></a>
+        <a href="#accounts-menu" class="nav-header" data-toggle="collapse"><i class="icon-briefcase"></i>Surat Masuk<span class="label label-info">+3</span></a>
         <ul id="accounts-menu" class="nav nav-list collapse">
-            <li ><a href="sign-in.html">Sign In</a></li>
-            <li ><a href="sign-up.html">Sign Up</a></li>
-            <li ><a href="reset-password.html">Reset Password</a></li>
+            <li ><a href="sign-in.html">Belum terbaca</a></li>
+            <li ><a href="sign-up.html">Dalam Proses</a></li>
+            <li ><a href="reset-password.html">Arsip</a></li>
         </ul>
 
-        <a href="#error-menu" class="nav-header collapsed" data-toggle="collapse"><i class="icon-exclamation-sign"></i>Error Pages <i class="icon-chevron-up"></i></a>
+        <a href="#error-menu" class="nav-header collapsed" data-toggle="collapse"><i class="icon-exclamation-sign"></i>Error  <i class="icon-chevron-up"></i></a>
         <ul id="error-menu" class="nav nav-list collapse">
-            <li ><a href="403.html">403 page</a></li>
+            <li ><?php echo anchor('user/pin_verification', 'PIN Verification'); ?></li>
             <li ><a href="404.html">404 page</a></li>
             <li ><a href="500.html">500 page</a></li>
             <li ><a href="503.html">503 page</a></li>

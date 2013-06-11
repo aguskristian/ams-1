@@ -58,25 +58,43 @@
     <div class="navbar">
         <div class="navbar-inner">
                 <ul class="nav pull-right">
-                    
-                    <li><a href="#" class="hidden-phone visible-tablet visible-desktop" role="button">Settings</a></li>
-                    <li id="fat-menu" class="dropdown">
+                
+                	<?php
+                    $session_data = $this->session->userdata('logged_in');
+					if($this->session->userdata('logged_in'))
+	    			{
+					?>
+                    	<li id="fat-menu" class="dropdown">
                         <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="icon-user"></i> Jack Smith
+                            <i class="icon-user"></i> <?php echo ucfirst($session_data['ui_nama']); ?>
                             <i class="icon-caret-down"></i>
                         </a>
 
-                        <ul class="dropdown-menu">
-                            <li><a tabindex="-1" href="#">My Account</a></li>
-                            <li class="divider"></li>
-                            <li><a tabindex="-1" class="visible-phone" href="#">Settings</a></li>
-                            <li class="divider visible-phone"></li>
-                            <li><a tabindex="-1" href="sign-in.html">Logout</a></li>
-                        </ul>
-                    </li>
+                            <ul class="dropdown-menu">
+                                <li><a tabindex="-1" href="#">My Account</a></li>
+                                <li class="divider"></li>
+                                <li><a tabindex="-1" class="visible-phone" href="#">Settings</a></li>
+                                <li class="divider visible-phone"></li>
+                                <li><a tabindex="-1" href="<?php echo base_url(); ?>index.php/user/logout/">Logout</a></li>
+                            </ul>
+                    	</li>
+					
+                    <?php
+					}
+					else
+					{
+					?>
+						<li><a href="<?php echo base_url(); ?>/user/pin_verification/" class="hidden-phone visible-tablet visible-desktop" role="button">PIN Verification</a></li>
+					<?php
+                    }
+					?>
+                    
+                    
+                    
+                    
                     
                 </ul>
-                <a class="brand" href="index.html"><img src="<?php echo base_url(); ?>wp-content/themes/gapura-angkasa/ams/images/gapura-angkasa.png" /></a>
+                <a class="brand" href="<?php echo base_url(); ?>"><img src="<?php echo base_url(); ?>wp-content/themes/gapura-angkasa/ams/images/gapura-angkasa.png" /></a>
         </div>
     </div>
     
