@@ -7,6 +7,7 @@
 
         <a href="#accounts-menu" class="nav-header" data-toggle="collapse"><i class="icon-briefcase"></i>Incoming<span class="label label-info">+3</span></a>
         <ul id="accounts-menu" class="nav nav-list collapse">
+        	<li ><a href="sign-in.html">New</a></li>
             <li ><a href="sign-in.html">Open</a></li>
             <li ><a href="sign-up.html">Progress</a></li>
             <li ><a href="reset-password.html">Archive</a></li>

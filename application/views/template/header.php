@@ -10,13 +10,18 @@
 
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>wp-content/themes/gapura-angkasa/ams/lib/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>wp-content/themes/gapura-angkasa/ams/stylesheets/theme.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>wp-content/themes/gapura-angkasa/ams/lib/font-awesome/css/font-awesome.css">
-
-    <script src="<?php echo base_url(); ?>wp-content/themes/gapura-angkasa/ams/lib/jquery-1.7.2.min.js" type="text/javascript"></script>
-
+    <!--<link rel="stylesheet" href="<?php //echo base_url(); ?>wp-content/themes/gapura-angkasa/ams/lib/font-awesome/css/font-awesome.css">-->
+    <link rel="stylesheet" href="<?php echo base_url(); ?>wp-content/themes/gapura-angkasa/ams/lib/ui-lightness/jquery-ui-1.10.3.custom.min.css">
+	<script src="<?php echo base_url(); ?>wp-content/themes/gapura-angkasa/ams/lib/js/jquery-1.9.1.js" type="text/javascript"></script>
+    <script src="<?php echo base_url(); ?>wp-content/themes/gapura-angkasa/ams/lib/js/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
+	<script>
+  	$(function() {
+    	$( "#datepicker" ).datepicker();
+  	});
+  	</script>
     <!-- Demo page code -->
 
-    <style type="text/css">
+   <!-- <style type="text/css">
         #line-chart {
             height:300px;
             width:800px;
@@ -32,7 +37,7 @@
             color: #fff;
             font-weight: bold;
         }
-    </style>
+    </style>-->
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
