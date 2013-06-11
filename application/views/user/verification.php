@@ -10,7 +10,7 @@
                     <font color="#FF0000" size="-1"><?php echo form_error('pin'); ?></font>
                     
                     <label>Pin</label>
-                    <input type="text" class="span12" name="kode">
+                    <input type="text" class="span12" name="pin">
                     <font color="#FF0000" size="-1"><?php echo form_error('pin'); ?></font>
                     
                     <?php echo form_submit('submit', 'verify', 'class = "btn btn-primary pull-right"'); ?>

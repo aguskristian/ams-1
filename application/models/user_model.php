@@ -24,6 +24,9 @@ class User_model extends CI_Model
 		'ui_app_role' => '0000000000000',
 		'ui_verification' => 'n',
 		'ui_ver_date' => '0000-00-00 00:00:00',
+		'ui_approval' => 'n',
+		'ui_approval_by' => '',
+		'ui_approval_on' => '0000-00-00 00:00:00',
 		);
 		
 		$this->db->insert('user_identity', $data);
@@ -34,11 +37,6 @@ class User_model extends CI_Model
 # check user on user indetity table ------------------------------------
 	function check_reg_email($email)
 	{
-		 /*$this->db->select('ui_id, ui_nama, ui_nipp, ui_hp, ui_email, ui_cabang, ui_unit, ui_jabatan, ui_app_level, ui_app_role, ui_verification, ui_ver_date');
-	     $this->db->from('user_identity');
-	     $this->db->where('ui_email', $email);
-	     $this->db->limit(1);
-	     $query = $this->db->get();*/
 		$query = $this->db->get_where('user_identity', array('ui_email' => $email), 1, 0);
 		return $query->result();	
 	}

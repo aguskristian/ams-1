@@ -46,7 +46,8 @@ class User extends CI_Controller {
 # login ------------------------------------
 	public function login()
 	{
-		$data['message']='';
+		# view login form
+		$data['message']='Masukan email anda dengan benar.';
 		$this->load->view('template/header');
 		$this->load->view('user/login', $data);
 		$this->load->view('template/footer');
@@ -63,14 +64,16 @@ class User extends CI_Controller {
 
 		if ($this->form_validation->run() == FALSE)
 		{
+			# validation fail do re-login
 			# send mesg to view
 			$this->form_validation->set_message('required', 'Email wajib diisi !!!');
 			$this->form_validation->set_message('valid_email', 'Email wajib diisi !!!');
 			$this->form_validation->set_error_delimiters('<div class="alert alert-error">', '</div>');
 			
 			# validation false, force user to re-login
+			$data['message']='Email anda salah.';
 			$this->load->view('template/header');
-			$this->load->view('user/login');
+			$this->load->view('user/login', $data);
 			$this->load->view('template/footer');
 		}
 		else
@@ -95,90 +98,102 @@ class User extends CI_Controller {
 						 $app_role = $row->ui_app_role; 
 						 $verification = $row->ui_verification; 
 						 $ver_date = $row->ui_ver_date;
+						 $approval = $row->ui_approval;
 					}
-			 	
-					# send email to view
-					$data['email'] = $email;
-					
-					# call models to delete previous verification duplicate data
-					$this->user_model->del_dup_prev_ver_data($email);
-					
-					# create random pin
-					$this->load->helper('pin');
-					$pin = get_pin();
-					$email_link = $email . '+' . $pin ;
-					
-					# encrypt email link to send via email
-					$email_link = base64_encode($email_link);
-					$email_link = urlencode($email_link);
-					
-					# set request date & expired date
-					$request = mdate("%Y-%m-%d %H:%i:%s", time());
-					$expired = mdate("%Y-%m-%d %H:%i:%s", time()+3600);
-					
-					# set verification type
-					$type = 'login';
-					
-					# call models to save new pin and verification link
-					$this->user_model->save_verification($email, $hp, $pin, $email_link, $request, $expired, $type);
-					
-					# send pin and link via sendemail
-					$config['protocol'] = 'sendmail';
-					$config['mailpath'] = '/usr/sbin/sendmail';
-					$config['charset'] = 'iso-8859-1';
-					$config['wordwrap'] = TRUE;
-					$config['mailtype'] = 'html';
-					$this->email->initialize($config);
-					# send pin and link via sendemail
-					
-					# send pin and link via smtp
-					/*$config['protocol'] = 'smtp';
-					$config['smtp_host'] = 'ssl://smtp.googlemail.com';
-					$config['smtp_port'] = 465;
-					$config['smtp_user'] = 'xxx@gapura.co.id';
-					$config['smtp_pass'] = 'xxxx';
-					$config['charset'] = 'iso-8859-1';
-					$config['wordwrap'] = TRUE;
-					$config['mailtype'] = 'html';
-					$this->load->library('email', $config);
-					$this->email->set_newline("\r\n");*/
-					# send pin and link via smtp
-					
-					$this->email->from('admin@gapura.co.id', 'Team Sigap');
-					$this->email->to($email); 
-					$this->email->subject('PT Gapura Angkasa AMS Registration');
-					$this->email->message('
-					
-					<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-					<html xmlns="http://www.w3.org/1999/xhtml">
-					<head>
-					<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-					<title>Untitled Document</title>
-					</head>
-					
-					<body>
-					<p>Your verification code : ' . $pin . '</p>
-					<p>or</p>
-					<p>Please click link below to verify your request :</p>
-					<p>{unwrap}' . anchor("login/verification_link/" . $email_link, 'http://ods.gapura.co.id/login/verification_link/' . $email_link) . '{/unwrap}</p>
-					<p>Thank you</p>
-					<p>Best regards</p>
-					<p>SIGAP Team</p>
-					<p>&nbsp;</p>
-					</body>
-					</html>
-					
-					');
-					$this->email->send();
-					
-					# show link for develope mode only, please disable on run mode
-					echo $email . ' - ' . $pin . ' - ' . $email_link;
-					
-					# call views
-					$data['message'] = 'masukan kode verifikasi yang anda terima di inbox email.';
-					$this->load->view('template/header');
-					$this->load->view('user/verification', $data);
-					$this->load->view('template/footer');
+			 		
+					# if user exist but no approve yet, call admin
+					if($approval == 'n')
+					{
+						$data['message'] = 'Profile anda belum di approve, hubungi Team Sigap';
+						$this->load->view('template/header');
+						$this->load->view('user/login', $data);
+						$this->load->view('template/footer');
+					}
+					else
+					{
+						# send email to view
+						$data['email'] = $email;
+						
+						# call models to delete previous verification duplicate data
+						$this->user_model->del_dup_prev_ver_data($email);
+						
+						# create random pin
+						$this->load->helper('pin');
+						$pin = get_pin();
+						$email_link = $email . '+' . $pin ;
+						
+						# encrypt email link to send via email
+						$email_link = base64_encode($email_link);
+						$email_link = urlencode($email_link);
+						
+						# set request date & expired date
+						$request = mdate("%Y-%m-%d %H:%i:%s", time());
+						$expired = mdate("%Y-%m-%d %H:%i:%s", time()+3600);
+						
+						# set verification type
+						$type = 'login';
+						
+						# call models to save new pin and verification link
+						$this->user_model->save_verification($email, $hp, $pin, $email_link, $request, $expired, $type);
+						
+						# send pin and link via sendemail
+						$config['protocol'] = 'sendmail';
+						$config['mailpath'] = '/usr/sbin/sendmail';
+						$config['charset'] = 'iso-8859-1';
+						$config['wordwrap'] = TRUE;
+						$config['mailtype'] = 'html';
+						$this->email->initialize($config);
+						# send pin and link via sendemail
+						
+						# send pin and link via smtp
+						/*$config['protocol'] = 'smtp';
+						$config['smtp_host'] = 'ssl://smtp.googlemail.com';
+						$config['smtp_port'] = 465;
+						$config['smtp_user'] = 'xxx@gapura.co.id';
+						$config['smtp_pass'] = 'xxxx';
+						$config['charset'] = 'iso-8859-1';
+						$config['wordwrap'] = TRUE;
+						$config['mailtype'] = 'html';
+						$this->load->library('email', $config);
+						$this->email->set_newline("\r\n");*/
+						# send pin and link via smtp
+						
+						$this->email->from('admin@gapura.co.id', 'Team Sigap');
+						$this->email->to($email); 
+						$this->email->subject('PT Gapura Angkasa AMS Registration');
+						$this->email->message('
+						
+						<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+						<html xmlns="http://www.w3.org/1999/xhtml">
+						<head>
+						<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+						<title>Untitled Document</title>
+						</head>
+						
+						<body>
+						<p>Your verification code : ' . $pin . '</p>
+						<p>or</p>
+						<p>Please click link below to verify your request :</p>
+						<p>{unwrap}' . anchor("login/verification_link/" . $email_link, 'http://ods.gapura.co.id/login/verification_link/' . $email_link) . '{/unwrap}</p>
+						<p>Thank you</p>
+						<p>Best regards</p>
+						<p>SIGAP Team</p>
+						<p>&nbsp;</p>
+						</body>
+						</html>
+						
+						');
+						$this->email->send();
+						
+						# show link for develope mode only, please disable on run mode
+						echo $email . ' - ' . $pin . ' - ' . $email_link;
+						
+						# call views
+						$data['message'] = 'masukan kode verifikasi yang anda terima di inbox email.';
+						$this->load->view('template/header');
+						$this->load->view('user/verification', $data);
+						$this->load->view('template/footer');
+					}
 					
 			}
 			else
@@ -208,9 +223,7 @@ class User extends CI_Controller {
 	{
 		# get data
 		$email = $this->input->post('email');
-		$pin = $this->input->post('kode');
-		
-		# later : check previous verification request and delete it
+		$pin = $this->input->post('pin');
 		
 		# call model
 		$result = $this->user_model->do_verification($email, $pin);
@@ -246,7 +259,7 @@ class User extends CI_Controller {
 		   else
 		   {
 			 # verification pin fail, force to try again
-			 $data['ads_code'] = $this->input->post('ads_code');
+			 $data['email'] = $this->input->post('email');
 			 $data['success_message'] = 'link yang anda klik salah, masukan kode verifikasi yang anda terima di inbox email.';
 			 $this->load->view('template/header');
 			 $this->load->view('user/verification', $data);
