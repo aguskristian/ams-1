@@ -15,13 +15,13 @@
 
         <a href="#error-menu" class="nav-header collapsed" data-toggle="collapse"><i class="icon-exclamation-sign"></i>Error  <i class="icon-chevron-up"></i></a>
         <ul id="error-menu" class="nav nav-list collapse">
-            <li ><?php echo anchor('user/pin_verification', 'PIN Verification'); ?></li>
+           
             <li ><a href="404.html">404 page</a></li>
             <li ><a href="500.html">500 page</a></li>
             <li ><a href="503.html">503 page</a></li>
         </ul>
 
-        <a href="#legal-menu" class="nav-header" data-toggle="collapse"><i class="icon-legal"></i>Legal</a>
+        <a href="#legal-menu" class="nav-header" data-toggle="collapse"><i class="icon-signal"></i>Legal</a>
         <ul id="legal-menu" class="nav nav-list collapse">
             <li ><a href="privacy-policy.html">Privacy Policy</a></li>
             <li ><a href="terms-and-conditions.html">Terms and Conditions</a></li>

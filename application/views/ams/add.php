@@ -3,10 +3,6 @@
 
 <div class="row-fluid">
 
-    <div class="alert alert-info">
-        <button type="button" class="close" data-dismiss="alert">×</button>
-        <strong>Just a quick note:</strong> Hope you like the theme!
-    </div>
 
     <div class="block">
         <a href="#page-stats" class="block-heading" data-toggle="collapse">ADD NEW INCOMING DOCUMENT</a>
