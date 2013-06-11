@@ -1,6 +1,15 @@
 <div class="row-fluid">
+	
+    
+    
     <div class="dialog">
-    <?php echo $message; ?>
+    
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>Info :</strong> masukan email anda dengan benar.
+    </div>
+    
+    
         <div class="block">
             <p class="block-heading">User Login</p>
             	<div class="block-body">

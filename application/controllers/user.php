@@ -58,17 +58,19 @@ class User extends CI_Controller {
 		$email = $this->input->post('email');	
 		
 		#validate data
-		$this->form_validation->set_rules('email', 'email', 'required|xss_clean|valid_email');
-		$this->form_validation->set_message('email', 'Email yang anda masukan salah !!!');
+		$this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');
+		
 
 		if ($this->form_validation->run() == FALSE)
 		{
 			# send mesg to view
-			$data['message']='error';
+			$this->form_validation->set_message('required', 'Email wajib diisi !!!');
+			$this->form_validation->set_message('valid_email', 'Email wajib diisi !!!');
+			$this->form_validation->set_error_delimiters('<div class="alert alert-error">', '</div>');
 			
 			# validation false, force user to re-login
 			$this->load->view('template/header');
-			$this->load->view('user/login', $data);
+			$this->load->view('user/login');
 			$this->load->view('template/footer');
 		}
 		else
@@ -94,14 +96,7 @@ class User extends CI_Controller {
 						 $ver_date = $row->ui_ver_date;
 					}
 			 	
-					# split data to get username only		
-					#$email_result = explode("@", $email);
-					#$user_email  = $email_result[0];
-				    #$full_email = $email;
-					
-					# encrypt username before send to view as ads_code
-					#$email = $this->encrypt->encode($user_email, 'liame');
-					#$data['ads_code'] = $email;
+					# send email to view
 					$data['email'] = $email;
 					
 					# call models to delete previous verification duplicate data
