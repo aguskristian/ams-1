@@ -7,7 +7,7 @@
                 <?php echo form_open('user/do_login'); ?>
                     <label>Email</label>
                     <input type="text" class="span12" name="email">
-                    <font color="#FF0000" size="-1"><?php echo form_error('hp'); ?></font>
+                    <font color="#FF0000" size="-1"><?php echo form_error('email'); ?></font>
                     
                     <?php echo form_submit('submit', 'login', 'class = "btn btn-primary pull-right"'); ?>
                    

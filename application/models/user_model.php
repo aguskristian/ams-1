@@ -94,16 +94,17 @@ class User_model extends CI_Model
 # get all unit available  ----------------------------------------------	
 
 # save data on user verification table ---------------------------------
-	function save_verification($full_email, $hp, $pin, $link)
+	function save_verification($full_email, $hp, $pin, $link, $request, $expired, $type)
 	{
 		$data = array(
 		
 		'uv_email' => $full_email,
 		'uv_hp' => $hp,
-		'uv_type' => 'register',
+		'uv_type' => $type,
 		'uv_pin' => $pin,
 		'uv_link' => $link,
-		'uv_expired' => '0000-00-00 00:00:00',
+		'uv_date' => $request,
+		'uv_expired' => $expired,
 		);
 		
 		$this->db->insert('user_verification', $data);

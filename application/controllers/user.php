@@ -3,8 +3,16 @@
 class User extends CI_Controller {
 
 	/**
-	 * User Controller
+	 * PT Gapura Angkasa
+	 * Administration Management System.
+	 * ver 1.0.0
 	 *
+	 * user controller
+	 *
+	 * url : http://ams.gapura.co.id/
+	 * developer : www.studiokami.com
+	 * phone : 0361 853 2400
+	 * email : support@studiokami.com
 	 */
 	
 	
@@ -12,20 +20,21 @@ class User extends CI_Controller {
 	{
         parent::__construct();
 		
-		/*if ( ! $this->session->userdata('logged_in'))
+		# load model, library and helper
+		$this->load->model('user_model','', TRUE);
+		
+		# user restriction
+		if ( ! $this->session->userdata('logged_in'))
     	{ 
         	# function allowed for access without login
-			$allowed = array('index', 'request_verification', 'verification_pin', 'verification_link');
+			$allowed = array('index', 'login', 'do_login', 'pin_verification', 'do_pin_verification');
         
 			# other function need login
 			if (! in_array($this->router->method, $allowed)) 
 			{
-    			redirect('login');
+    			redirect('user/login');
 			}
-   		 }*/
-		
-		# load model, library and helper
-		$this->load->model('user_model','', TRUE);
+   		 }
     }
 	 
 	public function index()
@@ -50,7 +59,7 @@ class User extends CI_Controller {
 		
 		#validate data
 		$this->form_validation->set_rules('email', 'email', 'required|xss_clean|valid_email');
-		$this->form_validation->set_message('alpha_dash', 'Email yang anda masukan salah !!!');
+		$this->form_validation->set_message('email', 'Email yang anda masukan salah !!!');
 
 		if ($this->form_validation->run() == FALSE)
 		{
@@ -69,56 +78,78 @@ class User extends CI_Controller {
 			
 			if($result)
 			{
-				# if email found on database
-				foreach($result as $row)
-			 	{
-					 $nama = $row->ui_nama; 
-					 $nipp = $row->ui_nipp; 
-					 $hp = $row->ui_hp; 
-					 $email = $row->ui_email; 
-					 $cabang = $row->ui_cabang; 
-					 $unit = $row->ui_unit; 
-					 $jabatan = $row->ui_jabatan; 
-					 $app_level = $row->ui_app_level; 
-					 $app_role = $row->ui_app_role; 
-					 $verification = $row->ui_verification; 
-					 $ver_date = $row->ui_ver_date;
-				}
+					# if email found on database
+					foreach($result as $row)
+					{
+						 $nama = $row->ui_nama; 
+						 $nipp = $row->ui_nipp; 
+						 $hp = $row->ui_hp; 
+						 $email = $row->ui_email; 
+						 $cabang = $row->ui_cabang; 
+						 $unit = $row->ui_unit; 
+						 $jabatan = $row->ui_jabatan; 
+						 $app_level = $row->ui_app_level; 
+						 $app_role = $row->ui_app_role; 
+						 $verification = $row->ui_verification; 
+						 $ver_date = $row->ui_ver_date;
+					}
 			 	
 					# split data to get username only		
-					$email_result = explode("@", $email);
-					$user_email  = $email_result[0];
-				    $full_email = $email;
+					#$email_result = explode("@", $email);
+					#$user_email  = $email_result[0];
+				    #$full_email = $email;
 					
 					# encrypt username before send to view as ads_code
-					$email = $this->encrypt->encode($user_email, 'liame');
-					$data['ads_code'] = $email;
+					#$email = $this->encrypt->encode($user_email, 'liame');
+					#$data['ads_code'] = $email;
+					$data['email'] = $email;
 					
 					# call models to delete previous verification duplicate data
-					$this->user_model->del_dup_prev_ver_data($full_email);
+					$this->user_model->del_dup_prev_ver_data($email);
 					
 					# create random pin
 					$this->load->helper('pin');
 					$pin = get_pin();
-					$email_link = $full_email . '+' . $pin ;
+					$email_link = $email . '+' . $pin ;
 					
 					# encrypt email link to send via email
 					$email_link = base64_encode($email_link);
 					$email_link = urlencode($email_link);
 					
-					# call models to save new pin and verification link
-					$this->user_model->save_verification($full_email, $hp, $pin, $email_link);
+					# set request date & expired date
+					$request = mdate("%Y-%m-%d %H:%i:%s", time());
+					$expired = mdate("%Y-%m-%d %H:%i:%s", time()+3600);
 					
-					# send pin and link via email
+					# set verification type
+					$type = 'login';
+					
+					# call models to save new pin and verification link
+					$this->user_model->save_verification($email, $hp, $pin, $email_link, $request, $expired, $type);
+					
+					# send pin and link via sendemail
 					$config['protocol'] = 'sendmail';
 					$config['mailpath'] = '/usr/sbin/sendmail';
 					$config['charset'] = 'iso-8859-1';
 					$config['wordwrap'] = TRUE;
 					$config['mailtype'] = 'html';
 					$this->email->initialize($config);
+					# send pin and link via sendemail
+					
+					# send pin and link via smtp
+					$config['protocol'] = 'smtp';
+					$config['smtp_host'] = 'ssl://smtp.googlemail.com';
+					$config['smtp_port'] = 465;
+					$config['smtp_user'] = 'admin@gapura.co.id';
+					$config['smtp_pass'] = 'gapura2013';
+					$config['charset'] = 'iso-8859-1';
+					$config['wordwrap'] = TRUE;
+					$config['mailtype'] = 'html';
+					$this->load->library('email', $config);
+					$this->email->set_newline("\r\n");
+					# send pin and link via smtp
 					
 					$this->email->from('admin@gapura.co.id', 'Team Sigap');
-					$this->email->to($full_email); 
+					$this->email->to($email); 
 					$this->email->subject('PT Gapura Angkasa Online Document System Registration Verification');
 					$this->email->message('
 					
@@ -145,11 +176,10 @@ class User extends CI_Controller {
 					$this->email->send();
 					
 					# show link for develope mode only, please disable on run mode
-					echo $email_link;
+					echo $email . ' - ' . $pin . ' - ' . $email_link;
 					
 					# call views
-					$data['user_email'] = $user_email;
-					$data['success_message'] = 'masukan kode verifikasi yang anda terima di inbox email.';
+					$data['message'] = 'masukan kode verifikasi yang anda terima di inbox email.';
 					$this->load->view('template/header');
 					$this->load->view('user/verification', $data);
 					$this->load->view('template/footer');
@@ -180,9 +210,7 @@ class User extends CI_Controller {
 	public function do_pin_verification()
 	{
 		# get data
-		$email = $this->input->post('ads_code');
-		$email = $this->encrypt->decode($email, 'liame');
-		$email = $email . '@gapura.co.id';
+		$email = $this->input->post('email');
 		$pin = $this->input->post('kode');
 		
 		# later : check previous verification request and delete it
