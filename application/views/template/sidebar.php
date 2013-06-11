@@ -5,11 +5,11 @@
             <li><?php echo anchor('dashboard', 'Home', 'Home'); ?></li>
         </ul>
 
-        <a href="#accounts-menu" class="nav-header" data-toggle="collapse"><i class="icon-briefcase"></i>Surat Masuk<span class="label label-info">+3</span></a>
+        <a href="#accounts-menu" class="nav-header" data-toggle="collapse"><i class="icon-briefcase"></i>Incoming<span class="label label-info">+3</span></a>
         <ul id="accounts-menu" class="nav nav-list collapse">
-            <li ><a href="sign-in.html">Belum terbaca</a></li>
-            <li ><a href="sign-up.html">Dalam Proses</a></li>
-            <li ><a href="reset-password.html">Arsip</a></li>
+            <li ><a href="sign-in.html">Open</a></li>
+            <li ><a href="sign-up.html">Progress</a></li>
+            <li ><a href="reset-password.html">Archive</a></li>
         </ul>
 
         <a href="#error-menu" class="nav-header collapsed" data-toggle="collapse"><i class="icon-exclamation-sign"></i>Error  <i class="icon-chevron-up"></i></a>
