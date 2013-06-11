@@ -8,64 +8,75 @@
         <a href="#page-stats" class="block-heading" data-toggle="collapse">ADD NEW INCOMING DOCUMENT</a>
         <div id="page-stats" class="block-body collapse in">
         
-        <?php echo $error; ?>
-                  <?php echo form_open_multipart('docs/do_upload', array('class' => 'form-horizontal', 'id' => 'edit-profile')); ?>
+        <br /><br  />
+        			<?php echo $error; ?>
+                  	<?php echo form_open_multipart('docs/do_upload', array('class' => 'form-horizontal', 'id' => 'edit-profile')); ?>
                     
 						<fieldset>
-							<legend>Document Details</legend>
+							
+                          
                           
                            <div class="control-group">
-								<label class="control-label" for="input01">Date</label>
+								<label class="control-label" for="input01">Jenis</label>
+								<div class="controls">
+                                	<select>
+                                      <option value="memo">Memo</option>
+                                      <option value="notadinas" selected="selected">Nota Dinas</option>
+                                      <option value="surat">Surat</option>
+                                      <option value="sk">Surat Keputusan</option>
+                                      <option value="ba">Berita Acara</option>
+                                      <option value="sk">Surat Keputusan</option>
+                                    </select>
+								</div>
+							</div>
+                            
+                            <div class="control-group">
+								<label class="control-label" for="input01">No</label>
+								<div class="controls">
+									<input name="filename" type="text" value="" />
+								</div>
+							</div>
+                           
+                           <div class="control-group">
+								<label class="control-label" for="input01">Tanggal</label>
 								<div class="controls">
 									<input name="date" type="text" id="datepicker" />
                            		</div>
 						   </div>
                                     
-								
+							<div class="control-group">
+								<label class="control-label" for="input01">Kepada</label>
+								<div class="controls">
+									<input name="filename" type="text" value="" />
+								</div>
+							</div>	
 							
                             
                             <div class="control-group">
-								<label class="control-label" for="input01">To</label>
+								<label class="control-label" for="input01">Dari</label>
 								<div class="controls">
-									<input name="filename" type="text" class="input-xlarge" id="input01" value="filename" />
+									<input name="filename" type="text" value="" />
 								</div>
 							</div>
                             
                             <div class="control-group">
-								<label class="control-label" for="input01">Subject</label>
+								<label class="control-label" for="input01">Tembusan</label>
 								<div class="controls">
-									<input name="filename" type="text" class="input-xlarge" id="input01" value="filename" />
+									<input name="filename" type="text" value="" />
 								</div>
 							</div>
                             
                             <div class="control-group">
-								<label class="control-label" for="input01">Select File</label>
+								<label class="control-label" for="input01">Perihal</label>
 								<div class="controls">
-									<input type="file" class="input-xlarge" id="input01" value="file" name="file" />
+									<input name="filename" type="text" value="" />
 								</div>
 							</div>
                             
-                            
-                            
                             <div class="control-group">
-								<label class="control-label" for="input01">Category</label>
+								<label class="control-label" for="input01">Pilih File</label>
 								<div class="controls">
-                                	<?php /*
-										$dropdown = array();
-										
-										foreach($query_category_for_combo as $row_combo) 
-										{
-											if($row_combo->dc_uu_code == 'all')
-											{
-												$dropdown[$row_combo->dc_id] = $row_combo->dc_category . ' (ext)';
-											}
-											else
-											{
-												$dropdown[$row_combo->dc_id] = $row_combo->dc_category;
-											}
-									    }
-										echo form_dropdown('category', $dropdown, '2'); */
-									?>
+									<input type="file" value="file" name="file" />
 								</div>
 							</div>
 							

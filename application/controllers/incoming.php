@@ -23,7 +23,7 @@ class Incoming extends CI_Controller {
 		# restrict all function access after log in
 		if ( ! $this->session->userdata('logged_in'))
         { 
-            redirect('login');
+            redirect('user/login');
         }
     }
 	

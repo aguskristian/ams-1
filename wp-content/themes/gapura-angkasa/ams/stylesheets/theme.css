@@ -317,7 +317,7 @@ a.block-heading:hover,
   filter: progid:dximagetransform.microsoft.gradient(startColorStr='#4d5b76', EndColorStr='#6c7a95');
   -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#ffffff',EndColorStr='#efeff0')";
 }
-.sidebar-nav .nav-header.collapsed .icon-chevron-up::before {
+.sidebar-nav .nav-header.collapsed .icon-chevron-up before {
   content: "\f078";
 }
 .sidebar-nav .nav-header .icon-chevron-up {
