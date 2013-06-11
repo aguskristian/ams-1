@@ -27,7 +27,7 @@ class User extends CI_Controller {
 		if ( ! $this->session->userdata('logged_in'))
     	{ 
         	# function allowed for access without login
-			$allowed = array('index', 'login', 'do_login', 'pin_verification', 'do_pin_verification');
+			$allowed = array('index', 'login', 'do_login', 'pin_verification', 'do_pin_verification', 'registration', 'do_registration');
         
 			# other function need login
 			if (! in_array($this->router->method, $allowed)) 
@@ -58,7 +58,7 @@ class User extends CI_Controller {
 		$email = $this->input->post('email');	
 		
 		#validate data
-		$this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');
+		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
 		
 
 		if ($this->form_validation->run() == FALSE)
@@ -75,6 +75,7 @@ class User extends CI_Controller {
 		}
 		else
 		{
+			
 			# check email on database 
 			$result = $this->user_model->check_reg_email($email);
 			
@@ -131,21 +132,21 @@ class User extends CI_Controller {
 					# send pin and link via sendemail
 					
 					# send pin and link via smtp
-					$config['protocol'] = 'smtp';
+					/*$config['protocol'] = 'smtp';
 					$config['smtp_host'] = 'ssl://smtp.googlemail.com';
 					$config['smtp_port'] = 465;
-					$config['smtp_user'] = 'admin@gapura.co.id';
-					$config['smtp_pass'] = 'gapura2013';
+					$config['smtp_user'] = 'xxx@gapura.co.id';
+					$config['smtp_pass'] = 'xxxx';
 					$config['charset'] = 'iso-8859-1';
 					$config['wordwrap'] = TRUE;
 					$config['mailtype'] = 'html';
 					$this->load->library('email', $config);
-					$this->email->set_newline("\r\n");
+					$this->email->set_newline("\r\n");*/
 					# send pin and link via smtp
 					
 					$this->email->from('admin@gapura.co.id', 'Team Sigap');
 					$this->email->to($email); 
-					$this->email->subject('PT Gapura Angkasa Online Document System Registration Verification');
+					$this->email->subject('PT Gapura Angkasa AMS Registration');
 					$this->email->message('
 					
 					<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -197,6 +198,7 @@ class User extends CI_Controller {
 # verification ------------------------------	
 	public function pin_verification()
 	{
+		# call view
 		$this->load->view('template/header');
 		$this->load->view('user/verification');
 		$this->load->view('template/footer');
@@ -296,27 +298,29 @@ class User extends CI_Controller {
 		$this->form_validation->set_rules('hp', 'hp', 'trim|required|min_length[3]|numeric|xss_clean');
 		$this->form_validation->set_rules('nipp', 'nipp', 'trim|required|min_length[3]|numeric|xss_clean');
 		
-		if ($this->input->post('submit')) 
-			{
+		#if ($this->input->post('submit')) 
+		#	{
 				if ($this->form_validation->run() == FALSE)
 				{
+					# if fail force to do registration again
 					# send mesg to view
-					$data['message']='error';
+					$data['message']='silahkan melakukan registrasi, bila anda tidak memiliki email perusahaan, silahkan mendaftar melalui supervisor on duty';
 					
-					# validation false, force user to re-login
+					# call view		
 					$this->load->view('template/header');
-					$this->load->view('user/login', $data);
-					$this->load->view('template/footer');				
+					$this->load->view('user/registration', $data);
+					$this->load->view('template/footer');			
 				}
 				else
 				{
+					# do registration
 					# prepare data
 					$user_email = $email;
 				    $full_email = $email . '@gapura.co.id';
-					
+										
 					# encrypt data before save and send to view as ads_code
-					$email = $this->encrypt->encode($user_email, 'liame');
-					$data['ads_code'] = $email;
+					#$email = $this->encrypt->encode($user_email, 'liame');
+					$data['email'] = $full_email;
 					
 					# call models to delete previous verification duplicate data
 					$this->user_model->del_dup_prev_ver_data($full_email);
@@ -336,8 +340,15 @@ class User extends CI_Controller {
 					$email_link = base64_encode($email_link);
 					$email_link = urlencode($email_link);
 					
+					# set request date & expired date
+					$request = mdate("%Y-%m-%d %H:%i:%s", time());
+					$expired = mdate("%Y-%m-%d %H:%i:%s", time()+3600);
+					
+					# set verification type
+					$type = 'register';
+					
 					# call models to save data
-					$this->user_model->save_verification($full_email, $hp, $pin, $email_link);
+					$this->user_model->save_verification($full_email, $hp, $pin, $email_link, $type, $request, $expired);
 					
 					# send pin and link via email
 					$config['protocol'] = 'sendmail';
@@ -380,7 +391,7 @@ class User extends CI_Controller {
 					$this->load->view('user/verification', $data);
 					$this->load->view('template/footer');
 				}
-			}
+		#	}
 			
 	}
 # registration -----------------------------

@@ -34,12 +34,13 @@ class User_model extends CI_Model
 # check user on user indetity table ------------------------------------
 	function check_reg_email($email)
 	{
-		 $this -> db -> select('ui_id, ui_nama, ui_nipp, ui_hp, ui_email, ui_cabang, ui_unit, ui_jabatan, ui_app_level, ui_app_role, ui_verification, ui_ver_date');
-	     $this -> db -> from('user_identity');
-	     $this -> db -> where('ui_email', $email);
-	     $this -> db -> limit(1);
-	     $query = $this -> db -> get();
-		 return $query->result();	
+		 /*$this->db->select('ui_id, ui_nama, ui_nipp, ui_hp, ui_email, ui_cabang, ui_unit, ui_jabatan, ui_app_level, ui_app_role, ui_verification, ui_ver_date');
+	     $this->db->from('user_identity');
+	     $this->db->where('ui_email', $email);
+	     $this->db->limit(1);
+	     $query = $this->db->get();*/
+		$query = $this->db->get_where('user_identity', array('ui_email' => $email), 1, 0);
+		return $query->result();	
 	}
 # check user on user indetity table ------------------------------------
 
@@ -94,7 +95,7 @@ class User_model extends CI_Model
 # get all unit available  ----------------------------------------------	
 
 # save data on user verification table ---------------------------------
-	function save_verification($full_email, $hp, $pin, $link, $request, $expired, $type)
+	function save_verification($full_email, $hp, $pin, $email_link, $type, $request, $expired)
 	{
 		$data = array(
 		
@@ -102,7 +103,7 @@ class User_model extends CI_Model
 		'uv_hp' => $hp,
 		'uv_type' => $type,
 		'uv_pin' => $pin,
-		'uv_link' => $link,
+		'uv_link' => $email_link,
 		'uv_date' => $request,
 		'uv_expired' => $expired,
 		);
