@@ -16,6 +16,7 @@ class User extends CI_Controller {
 	 */
 	
 	
+# constuction ------------------------------	
 	 function __construct()
 	{
         parent::__construct();
@@ -36,12 +37,14 @@ class User extends CI_Controller {
 			}
    		 }
     }
-	 
+# constuction ------------------------------	
+
+# index ------------------------------------	 
 	public function index()
 	{
 		redirect('dashboard');
 	}
-	
+# index ------------------------------------	
 	
 # login ------------------------------------
 	public function login()
@@ -174,7 +177,7 @@ class User extends CI_Controller {
 						<p>Your verification code : ' . $pin . '</p>
 						<p>or</p>
 						<p>Please click link below to verify your request :</p>
-						<p>{unwrap}' . anchor("login/verification_link/" . $email_link, 'http://ods.gapura.co.id/login/verification_link/' . $email_link) . '{/unwrap}</p>
+						<p>{unwrap}' . anchor("user/verification/" . $email_link, 'http://ams.gapura.co.id/user/verification/' . $email_link) . '{/unwrap}</p>
 						<p>Thank you</p>
 						<p>Best regards</p>
 						<p>SIGAP Team</p>
@@ -218,6 +221,7 @@ class User extends CI_Controller {
 		redirect('dashboard', 'refresh');
 	}
 # logout -----------------------------------
+
 
 # verification ------------------------------	
 	public function pin_verification()
@@ -284,6 +288,65 @@ class User extends CI_Controller {
 		$this->load->view('template/header');
 		$this->load->view('user/dashboard');
 		$this->load->view('template/footer');
+	}
+	
+	public function verification()
+	{
+		# get data
+		$email_link= $this->uri->segment(3, 0);
+		$email_link = urldecode($email_link);
+		$email_link = base64_decode($email_link);
+		
+		# split data			
+		$url_result = explode("+", $email_link);
+		$email = $url_result[0];
+		$pin = $url_result[1];
+		
+		# call model
+		$result = $this->login_model->do_verification($email, $pin);
+		
+		# check verification link
+		if($result)
+		   {
+			 # if success prepare session
+			 $sess_array = array();
+			 foreach($result as $row)
+			 {
+			   $sess_array = array(
+			     'ui_id' => $row->ui_id, 
+				 'ui_nama' => $row->ui_nama, 
+				 'ui_nipp' => $row->ui_nipp, 
+				 'ui_hp' => $row->ui_hp, 
+				 'ui_email' => $row->ui_email, 
+				 'ui_cabang' => $row->ui_cabang, 
+				 'ui_unit' => $row->ui_unit, 
+				 'ui_jabatan' => $row->ui_jabatan, 
+				 'ui_app_level' => $row->ui_app_level, 
+				 'ui_app_role' => $row->ui_app_role, 
+				 'ui_verification' => $row->ui_verification, 
+				 'ui_ver_date' => $row->ui_ver_date
+			   );
+			   # set session
+			   $this->session->set_userdata('logged_in', $sess_array);
+			   
+			 }
+			 # logged in and redirect user to dashboard
+			 redirect('team');
+			 return TRUE;
+		   }
+		   else
+		   {
+			 # verification fail force user to input pin from email
+			 $data['success_message'] = 'link yang anda klik salah, masukan kode verifikasi yang anda terima di inbox email.';
+			 $nav['view_dashboard'] = 'class="active"';
+			 $this->load->view('team/header', $nav);
+			 $this->load->view('login/login_verification_view', $data);
+			 $this->load->view('team/footer');
+			 
+			 
+			 return FALSE;
+		   }
+		   
 	}
 # verification ------------------------------
 
@@ -399,7 +462,7 @@ class User extends CI_Controller {
 					<p>Your verification code : ' . $pin . '</p>
 					<p>or</p>
 					<p>Please click link below to verify your request :</p>
-					<p>{unwrap}' . anchor("login/verification_link/" . $email_link, 'http://ams.gapura.co.id/user/verification_link/' . $email_link) . '{/unwrap}</p>
+					<p>{unwrap}' . anchor("user/verification/" . $email_link, 'http://ams.gapura.co.id/user/verification/' . $email_link) . '{/unwrap}</p>
 					<p>Thank you</p>
 					<p>Best regards</p>
 					<p>SIGAP Team</p>
