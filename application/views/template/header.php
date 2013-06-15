@@ -61,10 +61,20 @@
   <body class=""> 
   <!--<![endif]-->
     
+    
+    
     <div class="navbar">
+    
+    
         <div class="navbar-inner">
-                <ul class="nav pull-right">
+        
+        
+                <a class="logo" href="<?php echo base_url(); ?>"><img src="<?php echo base_url(); ?>wp-content/themes/gapura-angkasa/ams/images/gapura-angkasa.png" /></a>
+    
+    
                 
+                <ul class="nav pull-right">
+                	<li><a href="">Administration Management System</a></li>
                 	<?php
                     $session_data = $this->session->userdata('logged_in');
 					if($this->session->userdata('logged_in'))
@@ -90,17 +100,13 @@
 					else
 					{
 					?>
-						<li><a href="<?php echo base_url(); ?>/user/pin_verification/" class="hidden-phone visible-tablet visible-desktop" role="button">PIN Verification</a></li>
+						<li><a href="<?php echo base_url(); ?>user/login/" class="hidden-phone visible-tablet visible-desktop" role="button">Login</a></li>
+                        <li><a href="<?php echo base_url(); ?>user/pin_verification/" class="hidden-phone visible-tablet visible-desktop" role="button">PIN Verification</a></li>
 					<?php
                     }
 					?>
-                    
-                    
-                    
-                    
-                    
                 </ul>
-                <a class="brand" href="<?php echo base_url(); ?>"><img src="<?php echo base_url(); ?>wp-content/themes/gapura-angkasa/ams/images/gapura-angkasa.png" /></a>
+                
         </div>
     </div>
     
