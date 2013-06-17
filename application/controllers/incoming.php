@@ -33,62 +33,7 @@ class Incoming extends CI_Controller {
 	public function index()
 	{
 		
-		#$this->load->library('rest', array('server' => REST_SERVER));
-		$this->rest->initialize(array(
-		'server' => 'http://gfis.gapura.co.id/dps/api/daily/',
-		'http_user' => 'malammingguandistudio',
-			'http_pass' => 'vORtOOVlg5vGaEv',
-			'http_auth' => 'digest' // or 'digest'
-		));
-		
-		/*$this->load->library('rest', array(
-			'server' => 'http://localhost/gapura/fids/api/example/',
-			'http_user' => 'admin',
-			'http_pass' => '1234',
-			'http_auth' => 'basic' // or 'digest'
-		));*/
-		//$id = 1;
-		$ds_date_daily = '2013-06-16';
-        #$data = $this->rest->get('deparure', $date_daily, 'json');
-		
-		$data = $this->rest->get('departure', array('ds_date_daily' => $ds_date_daily), 'json');  
-        #http://localhost/gapura/fids/api/example/user_get
-        #print_r($data);
-		
-		foreach ($data as $row) : 
-			echo $row->dsd_flt_nbr;
-			echo $row->dsd_std;
-			echo $row->dsd_stn_from;
-			echo $row->dsd_stn_to . "<br />";
-		endforeach;
-		/*$username = 'admin';
-		$password = '1234';
-		
-		$this->load->library('curl');
-		
-		$this->curl->get('http://localhost/gapura/fids/api/example/');
-		
-		// Optional, delete this line if your API is open
-		#$this->curl->http_login($username, $password);
-
-		$data['user'] = $this->rest->get('user', array(
-			'id' => 1,
-		));
-		
-		print_r($data);
-		
-		$result = json_decode($this->rest->get()); */
-		#$result = json_decode($this->curl->execute());
-
-		/*if(isset($result->status) && $result->status == 'success')
-		{
-			echo 'User has been updated.';
-		}
-		
-		else
-		{
-			echo 'Something has gone wrong';
-		}*/
+		redirect('add');
 		
 	}
 	
