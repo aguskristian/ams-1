@@ -54,15 +54,16 @@ class User_model extends CI_Model
 # get all stn available  ----------------------------------------------		
 	function get_cabang()
 	{
-		 $this->db->select('uc_id,	uc_code, uc_name');
-	     $this->db->from('user_cabang');
-	     $this->db->where('uc_code !=', 'all');
-		 $this->db->order_by('uc_name', 'asc');
-	     $query_cabang_combo = $this->db->get();
-		 #return $query_cabang_combo->result();
-		 if ($query_cabang_combo->num_rows() > 0 )
+		 
+	     $this->db->where('us_code !=', 'non');
+		 $this->db->order_by('us_id', 'asc');
+		 $this->db->order_by('us_name', 'asc');
+
+	     $query_stn = $this->db->get('user_station');
+
+		 if ($query_stn->num_rows() > 0 )
 		 {
-			 return $query_cabang_combo->result_array();
+			 return $query_stn->result_array();
 		 }
 		 else
 		 {
@@ -71,12 +72,11 @@ class User_model extends CI_Model
 	}
 # get all stn available  ----------------------------------------------	
 
-
 # get all unit available  ----------------------------------------------		
 	function get_unit($cabang)
 	{
-	     $this->db->where('uu_uc_code', $cabang);
-		 $this->db->where('uu_code !=', 'all');
+	     $this->db->where('uu_code !=', 'non');
+		 $this->db->where('uu_us_id', $cabang);
 		 $this->db->order_by('uu_name', 'asc');
 		 
 		 $query_unit_combo = $this->db->get('user_unit');
@@ -88,9 +88,30 @@ class User_model extends CI_Model
 		 else
 		 {
 			 return array();
-		 }
+		}
 	}
 # get all unit available  ----------------------------------------------	
+
+# get all unit available  ----------------------------------------------		
+	function get_sub_unit($unit)
+	{
+	     
+		 $this->db->where('us_uu_id', $unit);
+		 $this->db->order_by('us_name', 'asc');
+		 
+		 $query_sub_unit_combo = $this->db->get('user_sub_unit');
+
+		 if ($query_sub_unit_combo->num_rows() > 0 )
+		 {
+			 return $query_sub_unit_combo->result_array();
+		 }
+		 else
+		 {
+			 return array();
+		}
+	}
+# get all unit available  ----------------------------------------------	
+
 
 # save data on user verification table ---------------------------------
 	function save_verification($full_email, $hp, $pin, $email_link, $type, $request, $expired)

@@ -26,5 +26,8 @@
             <li ><a href="terms-and-conditions.html">Terms and Conditions</a></li>
         </ul>
 
+		<p>user : <?php echo $nama; ?></p>
+        <p>cabang : <?php echo $cabang; ?></p>        
+        <p>unit : <?php echo $unit; ?></p>
       
     </div>

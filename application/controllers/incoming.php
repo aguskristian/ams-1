@@ -117,7 +117,7 @@ class Incoming extends CI_Controller {
 		
 		 # redirect to upload form
 		$this->load->view('template/header');
-		$this->load->view('template/sidebar');
+		$this->load->view('template/sidebar', $data);
 		$this->load->view('template/breadcumb');
 		$this->load->view('ams/add', $data);
 		$this->load->view('template/footer');

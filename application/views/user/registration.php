@@ -26,12 +26,29 @@
                     <input type="text" name="email" width="50%">@gapura.co.id
                     
                     <label>Cabang</label>
-                    <select name="cabang">
+                    <select name="cabang" id="cabang_id">
+                        <option value="">-- select cabang --</option>
+                        <?php
+                        foreach ( $query_cabang_combo as $row_cabang_combo )
+                        {
+                            echo "<option value='$row_cabang_combo[us_id]'>$row_cabang_combo[us_name]</option>";
+                        }
+                        ?>
+                    </select>
+                    <!--<select name="cabang">
                         <option value="dps">DPS</option>
-                   	</select>
+                   	</select>-->
                     
                     <label>Unit</label>
-                    <select name="unit">
+                    <select name="unit" id="unit_id">
+                        <option value="">-- select cabang first --</option>
+                    </select>
+                    
+                    <label>Sub Unit</label>
+                    <select name="sub_unit" id="sub_unit_id">
+                        <option value="">-- select unit first --</option>
+                    </select>
+                   <!-- <select name="unit">
                        	<option value="gm">General Manager</option>
                         <option value="mc">Customer Service</option>
                         <option value="mi">Internal Service</option>
@@ -40,7 +57,7 @@
                         <option value="mt">Technic</option>
                         <option value="mw">Cargo</option>
                         <option value="mq">SSQ</option>
-                   	</select>
+                   	</select>-->
                                     
                     <label>Jabatan</label>
                     <select name="jabatan" id="jabatan">

@@ -31,10 +31,28 @@ class Dashboard extends CI_Controller {
 
 	function index()
 	{
+		# get data from session
+		$session_data = $this->session->userdata('logged_in');
+		  
+		# data
+		$nama = $session_data['ui_nama'];
+		$data['nama'] = $nama;
+		  
+		$email = $session_data['ui_email'];
+		$data['email'] = $email;
+		  
+		$cabang = $session_data['ui_cabang'];
+		$data['cabang'] = $cabang;
+		  
+		$unit = $session_data['ui_unit'];
+		$data['unit'] = $unit;
+		  
+		$data['error'] ='';
+		  
 		$data['title'] = 'Dashboard';
 		
 		$this->load->view('template/header');
-		$this->load->view('template/sidebar');
+		$this->load->view('template/sidebar', $data);
 		$this->load->view('template/breadcumb');
 		$this->load->view('ams/dashboard', $data);
 		$this->load->view('template/footer');

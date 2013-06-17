@@ -9,7 +9,7 @@
         <div id="page-stats" class="block-body collapse in">
         
         <br /><br  />
-        			 | <?php echo $nama; ?> | <?php echo $cabang; ?> | <?php echo $unit; ?>
+        			 
         			<?php echo $error; ?>
                   	<?php echo form_open_multipart('docs/do_upload', array('class' => 'form-horizontal', 'id' => 'edit-profile')); ?>
                     
@@ -18,7 +18,7 @@
                            <div class="control-group">
 								<label class="control-label" for="input01">Jenis</label>
 								<div class="controls">
-                                	<select name="jenis">
+                                	<select name="type">
                                       <option value="memo">Memo</option>
                                       <option value="notadinas" selected="selected">Nota Dinas</option>
                                       <option value="surat">Surat</option>
@@ -46,7 +46,7 @@
 							<div class="control-group">
 								<label class="control-label" for="input01">Kepada</label>
 								<div class="controls">
-									<input name="kepada" type="text" value="" />
+									<input name="to" type="text" value="" />
 								</div>
 							</div>	
 							
@@ -54,28 +54,28 @@
                             <div class="control-group">
 								<label class="control-label" for="input01">Dari</label>
 								<div class="controls">
-									<input name="dari" type="text" value="" />
+									<input name="from" type="text" value="" />
 								</div>
 							</div>
                             
                             <div class="control-group">
 								<label class="control-label" for="input01">Tembusan</label>
 								<div class="controls">
-									<input name="tembusan" type="text" value="" />
+									<input name="copy" type="text" value="" />
 								</div>
 							</div>
                             
                             <div class="control-group">
 								<label class="control-label" for="input01">Perihal</label>
 								<div class="controls">
-									<input name="perihal" type="text" value="" />
+									<input name="subject" type="text" value="" />
 								</div>
 							</div>
                             
                             <div class="control-group">
 								<label class="control-label" for="input01">Keterangan</label>
 								<div class="controls">
-									<textarea cols="40" rows="5" name="keterangan"></textarea>
+									<textarea cols="40" rows="5" name="remarks"></textarea>
 								</div>
 							</div>
                             

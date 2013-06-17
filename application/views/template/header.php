@@ -16,9 +16,98 @@
 	<script src="<?php echo base_url(); ?>wp-content/themes/gapura-angkasa/ams/lib/js/jquery-1.9.1.js" type="text/javascript"></script>
     <script src="<?php echo base_url(); ?>wp-content/themes/gapura-angkasa/ams/lib/js/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
 	<script>
-  	$(function() {
+	/*$(document).ready(function(){
+        $("#cabang_id").change(function(){
+            var cabang_id = $("#cabang_id").val();
+            $.ajax({
+               type : "POST",
+               url  : "<?php //echo base_url();?>user/select_unit/",
+               data : "cabang_id=" + cabang_id,
+               success: function(data){$("#unit_id").html(data);
+			   alert(data);
+			   }
+            });
+        });
+		
+
+    });*/
+	
+	$(document).ready(function(){
+		/*$('#cabang_id, #unit_id, #sub_unit_id').hide();*/
+        $("#cabang_id").change(function(){
+            var cabang_id = $("#cabang_id").val();
+            
+			$.ajax({
+               type : "POST",
+               url  : "<?php echo base_url();?>user/select_unit/",
+               data : "cabang_id=" + cabang_id,
+               success: function(data)
+			    {
+					
+			   		$('#unit_id').append(data);
+					var unit_id = $("#unit_id").val();
+					
+					$.ajax({
+               		type : "POST",
+               		url  : "<?php echo base_url();?>user/select_sub_unit/",
+              		data : "unit_id=" + unit_id,
+              		success: function(data){$("#sub_unit_id").html(data);
+			   		
+			   		}
+            		});
+                	
+			   }
+            });
+        });
+		
+
+    });
+	
+	/*$('#f_city, #f_city_label').hide();
+	$('#f_state').change(function(){
+    var state_id = $('#f_state').val();
+    if (state_id != ""){
+        var post_url = "/index.php/control_form/get_cities/" + state_id;
+        $.ajax({
+            type: "POST",
+             url: post_url,
+             success: function(cities) //we're calling the response json array 'cities'
+              {
+                $('#f_city').empty();
+                $('#f_city, #f_city_label').show();
+                   $.each(cities,function(id,city) 
+                   {
+                    var opt = $('<option />'); // here we're creating a new select option for each group
+                      opt.val(id);
+                      opt.text(city);
+                      $('#f_city').append(opt); 
+                });
+               } //end success
+         }); //end AJAX
+    } else {
+        $('#f_city').empty();
+        $('#f_city, #f_city_label').hide();
+    }//end if
+}); //end change */
+	
+/*	$(document).ready(function(){
+		$("#unit_id").change(function(){
+            var unit_id = function(data){$("#unit_id").html(data);};
+            $.ajax({
+               type : "POST",
+               url  : "<?php //echo base_url();?>user/select_sub_unit/",
+               data : "unit_id=" + unit_id, 
+               success: function(data){$("#sub_unit_id").html(data);
+			   alert(data);
+			   }
+            });
+        });*/
+		
+		
+	// });
+  	/*$(function() {
     	$( "#datepicker" ).datepicker();
-  	});
+  	});*/
   	</script>
     <!-- Demo page code -->
 

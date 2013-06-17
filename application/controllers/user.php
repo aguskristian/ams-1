@@ -28,7 +28,7 @@ class User extends CI_Controller {
 		if ( ! $this->session->userdata('logged_in'))
     	{ 
         	# function allowed for access without login
-			$allowed = array('index', 'login', 'do_login', 'pin_verification', 'do_pin_verification', 'registration', 'do_registration');
+			$allowed = array('index', 'login', 'do_login', 'pin_verification', 'do_pin_verification', 'registration', 'do_registration', 'select_unit');
         
 			# other function need login
 			if (! in_array($this->router->method, $allowed)) 
@@ -354,14 +354,53 @@ class User extends CI_Controller {
 # registration -----------------------------
 	public function registration()
 	{
+		# get stn available
+		$data['query_cabang_combo'] = $this->user_model->get_cabang();
+		
 		# send mesg to view
 		$data['message']='silahkan melakukan registrasi, bila anda tidak memiliki email perusahaan, silahkan mendaftar melalui supervisor on duty';
-				
 		$this->load->view('template/header');
 		$this->load->view('user/registration', $data);
 		$this->load->view('template/footer');
-	
+	print_r($data);
 	}
+	
+	function select_unit()
+	{
+		# get cabang from previous combo
+		$cabang = $this->input->post('cabang_id');
+		# call model
+		$data['query_unit_combo'] = $this->user_model->get_unit($cabang);
+		
+		$content = "<option value='non'>non unit</option>\n";
+		
+		# fetch data from model result then send to content
+		foreach($data['query_unit_combo'] as $row_unit_combo) 
+	    {
+			$content .= "<option value='$row_unit_combo[uu_code]'>$row_unit_combo[uu_name]</option>\n";
+		}
+		echo $content;
+    }
+	
+	
+	function select_sub_unit()
+	{
+		# get cabang from previous combo
+		#$cabang = $this->input->post('cabang_id');
+		$unit = $this->input->post('unit_id');
+		#$unit = 3;
+		# call model
+		$data['query_sub_unit_combo'] = $this->user_model->get_sub_unit($unit);
+		
+		$content = "<option value='non'>non unit</option>\n";
+		
+				# fetch data from model result then send to content
+		foreach($data['query_sub_unit_combo'] as $row_sub_unit_combo) 
+	    {
+			$content .= "<option value='$row_sub_unit_combo[us_code]'>$row_sub_unit_combo[us_name]</option>\n";
+		}
+		echo $content;
+    }
 	
 	public function do_registration()
 	{
