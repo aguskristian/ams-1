@@ -32,36 +32,39 @@
 
     });*/
 	
+
 	$(document).ready(function(){
-		/*$('#cabang_id, #unit_id, #sub_unit_id').hide();*/
         $("#cabang_id").change(function(){
             var cabang_id = $("#cabang_id").val();
-            
-			$.ajax({
+            $.ajax({
                type : "POST",
                url  : "<?php echo base_url();?>user/select_unit/",
                data : "cabang_id=" + cabang_id,
-               success: function(data)
-			    {
+               success: function(data){$("#unit_id").html(data);}
+			   
+			   
 					
-			   		$('#unit_id').append(data);
-					var unit_id = $("#unit_id").val();
-					
-					$.ajax({
-               		type : "POST",
-               		url  : "<?php echo base_url();?>user/select_sub_unit/",
-              		data : "unit_id=" + unit_id,
-              		success: function(data){$("#sub_unit_id").html(data);
-			   		
-			   		}
-            		});
-                	
-			   }
             });
+			
+			
         });
+		
+		/* ----- */
+					$("#unit_id").change(function(){
+            			var unit_id = $("#unit_id").val();
+            			$.ajax({
+               				type : "POST",
+               				url  : "<?php echo base_url();?>user/select_sub_unit/",
+               				data : "unit_id=" + unit_id,
+               			success: function(data){$("#sub_unit_id").html(data);
+					 		}
+            			});
+        			});
+					/* ----- */
 		
 
     });
+    
 	
 	/*$('#f_city, #f_city_label').hide();
 	$('#f_state').change(function(){
