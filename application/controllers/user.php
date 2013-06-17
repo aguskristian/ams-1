@@ -42,7 +42,7 @@ class User extends CI_Controller {
 # index ------------------------------------	 
 	public function index()
 	{
-		redirect('dashboard');
+		redirect('user/login');
 	}
 # index ------------------------------------	
 	

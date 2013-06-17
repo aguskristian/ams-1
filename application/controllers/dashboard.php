@@ -12,17 +12,17 @@ class Dashboard extends CI_Controller {
 	{
         parent::__construct();
 		
-		/*if ( ! $this->session->userdata('logged_in'))
+		if ( ! $this->session->userdata('logged_in'))
     	{ 
         	# function allowed for access without login
-			$allowed = array('index', 'request_verification', 'verification_pin', 'verification_link');
+			$allowed = array('');
         
 			# other function need login
 			if (! in_array($this->router->method, $allowed)) 
 			{
-    			redirect('login');
+    			redirect('user');
 			}
-   		 }*/
+   		 }
 		
 		# load model, library and helper
 		$this->load->model('user_model','', TRUE);
