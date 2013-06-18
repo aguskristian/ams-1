@@ -52,25 +52,30 @@ class User_model extends CI_Model
 
 
 # get all stn available  ----------------------------------------------		
-	function get_cabang()
+	function get_position($up_parent_id)
 	{
-		 
-	     $this->db->where('us_code !=', 'non');
-		 $this->db->order_by('us_id', 'asc');
-		 $this->db->order_by('us_name', 'asc');
-
-	     $query_stn = $this->db->get('user_station');
-
-		 if ($query_stn->num_rows() > 0 )
-		 {
-			 return $query_stn->result_array();
-		 }
-		 else
-		 {
-			 return array();
-		 }
+		   
+		   $this->db->where('up_parent_id',$up_parent_id);
+		   $position = $this->db->get('user_position');
+		   
+		   return $position->result();
+		   
 	}
 # get all stn available  ----------------------------------------------	
+
+	public function get_child_position($up_parent_id)
+	{
+	   $data = array();
+	   $this->db->from('user_position');
+	   $this->db->where('up_parent_id',$up_parent_id);
+	   $result = $this->db->get();
+	   
+	   foreach($result->result() as $row)
+	   {
+		  $data[$row->up_id] = $row->up_position_name;
+	   }
+	   return $data;
+	}
 
 # get all unit available  ----------------------------------------------		
 	function get_unit($cabang)

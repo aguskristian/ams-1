@@ -25,21 +25,33 @@
                     <label>Email</label>
                     <input type="text" name="email" width="50%">@gapura.co.id
                     
-                    <label>Cabang</label>
-                    <select name="cabang" id="cabang_id">
+                    <label>Station</label>
+                    
+                    
+                    
+                    
+                    <select name="station" id="station">
                         <option value="">-- select cabang --</option>
                         <?php
-                        foreach ( $query_cabang_combo as $row_cabang_combo )
-                        {
-                            echo "<option value='$row_cabang_combo[us_id]'>$row_cabang_combo[us_name]</option>";
-                        }
-                        ?>
+						   foreach($position as $row)
+						   {
+							  echo "<option value='$row->up_position_id'>$row->up_position_name</option>";
+						   }
+						?>
                     </select>
-                    <!--<select name="cabang">
-                        <option value="dps">DPS</option>
-                   	</select>-->
                     
                     <label>Unit</label>
+                    <div id="tampil_daerah">
+                    <select class="parent_position">
+					<?php
+                    foreach($child_position as $row_child)
+                    {
+                        echo "<option value='$row_child->up_position_id'>$row_child->up_position_name</option>";
+                    
+                    }?>
+                    </select>
+                    </div>
+                    
                     <select name="unit" id="unit_id">
                         <option value="">-- select cabang first --</option>
                     </select>

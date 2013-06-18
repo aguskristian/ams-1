@@ -355,14 +355,38 @@ class User extends CI_Controller {
 	public function registration()
 	{
 		# get stn available
-		$data['query_cabang_combo'] = $this->user_model->get_cabang();
+		$up_parent_id = 0;
+		$data['position'] = $this->user_model->get_position($up_parent_id);
 		
 		# send mesg to view
 		$data['message']='silahkan melakukan registrasi, bila anda tidak memiliki email perusahaan, silahkan mendaftar melalui supervisor on duty';
+		print_r($data);
 		$this->load->view('template/header');
 		$this->load->view('user/registration', $data);
 		$this->load->view('template/footer');
-	print_r($data);
+	
+	}
+	
+	public function get_sub()
+	{
+		$up_parent_id = $this->input->post('up_parent_id');
+		$data['child_position'] = $this->user_model->get_position($up_parent_id);
+		
+		$child_position = $data['child_position']->num_rows();
+		
+		if($position > 0)
+		{
+			echo "<select class='parent_position'>";
+				foreach($data['child_position']->result() as $row_child)
+				{
+					echo "<option value=" . $row_child->up_position_id . "><" . $row_child->up_position_name . "</option>";
+				}
+			echo "</select>";
+		}
+		else
+		{
+			echo '<div class="hasil">Datanya masih kosong mas brow....!!!!</div>';
+		}	
 	}
 	
 	function select_unit()
