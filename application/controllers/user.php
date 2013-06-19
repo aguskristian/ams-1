@@ -352,19 +352,43 @@ class User extends CI_Controller {
 
 
 # registration -----------------------------
+	function submit()
+	{
+    	echo "station = ".$this->input->post("station");
+        echo "";
+        echo "unit = ".$this->input->post("unit");
+        echo "";
+        echo "sub unit = ".$this->input->post("sub_unit");
+    }
+
 	public function registration()
 	{
 		# get stn available
-		$up_parent_id = 0;
-		$data['position'] = $this->user_model->get_position($up_parent_id);
+		$data['option_station'] = $this->user_model->get_station();
 		
 		# send mesg to view
 		$data['message']='silahkan melakukan registrasi, bila anda tidak memiliki email perusahaan, silahkan mendaftar melalui supervisor on duty';
-		print_r($data);
-		$this->load->view('template/header');
+		# call view
+		$this->load->view('user/header');
 		$this->load->view('user/registration', $data);
 		$this->load->view('template/footer');
 	
+	}
+	
+	public function get_unit()
+	{
+		if('IS_AJAX')
+		{
+		# get stn available
+		$data['option_unit'] = $this->user_model->get_station();
+		
+		# send mesg to view
+		$data['message']='silahkan melakukan registrasi, bila anda tidak memiliki email perusahaan, silahkan mendaftar melalui supervisor on duty';
+		# call view
+		$this->load->view('user/header');
+		$this->load->view('user/registration', $data);
+		$this->load->view('template/footer');
+		}
 	}
 	
 	public function get_sub()

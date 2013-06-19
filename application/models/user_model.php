@@ -52,16 +52,40 @@ class User_model extends CI_Model
 
 
 # get all stn available  ----------------------------------------------		
-	function get_position($up_parent_id)
+	function get_station()
 	{
-		   
-		   $this->db->where('up_parent_id',$up_parent_id);
-		   $position = $this->db->get('user_position');
-		   
-		   return $position->result();
-		   
+		$data = array();
+		$this->db->from('user_station');
+		$station = $this->db->get();
+		
+		foreach($station->result() as $row)
+		   {
+			  $data[0] = '-- select station --';
+			  $data[$row->us_id] = $row->us_name;
+		   }
+	   return $data;	
+ 
 	}
 # get all stn available  ----------------------------------------------	
+
+# get unit  available  ----------------------------------------------		
+	function get_unit()
+	{
+		$data = array();
+		$this->db->from('user_unit');
+		$this->db->where('uu_us_id',$station);
+		$unit = $this->db->get();
+		
+		foreach($unit->result() as $row)
+		   {
+			  $data[0] = '-- select station first --';
+			  $data[$row->us_id] = $row->us_name;
+		   }
+	   return $data;	
+ 
+	}
+# get unit  available  ----------------------------------------------
+
 
 	public function get_child_position($up_parent_id)
 	{
@@ -78,7 +102,7 @@ class User_model extends CI_Model
 	}
 
 # get all unit available  ----------------------------------------------		
-	function get_unit($cabang)
+/*	function get_unit($cabang)
 	{
 	     $this->db->where('uu_code !=', 'non');
 		 $this->db->where('uu_us_id', $cabang);
@@ -94,7 +118,7 @@ class User_model extends CI_Model
 		 {
 			 return array();
 		}
-	}
+	}*/
 # get all unit available  ----------------------------------------------	
 
 # get all unit available  ----------------------------------------------		

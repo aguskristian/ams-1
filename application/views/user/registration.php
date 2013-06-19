@@ -23,38 +23,14 @@
                     <font color="#FF0000" size="-1"><?php echo form_error('hp'); ?></font>
                     
                     <label>Email</label>
-                    <input type="text" name="email" width="50%">@gapura.co.id
+                    <input type="text" name="email">@gapura.co.id
                     
                     <label>Station</label>
-                    
-                    
-                    
-                    
-                    <select name="station" id="station">
-                        <option value="">-- select cabang --</option>
-                        <?php
-						   foreach($position as $row)
-						   {
-							  echo "<option value='$row->up_position_id'>$row->up_position_name</option>";
-						   }
-						?>
-                    </select>
+					<?php echo form_dropdown("station_id", $option_station, "", "id='station_id'"); ?>
+                   
                     
                     <label>Unit</label>
-                    <div id="tampil_daerah">
-                    <select class="parent_position">
-					<?php
-                    foreach($child_position as $row_child)
-                    {
-                        echo "<option value='$row_child->up_position_id'>$row_child->up_position_name</option>";
-                    
-                    }?>
-                    </select>
-                    </div>
-                    
-                    <select name="unit" id="unit_id">
-                        <option value="">-- select cabang first --</option>
-                    </select>
+                    <?php echo form_dropdown("unit_id", array('select station'=>'-- select station first --'), "", "disabled","id='unit_id'"); ?>
                     
                     <label>Sub Unit</label>
                     <select name="sub_unit" id="sub_unit_id">

@@ -15,42 +15,73 @@
 	<script src="<?php echo base_url(); ?>wp-content/themes/gapura-angkasa/ams/lib/bootstrap/js/bootstrap.js" type="text/javascript"></script>
 	<script src="<?php echo base_url(); ?>wp-content/themes/gapura-angkasa/ams/lib/js/jquery-1.9.1.js" type="text/javascript"></script>
     <script src="<?php echo base_url(); ?>wp-content/themes/gapura-angkasa/ams/lib/js/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
-    
+<script type="text/javascript">    
+    /*
+    $('#f_state').change(function(){
+    var state_id = $('#f_state').val();
+    if (state_id != ""){
+        var post_url = "/index.php/control_form/get_cities/" + state_id;
+        $.ajax({
+            type: "POST",
+             url: post_url,
+             success: function(cities) //we're calling the response json array 'cities'
+              {
+                $('#f_city').empty();
+                $('#f_city, #f_city_label').show();
+                   $.each(cities,function(id,city) 
+                   {
+                    var opt = $('<option />'); // here we're creating a new select option for each group
+                      opt.val(id);
+                      opt.text(city);
+                      $('#f_city').append(opt); 
+                });
+               } //end success
+         }); //end AJAX
+    } else {
+        $('#f_city').empty();
+        $('#f_city, #f_city_label').hide();
+    }//end if
+}); //end change 
+
+*/
+</script>    
 <script type="text/javascript">
         $("#station_id").change(function(){
-    	var selectValues = $("#station_id").val();
-        if (selectValues == 0){
+    	/*var selectValues = $("#station_id").val();
+		alert(selectValues);*/
+        /*if (selectValues == 0){
         	var msg = "unit :<br><select name=\"unit\" disabled><option value=\"select_sub_unit\">-- select station --</option></select>";
-            $('#unit_id').html(msg);
-            }else{
-            var station = {station:$("#station_id").val()};
-            $('#unit_id').attr("disabled",true);
+            $('#unit').html(msg);
+            }else{*/
+            /*var station = $('#station_id').val();*/
+			alert('');
+           /* $('#unit_id').attr("disabled",true);
             	$.ajax({
                 type: "POST",
-                url : "<?php echo site_url('user/get_unit')?>",
+                url : "<?php //echo site_url('user/get_unit')?>",
                 data: station_id,
                 success: function(msg){$('#unit_id').html(msg);
 				alert(msg);
 				}
-               	});
-            }
+               	});*/
+           /* }*/
         });
-         	$('body').delegate("#unit","change", function() {
-            var selectValues = $("#unit").val();
+         	/*$('body').delegate("#unit_id","change", function() {
+            var selectValues = $("#unit_id").val();
             if (selectValues == 0){
             var msg = "sub unit :<br><select name=\"unit\" disabled><option value=\"select_unit\">-- select unit --</option></select>";
             $('#city').html(msg);
             }else{
-            var unit_id = {unit:$("#unit").val()};
+            var unit_id = {unit_id:$("#unit_id").val()};
             $('#city_id').attr("disabled",true);
             $.ajax({
             	type: "POST",
-                url : "<?php echo site_url('user/get_sub_unit')?>",
-                data: unit,
+                url : "<?php //echo site_url('user/get_sub_unit')?>",
+                data: unit_id,
                 success: function(msg){$('#city').html(msg);}
                 });
-            }
-        });
+            }*/
+      /*  });*/
 </script>
 	
 	
