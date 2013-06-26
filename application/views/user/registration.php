@@ -23,29 +23,29 @@
                     <font color="#FF0000" size="-1"><?php echo form_error('hp'); ?></font>
                     
                     <label>Email</label>
-                    <input type="text" name="email">@gapura.co.id
+                    <input type="text" name="email" width="50%" >@gapura.co.id
                     
-                    <label>Station</label>
-					<?php echo form_dropdown("station_id", $option_station, "", "id='station_id'"); ?>
-                   
+                    <label>Station</label>                    
+                    <select name="station" id="station">
+					
+						<option value="none">select station</option>
+						<?php foreach ( $station as $item ) : ?>
+										
+							<option value="<?php echo $item->us_id ?>"><?php echo ucfirst( $item->us_name ) ?></option>
+											
+						<?php endforeach ?>
+						
+                    </select>
                     
                     <label>Unit</label>
-                    <?php echo form_dropdown("unit_id", array('select station'=>'-- select station first --'), "", "disabled","id='unit_id'"); ?>
+                    <select  name="unit" id="unit">
+						<option value="none">select unit</option>
+                    </select>
                     
                     <label>Sub Unit</label>
-                    <select name="sub_unit" id="sub_unit_id">
-                        <option value="">-- select unit first --</option>
+                    <select name="sub_unit" id="subunit">
+                        <option value="none">select sub unit</option>
                     </select>
-                   <!-- <select name="unit">
-                       	<option value="gm">General Manager</option>
-                        <option value="mc">Customer Service</option>
-                        <option value="mi">Internal Service</option>
-                        <option value="mf">Finance</option>
-                        <option value="mo" selected="selected">Operation</option>
-                        <option value="mt">Technic</option>
-                        <option value="mw">Cargo</option>
-                        <option value="mq">SSQ</option>
-                   	</select>-->
                                     
                     <label>Jabatan</label>
                     <select name="jabatan" id="jabatan">
@@ -70,3 +70,84 @@
         <p><a href="#">Privacy Policy</a></p>
     </div>
 </div>
+
+<script type="text/javascript">
+
+	$(document).ready(function(){
+	
+		/* pengaturan id select dropdown */
+		$_station	= $('select#station');
+		$_unit 		= $('select#unit');
+		$_subunit	= $('select#subunit');
+		
+		/* select dengan id station on change */
+		$_station.change(function(){
+		
+			$this = $(this);
+			
+			/* 	ambil konten ke '/ajax_station/select_unit/' + id station
+				Contoh: '/ajax_station/select_unit/04'
+			*/
+			$.get( '<?php echo base_url() ?>ajax_station/select_unit/' + $this.val(), function(data){
+				
+				/* replace konten select unit dengan data dari server, jika data tidak kosong */				
+				$_unit.html( data ? data : '<option value="none">(empty)</option>' );
+				
+				/** menyesuaikan data subunit, untuk menghindari kesalahan data **/
+				
+				/* 	ambil konten ke '/ajax_station/select_subunit/' + id unit
+					Contoh: '/ajax_station/select_subunit/04'
+				*/
+				$.get( '<?php echo base_url() ?>ajax_station/select_subunit/' + $_unit.val(), function(data){
+			
+					/* replace select subunit dengan data dari server, jika tidak kosong */
+					$_subunit.html( data ? data : '<option value="none">(empty)</option>' );
+				
+				});
+			
+			});
+			
+		});
+		
+		/* select unit on change */
+		$_unit.change(function(){
+		
+			$this = $(this);
+
+			/* 	ambil konten ke '/ajax_station/select_subunit/' + id unit
+				Contoh: '/ajax_station/select_subunit/04'
+			*/
+			$.get( '<?php echo base_url() ?>ajax_station/select_subunit/' + $this.val(), function(data){
+			
+				/* replace select subunit dengan data dari server, jika tidak kosong */
+				$_subunit.html( data ? data : '<option value="none">(empty)</option>' );
+				
+			});
+			
+		});
+		
+		/* akan digunakan
+		
+		// select unit on change
+		$_subunit.change(function(){
+		
+			$this = $(this);
+
+			// 	ambil konten ke '/ajax_station/select_subunit/' + id unit
+			//	Contoh: '/ajax_station/select_subunit/04'
+			
+			$.get( '<?php //echo base_url() ?>ajax_station/select_jabatan/' + $this.val(), function(data){
+			
+				// replace select subunit dengan data dari server, jika tidak kosong
+				$_jabatan.html( data ? data : '<option value="none">(empty)</option>' );
+				
+			});
+			
+		});
+		*/
+		
+		return false;
+	
+	});
+	
+</script>

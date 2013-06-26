@@ -52,92 +52,25 @@ class User_model extends CI_Model
 
 
 # get all stn available  ----------------------------------------------		
-	function get_station()
+	function get_station() 
 	{
-		$data = array();
-		$this->db->from('user_station');
-		$station = $this->db->get();
-		
-		foreach($station->result() as $row)
-		   {
-			  $data[0] = '-- select station --';
-			  $data[$row->us_id] = $row->us_name;
-		   }
-	   return $data;	
- 
+		 return $this->db->get( 'user_station' )->result();
 	}
 # get all stn available  ----------------------------------------------	
 
-# get unit  available  ----------------------------------------------		
-	function get_unit()
-	{
-		$data = array();
-		$this->db->from('user_unit');
-		$this->db->where('uu_us_id',$station);
-		$unit = $this->db->get();
-		
-		foreach($unit->result() as $row)
-		   {
-			  $data[0] = '-- select station first --';
-			  $data[$row->us_id] = $row->us_name;
-		   }
-	   return $data;	
- 
-	}
-# get unit  available  ----------------------------------------------
-
-
-	public function get_child_position($up_parent_id)
-	{
-	   $data = array();
-	   $this->db->from('user_position');
-	   $this->db->where('up_parent_id',$up_parent_id);
-	   $result = $this->db->get();
-	   
-	   foreach($result->result() as $row)
-	   {
-		  $data[$row->up_id] = $row->up_position_name;
-	   }
-	   return $data;
-	}
-
 # get all unit available  ----------------------------------------------		
-/*	function get_unit($cabang)
+	function get_unit( $user_station ) 
 	{
-	     $this->db->where('uu_code !=', 'non');
-		 $this->db->where('uu_us_id', $cabang);
-		 $this->db->order_by('uu_name', 'asc');
-		 
-		 $query_unit_combo = $this->db->get('user_unit');
-
-		 if ($query_unit_combo->num_rows() > 0 )
-		 {
-			 return $query_unit_combo->result_array();
-		 }
-		 else
-		 {
-			 return array();
-		}
-	}*/
+	    $result = $this->db->where( 'uu_us_id', $user_station )->get( 'user_unit' )->result();
+		return $result ? $result : false;
+	}
 # get all unit available  ----------------------------------------------	
 
 # get all unit available  ----------------------------------------------		
-	function get_sub_unit($unit)
+	function get_subunit( $user_unit ) 
 	{
-	     
-		 $this->db->where('us_uu_id', $unit);
-		 $this->db->order_by('us_name', 'asc');
-		 
-		 $query_sub_unit_combo = $this->db->get('user_sub_unit');
-
-		 if ($query_sub_unit_combo->num_rows() > 0 )
-		 {
-			 return $query_sub_unit_combo->result_array();
-		 }
-		 else
-		 {
-			 return array();
-		}
+	     $result = $this->db->where( 'usu_uu_id', $user_unit )->get( 'user_sub_unit' )->result();
+		return $result ? $result : false;
 	}
 # get all unit available  ----------------------------------------------	
 

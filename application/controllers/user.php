@@ -25,7 +25,7 @@ class User extends CI_Controller {
 		$this->load->model('user_model','', TRUE);
 		
 		# user restriction
-		if ( ! $this->session->userdata('logged_in'))
+		/*if ( ! $this->session->userdata('logged_in'))
     	{ 
         	# function allowed for access without login
 			$allowed = array('index', 'login', 'do_login', 'pin_verification', 'do_pin_verification', 'registration', 'do_registration', 'select_unit');
@@ -35,7 +35,7 @@ class User extends CI_Controller {
 			{
     			redirect('user/login');
 			}
-   		 }
+   		 }*/
     }
 # constuction ------------------------------	
 
@@ -82,8 +82,11 @@ class User extends CI_Controller {
 		else
 		{
 			
-			# check email on database 
+			# check email on local database 
 			$result = $this->user_model->check_reg_email($email);
+			
+			# check email on ams database 
+			#$result = $this->user_model->check_reg_email($email);
 			
 			if($result)
 			{
@@ -104,9 +107,10 @@ class User extends CI_Controller {
 						 $approval = $row->ui_approval;
 					}
 			 		
-					# if user exist but no approve yet, call admin
+					# if user exist then check user approval by admin
 					if($approval == 'n')
 					{
+						# if user exist but no approve yet, call admin
 						$data['message'] = 'Profile anda belum di approve, hubungi Team Sigap';
 						$this->load->view('template/header');
 						$this->load->view('user/login', $data);
@@ -352,22 +356,14 @@ class User extends CI_Controller {
 
 
 # registration -----------------------------
-	function submit()
-	{
-    	echo "station = ".$this->input->post("station");
-        echo "";
-        echo "unit = ".$this->input->post("unit");
-        echo "";
-        echo "sub unit = ".$this->input->post("sub_unit");
-    }
-
 	public function registration()
 	{
 		# get stn available
-		$data['option_station'] = $this->user_model->get_station();
+		$data['station'] = $this->user_model->get_station();
 		
 		# send mesg to view
 		$data['message']='silahkan melakukan registrasi, bila anda tidak memiliki email perusahaan, silahkan mendaftar melalui supervisor on duty';
+		
 		# call view
 		$this->load->view('user/header');
 		$this->load->view('user/registration', $data);
@@ -375,80 +371,6 @@ class User extends CI_Controller {
 	
 	}
 	
-	public function get_unit()
-	{
-		if('IS_AJAX')
-		{
-		# get stn available
-		$data['option_unit'] = $this->user_model->get_station();
-		
-		# send mesg to view
-		$data['message']='silahkan melakukan registrasi, bila anda tidak memiliki email perusahaan, silahkan mendaftar melalui supervisor on duty';
-		# call view
-		$this->load->view('user/header');
-		$this->load->view('user/registration', $data);
-		$this->load->view('template/footer');
-		}
-	}
-	
-	public function get_sub()
-	{
-		$up_parent_id = $this->input->post('up_parent_id');
-		$data['child_position'] = $this->user_model->get_position($up_parent_id);
-		
-		$child_position = $data['child_position']->num_rows();
-		
-		if($position > 0)
-		{
-			echo "<select class='parent_position'>";
-				foreach($data['child_position']->result() as $row_child)
-				{
-					echo "<option value=" . $row_child->up_position_id . "><" . $row_child->up_position_name . "</option>";
-				}
-			echo "</select>";
-		}
-		else
-		{
-			echo '<div class="hasil">Datanya masih kosong mas brow....!!!!</div>';
-		}	
-	}
-	
-	function select_unit()
-	{
-		# get cabang from previous combo
-		$cabang = $this->input->post('cabang_id');
-		# call model
-		$data['query_unit_combo'] = $this->user_model->get_unit($cabang);
-		
-		$content = "<option value='non'>non unit</option>\n";
-		
-		# fetch data from model result then send to content
-		foreach($data['query_unit_combo'] as $row_unit_combo) 
-	    {
-			$content .= "<option value='$row_unit_combo[uu_code]'>$row_unit_combo[uu_name]</option>\n";
-		}
-		echo $content;
-    }
-	
-	
-	function select_sub_unit()
-	{
-		# get cabang from previous combo
-		#$cabang = $this->input->post('cabang_id');
-		$unit = $this->input->post('unit_id');
-		#$unit = 3;
-		# call model
-		$data['query_sub_unit_combo'] = $this->user_model->get_sub_unit($unit);
-		
-		$content = "<option value='non'>non unit</option>\n";
-		
-				# fetch data from model result then send to content
-		foreach($data['query_sub_unit_combo'] as $row_sub_unit_combo) 
-	    {
-			$content .= "<option value='$row_sub_unit_combo[us_code]'>$row_sub_unit_combo[us_name]</option>\n";
-		}
-		echo $content;
-    }
 	
 	public function do_registration()
 	{
@@ -473,11 +395,13 @@ class User extends CI_Controller {
 		$this->form_validation->set_rules('hp', 'hp', 'trim|required|min_length[3]|numeric|xss_clean');
 		$this->form_validation->set_rules('nipp', 'nipp', 'trim|required|min_length[3]|numeric|xss_clean');
 		
-		#if ($this->input->post('submit')) 
-		#	{
 				if ($this->form_validation->run() == FALSE)
 				{
 					# if fail force to do registration again
+					
+					# get stn available
+					$data['station'] = $this->user_model->get_station();
+					
 					# send mesg to view
 					$data['message']='silahkan melakukan registrasi, bila anda tidak memiliki email perusahaan, silahkan mendaftar melalui supervisor on duty';
 					
@@ -493,8 +417,7 @@ class User extends CI_Controller {
 					$user_email = $email;
 				    $full_email = $email . '@gapura.co.id';
 										
-					# encrypt data before save and send to view as ads_code
-					#$email = $this->encrypt->encode($user_email, 'liame');
+					# send view
 					$data['email'] = $full_email;
 					
 					# call models to delete previous verification duplicate data
@@ -566,12 +489,9 @@ class User extends CI_Controller {
 					$this->load->view('user/verification', $data);
 					$this->load->view('template/footer');
 				}
-		#	}
 			
 	}
 # registration -----------------------------
-
-
 	
 }
 

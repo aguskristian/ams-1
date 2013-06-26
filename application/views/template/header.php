@@ -15,7 +15,7 @@
 	<script src="<?php echo base_url(); ?>wp-content/themes/gapura-angkasa/ams/lib/bootstrap/js/bootstrap.js" type="text/javascript"></script>
 	<script src="<?php echo base_url(); ?>wp-content/themes/gapura-angkasa/ams/lib/js/jquery-1.9.1.js" type="text/javascript"></script>
     <script src="<?php echo base_url(); ?>wp-content/themes/gapura-angkasa/ams/lib/js/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
-    
+
 <script type="text/javascript">
         $("#station_id").change(function(){
     	var selectValues = $("#station_id").val();
@@ -52,6 +52,7 @@
             }
         });
 </script>
+
 	
 	
   

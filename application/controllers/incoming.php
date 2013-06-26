@@ -33,7 +33,7 @@ class Incoming extends CI_Controller {
 	public function index()
 	{
 		
-		redirect('add');
+		redirect('incoming/add');
 		
 	}
 	

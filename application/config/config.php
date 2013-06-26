@@ -15,7 +15,7 @@
 |
 */
 
-$config['base_url']	= 'http://localhost/github/ams/';
+$config['base_url']	= 'http://localhost/gapura/ams/';
 
 
 /*
