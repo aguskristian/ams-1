@@ -363,15 +363,28 @@ class User extends CI_Controller {
 		
 		# send mesg to view
 		$data['message']='silahkan melakukan registrasi, bila anda tidak memiliki email perusahaan, silahkan mendaftar melalui supervisor on duty';
+<<<<<<< HEAD
 		
+=======
+>>>>>>> adj local
 		# call view
 		$this->load->view('user/header');
 		$this->load->view('user/registration', $data);
 		$this->load->view('template/footer');
+<<<<<<< HEAD
 	
 	}
 	
 	
+=======
+	
+	}
+	
+	
+	
+	
+	
+>>>>>>> adj local
 	public function do_registration()
 	{
 		# scenario :
@@ -386,11 +399,12 @@ class User extends CI_Controller {
 		$nipp = $this->input->post('nipp');
 		$hp = $this->input->post('hp');
 		$email = $this->input->post('email');
-		$cabang = $this->input->post('cabang');
+		$station = $this->input->post('station');
 		$unit = $this->input->post('unit');
+		$sub_unit = $this->input->post('sub_unit');
 		$jabatan = $this->input->post('jabatan');
-		
-		# do validation rules
+		echo $station . $unit . $sub_unit . $jabatan . $nipp;
+		/*# do validation rules
 		$this->form_validation->set_rules('email', 'email', 'trim|required|min_length[3]|alpha_dash|xss_clean');
 		$this->form_validation->set_rules('hp', 'hp', 'trim|required|min_length[3]|numeric|xss_clean');
 		$this->form_validation->set_rules('nipp', 'nipp', 'trim|required|min_length[3]|numeric|xss_clean');
@@ -489,6 +503,10 @@ class User extends CI_Controller {
 					$this->load->view('user/verification', $data);
 					$this->load->view('template/footer');
 				}
+<<<<<<< HEAD
+=======
+		#	}*/
+>>>>>>> adj local
 			
 	}
 # registration -----------------------------

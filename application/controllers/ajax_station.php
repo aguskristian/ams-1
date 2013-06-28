@@ -13,7 +13,11 @@ class Ajax_station extends CI_Controller {
 		$units = $this->user_model->get_unit( $station );
 		
 		if ( $units ) foreach ( $units as $unit ) {
+<<<<<<< HEAD
 			echo '<option value="'.$unit->uu_id.'">'.ucfirst( $unit->uu_name ).'</option>';
+=======
+			echo '<option value="'.$unit->unit_level.'">'.ucfirst( $unit->unit_name ).'</option>';
+>>>>>>> adj local
 		}
 	}
 	
@@ -22,6 +26,7 @@ class Ajax_station extends CI_Controller {
 		$subunits = $this->user_model->get_subunit( $unit );
 		
 		if ( $subunits ) foreach ( $subunits as $subunit ) {
+<<<<<<< HEAD
 			echo '<option value="'.$subunit->usu_id.'">'.ucfirst( $subunit->usu_name ).'</option>';
 		}
 	}
@@ -41,3 +46,9 @@ class Ajax_station extends CI_Controller {
 
 /* End of file ajax_station.php */
 /* Location: ./application/controllers/ajax_station.php */
+=======
+			echo '<option value="'.$subunit->sub_unit_level.'">'.ucfirst( $subunit->sub_unit_name ).'</option>';
+		}
+	}
+}
+>>>>>>> adj local

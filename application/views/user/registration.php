@@ -25,6 +25,7 @@
                     <label>Email</label>
                     <input type="text" name="email" width="50%" >@gapura.co.id
                     
+<<<<<<< HEAD
                     <label>Station</label>                    
                     <select name="station" id="station">
 					
@@ -32,28 +33,49 @@
 						<?php foreach ( $station as $item ) : ?>
 										
 							<option value="<?php echo $item->us_id ?>"><?php echo ucfirst( $item->us_name ) ?></option>
+=======
+                     <label>Station</label>                    
+                    <select name="station" id="station">
+					
+						<option value="none">(Pilih Station)</option>
+						<?php foreach ( $station as $item ) : ?>
+										
+							<option value="<?php echo $item->stn_level ?>"><?php echo ucfirst( $item->stn_name ) ?></option>
+>>>>>>> adj local
 											
 						<?php endforeach ?>
 						
                     </select>
+<<<<<<< HEAD
                     
                     <label>Unit</label>
                     <select  name="unit" id="unit">
 						<option value="none">select unit</option>
+=======
+                   
+                    
+                   <label>Unit</label>
+                    <select  name="unit" id="unit">
+						<option value="none">(Pilih Unit)</option>
+>>>>>>> adj local
                     </select>
                     
                     <label>Sub Unit</label>
                     <select name="sub_unit" id="subunit">
+<<<<<<< HEAD
                         <option value="none">select sub unit</option>
+=======
+                        <option value="none">(Pilih Sub Unit)</option>
+>>>>>>> adj local
                     </select>
                                     
                     <label>Jabatan</label>
                     <select name="jabatan" id="jabatan">
-                        <option value="staff">Staff</option>
-                        <option value="supv">Supervisor</option>
-                        <option value="assman">Assistant Manager</option>
-                        <option value="mgr">Manager</option>
-                        <option value="gm">General Manager</option>
+                        <option value="12">Staff</option>
+                        <option value="11">Supervisor</option>
+                        <option value="10">Assistant Manager</option>
+                        <option value="09">Manager</option>
+                        <option value="06">General Manager</option>
                     </select>
                     
                    <!-- <label>Password</label>
@@ -136,7 +158,11 @@
 			// 	ambil konten ke '/ajax_station/select_subunit/' + id unit
 			//	Contoh: '/ajax_station/select_subunit/04'
 			
+<<<<<<< HEAD
 			$.get( '<?php //echo base_url() ?>ajax_station/select_jabatan/' + $this.val(), function(data){
+=======
+			$.get( '<?php echo base_url() ?>ajax_station/select_jabatan/' + $this.val(), function(data){
+>>>>>>> adj local
 			
 				// replace select subunit dengan data dari server, jika tidak kosong
 				$_jabatan.html( data ? data : '<option value="none">(empty)</option>' );

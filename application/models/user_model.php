@@ -54,6 +54,7 @@ class User_model extends CI_Model
 # get all stn available  ----------------------------------------------		
 	function get_station() 
 	{
+<<<<<<< HEAD
 		 return $this->db->get( 'user_station' )->result();
 	}
 # get all stn available  ----------------------------------------------	
@@ -70,6 +71,23 @@ class User_model extends CI_Model
 	function get_subunit( $user_unit ) 
 	{
 	     $result = $this->db->where( 'usu_uu_id', $user_unit )->get( 'user_sub_unit' )->result();
+=======
+		return $this->db->get( 'station' )->result();
+	}
+# get all stn available  ----------------------------------------------	
+
+# get unit  available  ----------------------------------------------		
+	function get_unit($station)
+	{
+		$result = $this->db->where('stn_level', $station)->get('unit')->result();
+		return $result ? $result : false;	}
+# get unit  available  ----------------------------------------------
+
+# get all unit available  ----------------------------------------------		
+	function get_subunit( $unit ) 
+	{
+		$result = $this->db->where( 'unit_level', $unit )->get( 'sub_unit' )->result();
+>>>>>>> adj local
 		return $result ? $result : false;
 	}
 # get all unit available  ----------------------------------------------	
