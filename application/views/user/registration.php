@@ -25,48 +25,27 @@
                     <label>Email</label>
                     <input type="text" name="email" width="50%" >@gapura.co.id
                     
-<<<<<<< HEAD
                     <label>Station</label>                    
                     <select name="station" id="station">
-					
 						<option value="none">select station</option>
 						<?php foreach ( $station as $item ) : ?>
-										
-							<option value="<?php echo $item->us_id ?>"><?php echo ucfirst( $item->us_name ) ?></option>
-=======
-                     <label>Station</label>                    
-                    <select name="station" id="station">
-					
-						<option value="none">(Pilih Station)</option>
-						<?php foreach ( $station as $item ) : ?>
-										
 							<option value="<?php echo $item->stn_level ?>"><?php echo ucfirst( $item->stn_name ) ?></option>
->>>>>>> adj local
-											
 						<?php endforeach ?>
-						
                     </select>
-<<<<<<< HEAD
-                    
-                    <label>Unit</label>
-                    <select  name="unit" id="unit">
-						<option value="none">select unit</option>
-=======
-                   
                     
                    <label>Unit</label>
                     <select  name="unit" id="unit">
-						<option value="none">(Pilih Unit)</option>
->>>>>>> adj local
+						<option value="none">select unit</option>
                     </select>
                     
                     <label>Sub Unit</label>
                     <select name="sub_unit" id="subunit">
-<<<<<<< HEAD
                         <option value="none">select sub unit</option>
-=======
-                        <option value="none">(Pilih Sub Unit)</option>
->>>>>>> adj local
+                    </select>
+                    
+                    <label>Team</label>
+                    <select name="team" id="team">
+                        <option value="none">select team</option>
                     </select>
                                     
                     <label>Jabatan</label>
@@ -101,6 +80,7 @@
 		$_station	= $('select#station');
 		$_unit 		= $('select#unit');
 		$_subunit	= $('select#subunit');
+		$_team		= $('select#team');
 		
 		/* select dengan id station on change */
 		$_station.change(function(){
@@ -124,6 +104,14 @@
 			
 					/* replace select subunit dengan data dari server, jika tidak kosong */
 					$_subunit.html( data ? data : '<option value="none">(empty)</option>' );
+					
+					
+					$.get( '<?php echo base_url() ?>ajax_station/select_team/' + $this.val(), function(data){
+			
+					// replace select subunit dengan data dari server, jika tidak kosong
+					$_team.html( data ? data : '<option value="none">(empty)</option>' );
+				
+					});
 				
 				});
 			
@@ -144,11 +132,20 @@
 				/* replace select subunit dengan data dari server, jika tidak kosong */
 				$_subunit.html( data ? data : '<option value="none">(empty)</option>' );
 				
+				
+				$.get( '<?php echo base_url() ?>ajax_station/select_team/' + $this.val(), function(data){
+			
+				// replace select subunit dengan data dari server, jika tidak kosong
+				$_team.html( data ? data : '<option value="none">(empty)</option>' );
+				
+				});
+				
+				
 			});
 			
 		});
 		
-		/* akan digunakan
+		 
 		
 		// select unit on change
 		$_subunit.change(function(){
@@ -158,19 +155,15 @@
 			// 	ambil konten ke '/ajax_station/select_subunit/' + id unit
 			//	Contoh: '/ajax_station/select_subunit/04'
 			
-<<<<<<< HEAD
-			$.get( '<?php //echo base_url() ?>ajax_station/select_jabatan/' + $this.val(), function(data){
-=======
-			$.get( '<?php echo base_url() ?>ajax_station/select_jabatan/' + $this.val(), function(data){
->>>>>>> adj local
+			$.get( '<?php echo base_url() ?>ajax_station/select_team/' + $this.val(), function(data){
 			
 				// replace select subunit dengan data dari server, jika tidak kosong
-				$_jabatan.html( data ? data : '<option value="none">(empty)</option>' );
+				$_team.html( data ? data : '<option value="none">(empty)</option>' );
 				
 			});
 			
 		});
-		*/
+		
 		
 		return false;
 	

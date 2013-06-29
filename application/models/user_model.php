@@ -51,46 +51,32 @@ class User_model extends CI_Model
 # del previous unverify data on user identity table -------------------
 
 
-# get all stn available  ----------------------------------------------		
+# get all stn available
 	function get_station() 
 	{
-<<<<<<< HEAD
-		 return $this->db->get( 'user_station' )->result();
+		 return $this->db->get( 'station' )->result();
 	}
-# get all stn available  ----------------------------------------------	
 
-# get all unit available  ----------------------------------------------		
-	function get_unit( $user_station ) 
-	{
-	    $result = $this->db->where( 'uu_us_id', $user_station )->get( 'user_unit' )->result();
-		return $result ? $result : false;
-	}
-# get all unit available  ----------------------------------------------	
-
-# get all unit available  ----------------------------------------------		
-	function get_subunit( $user_unit ) 
-	{
-	     $result = $this->db->where( 'usu_uu_id', $user_unit )->get( 'user_sub_unit' )->result();
-=======
-		return $this->db->get( 'station' )->result();
-	}
-# get all stn available  ----------------------------------------------	
-
-# get unit  available  ----------------------------------------------		
+# get unit  available 		
 	function get_unit($station)
 	{
 		$result = $this->db->where('stn_level', $station)->get('unit')->result();
 		return $result ? $result : false;	}
-# get unit  available  ----------------------------------------------
 
-# get all unit available  ----------------------------------------------		
-	function get_subunit( $unit ) 
+# get all sub unit available 		
+	function get_subunit($unit) 
 	{
-		$result = $this->db->where( 'unit_level', $unit )->get( 'sub_unit' )->result();
->>>>>>> adj local
+		$result = $this->db->where( 'unit_id', $unit )->get( 'sub_unit' )->result();
 		return $result ? $result : false;
 	}
-# get all unit available  ----------------------------------------------	
+
+# get all sub unit available 		
+	function get_team($subunit) 
+	{
+		$result = $this->db->where( 'sub_unit_id', $subunit )->get( 'team' )->result();
+		return $result ? $result : false;
+	}
+
 
 
 # save data on user verification table ---------------------------------

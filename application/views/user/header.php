@@ -16,9 +16,6 @@
 	<script src="<?php echo base_url(); ?>wp-content/themes/gapura-angkasa/ams/lib/js/jquery-1.9.1.js" type="text/javascript"></script>
     <script src="<?php echo base_url(); ?>wp-content/themes/gapura-angkasa/ams/lib/js/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
 
-<<<<<<< HEAD
-=======
-	
 	
   
     <!-- Demo page code -->
@@ -40,7 +37,6 @@
             font-weight: bold;
         }
     </style>-->
->>>>>>> adj local
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
