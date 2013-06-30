@@ -24,6 +24,7 @@
         <ul id="legal-menu" class="nav nav-list collapse">
             <li ><a href="privacy-policy.html">Privacy Policy</a></li>
             <li ><a href="terms-and-conditions.html">Terms and Conditions</a></li>
+            <li ><?php echo anchor('user/manage_station', 'manage station'); ?></li>
         </ul>
 
 		<p>user : <?php echo $nama; ?></p>

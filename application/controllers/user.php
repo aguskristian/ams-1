@@ -496,6 +496,118 @@ class User extends CI_Controller {
 			
 	}
 # registration -----------------------------
+
+# level manager --------------------------
+	public function manage_station()
+	{
+		try
+		{
+			$crud = new grocery_CRUD();
+
+			$crud->set_theme('datatables');
+			$crud->set_table('user_station');
+			$crud->set_subject('Station');
+			#$crud->required_fields('city');
+			#$crud->columns('city','country','phone','addressLine1','postalCode');
+			$crud->display_as('us_code','Station Code');
+			$crud->display_as('us_name','Station Name');
+			$crud->order_by('us_id','asc');
+			
+			$output = $crud->render();
+			
+			#$this->_example_output($output);
+			$data['nama']= '';
+			$data['cabang']= '';
+			$data['unit']= '';
+			
+			# call view
+			$this->load->view('user/header', $output);
+			$this->load->view('template/sidebar', $data);
+			$this->load->view('template/breadcumb');
+			$this->load->view('user/level_manager', $output);
+			$this->load->view('template/footer');
+			
+		}
+		catch(Exception $e)
+		{
+			show_error($e->getMessage().' --- '.$e->getTraceAsString());
+		}
+		
+	}
+	
+	public function manage_unit()
+	{
+		try
+		{
+			$crud = new grocery_CRUD();
+
+			$crud->set_theme('datatables');
+			$crud->set_table('user_unit');
+			$crud->set_subject('Unit');
+			#$crud->required_fields('city');
+			#$crud->columns('city','country','phone','addressLine1','postalCode');
+			#$crud->display_as('us_code','Station Code');
+			#$crud->display_as('us_name','Station Name');
+			$crud->set_relation('uu_us_id','user_station','{us_code} [{us_id}] ');
+			
+			$output = $crud->render();
+			
+			#$this->_example_output($output);
+			$data['nama']= '';
+			$data['cabang']= '';
+			$data['unit']= '';
+			
+			# call view
+			$this->load->view('user/header', $output);
+			$this->load->view('template/sidebar', $data);
+			$this->load->view('template/breadcumb');
+			$this->load->view('user/level_manager', $output);
+			$this->load->view('template/footer');
+			
+		}
+		catch(Exception $e)
+		{
+			show_error($e->getMessage().' --- '.$e->getTraceAsString());
+		}
+		
+	}
+	
+	public function manage_sub_unit()
+	{
+		try
+		{
+			$crud = new grocery_CRUD();
+
+			$crud->set_theme('datatables');
+			$crud->set_table('user_sub_unit');
+			$crud->set_subject('Unit');
+			#$crud->required_fields('city');
+			#$crud->columns('city','country','phone','addressLine1','postalCode');
+			#$crud->display_as('us_code','Station Code');
+			#$crud->display_as('us_name','Station Name');
+			
+			$output = $crud->render();
+			
+			#$this->_example_output($output);
+			$data['nama']= '';
+			$data['cabang']= '';
+			$data['unit']= '';
+			
+			# call view
+			$this->load->view('user/header', $output);
+			$this->load->view('template/sidebar', $data);
+			$this->load->view('template/breadcumb');
+			$this->load->view('user/level_manager', $output);
+			$this->load->view('template/footer');
+			
+		}
+		catch(Exception $e)
+		{
+			show_error($e->getMessage().' --- '.$e->getTraceAsString());
+		}
+		
+	}
+# level manager --------------------------
 	
 }
 
