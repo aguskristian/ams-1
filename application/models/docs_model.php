@@ -8,7 +8,46 @@ class Docs_model extends CI_Model
         parent::__construct();
     }
 
-
+	# docs upload
+	function save_docs($docs_type,$docs_no,$docs_date,$docs_from,$docs_to,$docs_copy,$docs_subject,$docs_remarks)
+	{
+		$data = array(
+		'docs_type'	=>	 $docs_type,	 	 	 	 	 	 	
+		'docs_no'	=>	 $docs_no,
+		'docs_date' => $docs_date,	 	 	 	 	 	 	
+		'docs_to'	=>	 $docs_to,	 	 	 	 	 	 	
+		'docs_from'	=>	 $docs_from,	 	 	 	 	 	 	
+		'docs_copy'	=> $docs_copy,		 	 	 	 	 	 	
+		'docs_subject'	=>	 $docs_subject,	 	 	 	 	 	 	
+		'docs_remarks'	=>	 $docs_remarks,	 	 	 	 	 	 	
+		'docs_upload_by' => 'admin',
+		);
+		$this->db->insert('docs', $data);
+		return $this->db->insert_id();
+	}
+	
+	# docs upload
+	function save_file($docs_id,$docs_user_name, $docs_real_name, $docs_system_name, $docs_ext, $docs_size, $docs_type, $docs_owner,  $docs_upload_by, $file_path)
+	{
+		$data = array(
+		'docs_id'	=>	 $docs_id,	
+		'docs_user_name'	=>	 $docs_user_name,	 	 	 	 	 	 	
+		'docs_real_name'	=>	 $docs_real_name,
+		'docs_system_name' => $docs_system_name,	 	 	 	 	 	 	
+		'docs_ext'	=>	 $docs_ext,	 	 	 	 	 	 	
+		'docs_size'	=>	 $docs_size,	 	 	 	 	 	 	
+		'docs_type'	=> $docs_type,		 	 	 	 	 	 	
+		'docs_owner'	=>	 $docs_owner,	 	 	 	 	 	 	
+		'docs_file_path'	=>	 $file_path,	 	 	 	 	 	 	
+		'docs_upload_by' => 'admin',
+		);
+		$this->db->insert('docs_files', $data);
+		#return $this->db->insert_id();
+	}
+	
+	
+	
+	
 	# category by group
 	function total_category_file_by_group_ext($cabang, $unit, $nama, $email)
 		{
@@ -87,22 +126,7 @@ class Docs_model extends CI_Model
 		return $this->db->get_where('docs_category', array('dc_id' => $category));
 	}
 
-# docs upload
-	function upload_file($docs_user_name, $docs_real_name, $docs_system_name, $docs_ext, $docs_size, $docs_category, $docs_owner, $docs_upload_by, $file_path)
-	{
-		$data = array(
-		'docs_user_name'	=>	 $docs_user_name,	 	 	 	 	 	 	
-		'docs_real_name'	=>	 $docs_real_name,
-		'docs_file_path' => $file_path,	 	 	 	 	 	 	
-		'docs_system_name'	=>	 $docs_system_name,	 	 	 	 	 	 	
-		'docs_ext'	=>	 $docs_ext,	 	 	 	 	 	 	
-		'docs_size'	=> $docs_size,		 	 	 	 	 	 	
-		'docs_category_id'	=>	 $docs_category,	 	 	 	 	 	 	
-		'docs_owner'	=>	 $docs_owner,	 	 	 	 	 	 	
-		'docs_upload_by' => $docs_upload_by
-		);
-		$this->db->insert('docs', $data);
-	}
+
 
 # get doc by id
 	function get_doc_by_id($docs_id)

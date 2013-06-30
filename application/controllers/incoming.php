@@ -25,6 +25,27 @@ class Incoming extends CI_Controller {
         { 
             redirect('user/login');
         }*/
+		
+		# get data from login session
+		$session_data = $this->session->userdata('logged_in');
+		$nama = $session_data['ui_nama'];
+		$data['nama'] = $nama;
+		
+		$email = $session_data['ui_email'];
+		$data['email'] = $email;
+		
+		$cabang = $session_data['ui_cabang'];
+		$data['cabang'] = $cabang;
+		
+		$unit = $session_data['ui_unit'];
+		$data['unit'] = $unit;
+		
+		# set upload config
+		$config['upload_path'] = './files/';
+		$config['allowed_types'] = 'pdf|gif|jpg|png|jpeg|bmp|doc|docx|xls|xlsx|ppt|pptx|pps|ppsx';
+		$config['max_size']	= '99999';
+		$config['max_width']  = '99999';
+		$config['max_height']  = '99999';
     }
 	
 	
@@ -37,37 +58,9 @@ class Incoming extends CI_Controller {
 		
 	}
 	
-	public function add()
-	{
-		  # get data from session
-		  $session_data = $this->session->userdata('logged_in');
-		  
-		  # data
-		  $nama = $session_data['ui_nama'];
-		  $data['nama'] = $nama;
-		  
-		  $email = $session_data['ui_email'];
-		  $data['email'] = $email;
-		  
-		  $cabang = $session_data['ui_cabang'];
-		  $data['cabang'] = $cabang;
-		  
-		  $unit = $session_data['ui_unit'];
-		  $data['unit'] = $unit;
-		  
-		  $data['error'] ='';
-		  
-		  # get variable for docs category
-		  #$data['query_category_for_combo'] = $this->docs_model->get_all_category_for_combo($cabang, $unit);
-		
-		 # redirect to upload form
-		$this->load->view('template/header');
-		$this->load->view('template/sidebar', $data);
-		$this->load->view('template/breadcumb');
-		$this->load->view('ams/add', $data);
-		$this->load->view('template/footer');
-	}
 	
+	
+
 	public function category()
 	{
 		# get data from session
@@ -137,74 +130,6 @@ class Incoming extends CI_Controller {
 	}
 	
 	
-	function do_upload()
-	{
-		  # login succces then get data from session
-		  $session_data = $this->session->userdata('logged_in');
-		  
-		  $nama = $session_data['ui_nama'];
-		  $data['nama'] = $nama;
-		  
-		  $unit = $session_data['ui_unit'];
-		  $data['unit'] = $unit;
-		  
-		  $email = $session_data['ui_email'];
-		  $data['email'] = $email;
-		  
-		  $cabang = $session_data['ui_cabang'];
-		  $data['cabang'] = $cabang;
-		  
-		  $config['upload_path'] = './files/';
-		  $config['allowed_types'] = 'pdf|gif|jpg|png|jpeg|bmp|doc|docx|xls|xlsx|ppt|pptx|pps|ppsx';
-		  $config['max_size']	= '99999';
-		  $config['max_width']  = '99999';
-		  $config['max_height']  = '99999';
-		
-		  $this->load->library('upload', $config);
-				
-				
-		
-				if ( ! $this->upload->do_upload('file'))
-				{
-					# get variable for docs category
-		  			$data['query_category_for_combo'] = $this->docs_model->get_all_category_for_combo($cabang, $unit);
-					
-					# set error message
-					$data['error'] = $this->upload->display_errors();
-					
-					$this->load->view('template/header_view');
-					$this->load->view('template/navigation_view');
-					$this->load->view('template/sidebar_view');
-					$this->load->view('docs/docs_file_upload_view', $data);
-					$this->load->view('template/footer_view');
-				}
-				else
-				{
-					# DO UPLOAD
-					$upload_data = $this->upload->data();
-					
-					# GET REAL DATA FOR DB
-					$docs_user_name = $this->input->post('filename');
-					$docs_real_name	= $this->encrypt->encode($upload_data['file_name'], 'eman_elif');
-					$docs_system_name	= $this->encrypt->encode(date("YmdHis"), 'siHdmY');	
-					$system_file_name = date("YmdHis");		 	 	 	 	 	 	
-					$docs_ext	= $this->encrypt->encode($upload_data['file_ext'], 'txe_elif');	 	 	 	 	 	 	
-					$docs_size	= $upload_data['file_size'];	 	 	 	 	 	 	
-					$docs_category	= $this->input->post('category');	 	 	 	 	 	 	
-					$docs_owner	= $this->input->post('fileowner');
-					$docs_upload_by = $email;
-					$file_path = $upload_data['file_path'];
-					
-					# call model
-					$this->docs_model->upload_file($docs_user_name, $docs_real_name, $docs_system_name, $docs_ext, $docs_size, $docs_category, $docs_owner,  $docs_upload_by, $file_path);
-					
-					# rename file after upload and remove ext
-					rename($upload_data['full_path'], $upload_data['file_path'] . $system_file_name);
-					
-					# call view
-					redirect('dashboard');
-				}
-	}
 	
 	public function file_view()
 	{

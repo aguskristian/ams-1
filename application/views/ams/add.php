@@ -11,14 +11,14 @@
         <br /><br  />
         			 
         			<?php echo $error; ?>
-                  	<?php echo form_open_multipart('docs/do_upload', array('class' => 'form-horizontal', 'id' => 'edit-profile')); ?>
+                  	<?php echo form_open_multipart('docs/save', array('class' => 'form-horizontal', 'id' => 'edit-profile')); ?>
                     
 						<fieldset>
 							
                            <div class="control-group">
 								<label class="control-label" for="input01">Jenis</label>
 								<div class="controls">
-                                	<select name="type">
+                                	<select name="docs_type">
                                       <option value="memo">Memo</option>
                                       <option value="notadinas" selected="selected">Nota Dinas</option>
                                       <option value="surat">Surat</option>
@@ -30,52 +30,54 @@
 							</div>
                             
                             <div class="control-group">
-								<label class="control-label" for="input01">No</label>
+								<label class="control-label" for="input01">Nomer</label>
 								<div class="controls">
-									<input name="no" type="text" value="" />
+									<input name="docs_no" type="text" value="" />
 								</div>
 							</div>
                            
                            <div class="control-group">
 								<label class="control-label" for="input01">Tanggal</label>
 								<div class="controls">
-									<input name="date" type="text" id="datepicker" />
+									<input name="docs_date" type="text" id="datepicker" />
                            		</div>
 						   </div>
+                           
+                           <div class="control-group">
+								<label class="control-label" for="input01">Dari</label>
+								<div class="controls">
+									<input name="docs_from" type="text" value="" />
+								</div>
+							</div>
                                     
 							<div class="control-group">
 								<label class="control-label" for="input01">Kepada</label>
 								<div class="controls">
-									<input name="to" type="text" value="" />
+									<input name="docs_to" type="text" value="" />
 								</div>
 							</div>	
 							
                             
-                            <div class="control-group">
-								<label class="control-label" for="input01">Dari</label>
-								<div class="controls">
-									<input name="from" type="text" value="" />
-								</div>
-							</div>
+                            
                             
                             <div class="control-group">
 								<label class="control-label" for="input01">Tembusan</label>
 								<div class="controls">
-									<input name="copy" type="text" value="" />
+									<input name="docs_copy" type="text" value="" />
 								</div>
 							</div>
                             
                             <div class="control-group">
 								<label class="control-label" for="input01">Perihal</label>
 								<div class="controls">
-									<input name="subject" type="text" value="" />
+									<input name="docs_subject" type="text" value="" />
 								</div>
 							</div>
                             
                             <div class="control-group">
 								<label class="control-label" for="input01">Keterangan</label>
 								<div class="controls">
-									<textarea cols="40" rows="5" name="remarks"></textarea>
+									<textarea cols="40" rows="5" name="docs_remarks"></textarea>
 								</div>
 							</div>
                             

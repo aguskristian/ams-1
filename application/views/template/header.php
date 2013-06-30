@@ -15,43 +15,11 @@
 	<script src="<?php echo base_url(); ?>wp-content/themes/gapura-angkasa/ams/lib/bootstrap/js/bootstrap.js" type="text/javascript"></script>
 	<script src="<?php echo base_url(); ?>wp-content/themes/gapura-angkasa/ams/lib/js/jquery-1.9.1.js" type="text/javascript"></script>
     <script src="<?php echo base_url(); ?>wp-content/themes/gapura-angkasa/ams/lib/js/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-        $("#station_id").change(function(){
-    	var selectValues = $("#station_id").val();
-        if (selectValues == 0){
-        	var msg = "unit :<br><select name=\"unit\" disabled><option value=\"select_sub_unit\">-- select station --</option></select>";
-            $('#unit_id').html(msg);
-            }else{
-            var station = {station:$("#station_id").val()};
-            $('#unit_id').attr("disabled",true);
-            	$.ajax({
-                type: "POST",
-                url : "<?php echo site_url('user/get_unit')?>",
-                data: station_id,
-                success: function(msg){$('#unit_id').html(msg);
-				alert(msg);
-				}
-               	});
-            }
-        });
-         	$('body').delegate("#unit","change", function() {
-            var selectValues = $("#unit").val();
-            if (selectValues == 0){
-            var msg = "sub unit :<br><select name=\"unit\" disabled><option value=\"select_unit\">-- select unit --</option></select>";
-            $('#city').html(msg);
-            }else{
-            var unit_id = {unit:$("#unit").val()};
-            $('#city_id').attr("disabled",true);
-            $.ajax({
-            	type: "POST",
-                url : "<?php echo site_url('user/get_sub_unit')?>",
-                data: unit,
-                success: function(msg){$('#city').html(msg);}
-                });
-            }
-        });
-</script>
+	<script>
+  $(function() {
+    $( "#datepicker" ).datepicker();
+  });
+  </script>
 
 	
 	
