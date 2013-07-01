@@ -24,7 +24,7 @@
                 <div class="stat-widget">
                     <div class="stat-button">
                         <p class="title">3,299</p>
-                        <p class="detail">Subscribers</p>
+                        <p class="detail">Open</p>
                     </div>
                 </div>
 

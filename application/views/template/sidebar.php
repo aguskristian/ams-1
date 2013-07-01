@@ -7,7 +7,7 @@
 
         <a href="#accounts-menu" class="nav-header" data-toggle="collapse"><i class="icon-file"></i>Incoming<span class="label label-info">+3</span></a>
         <ul id="accounts-menu" class="nav nav-list collapse">
-        	<li ><?php echo anchor('incoming/add','New'); ?></li>
+        	<li ><?php echo anchor('docs/add','New'); ?></li>
             <li ><a href="sign-in.html">Open</a></li>
             <li ><a href="sign-up.html">Progress</a></li>
             <li ><a href="reset-password.html">Archive</a></li>

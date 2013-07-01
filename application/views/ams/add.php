@@ -77,7 +77,7 @@
                             <div class="control-group">
 								<label class="control-label" for="input01">Keterangan</label>
 								<div class="controls">
-									<textarea cols="40" rows="5" name="docs_remarks"></textarea>
+									<textarea cols="40" rows="5" name="docs_description"></textarea>
 								</div>
 							</div>
                             

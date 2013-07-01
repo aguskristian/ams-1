@@ -9,7 +9,7 @@ class Docs_model extends CI_Model
     }
 
 	# docs upload
-	function save_docs($docs_type,$docs_no,$docs_date,$docs_from,$docs_to,$docs_copy,$docs_subject,$docs_remarks)
+	function save_docs($docs_type,$docs_no,$docs_date,$docs_from,$docs_to,$docs_copy,$docs_subject,$docs_remarks, $docs_update_by)
 	{
 		$data = array(
 		'docs_type'	=>	 $docs_type,	 	 	 	 	 	 	
@@ -20,33 +20,73 @@ class Docs_model extends CI_Model
 		'docs_copy'	=> $docs_copy,		 	 	 	 	 	 	
 		'docs_subject'	=>	 $docs_subject,	 	 	 	 	 	 	
 		'docs_remarks'	=>	 $docs_remarks,	 	 	 	 	 	 	
-		'docs_upload_by' => 'admin',
+		'docs_update_by' => $docs_update_by,
 		);
 		$this->db->insert('docs', $data);
 		return $this->db->insert_id();
 	}
 	
 	# docs upload
-	function save_file($docs_id,$docs_user_name, $docs_real_name, $docs_system_name, $docs_ext, $docs_size, $docs_type, $docs_owner,  $docs_upload_by, $file_path)
+	function save_file($df_docs_id, $df_user_name, $df_real_name, $df_file_path, $df_system_name, $df_ext, $df_size, $df_type, $df_owner, $df_update_by)
 	{
 		$data = array(
-		'docs_id'	=>	 $docs_id,	
-		'docs_user_name'	=>	 $docs_user_name,	 	 	 	 	 	 	
-		'docs_real_name'	=>	 $docs_real_name,
-		'docs_system_name' => $docs_system_name,	 	 	 	 	 	 	
-		'docs_ext'	=>	 $docs_ext,	 	 	 	 	 	 	
-		'docs_size'	=>	 $docs_size,	 	 	 	 	 	 	
-		'docs_type'	=> $docs_type,		 	 	 	 	 	 	
-		'docs_owner'	=>	 $docs_owner,	 	 	 	 	 	 	
-		'docs_file_path'	=>	 $file_path,	 	 	 	 	 	 	
-		'docs_upload_by' => 'admin',
+		'df_docs_id'	=>	 $df_docs_id,	
+		'df_user_name'	=>	 $df_user_name,	 	 	 	 	 	 	
+		'df_real_name'	=>	 $df_real_name,
+		'df_file_path' => $df_file_path,	 	 	 	 	 	 	
+		'df_system_name'	=>	 $df_system_name,	 	 	 	 	 	 	
+		'df_ext'	=>	 $df_ext,	 	 	 	 	 	 	
+		'df_size'	=> $df_size,		 	 	 	 	 	 	
+		'df_type'	=>	 $df_type,	 	 	 	 	 	 	
+		'df_owner'	=>	 $df_owner,	 	 	 	 	 	 	
+		'df_update_by' => $df_update_by,
 		);
 		$this->db->insert('docs_files', $data);
 		#return $this->db->insert_id();
 	}
 	
+	# update docs position
+	function update_docs_position($dp_docs_id, $dp_position, $dp_status, $dp_update_by)
+	{
+		$data = array(
+		'dp_docs_id' => $dp_docs_id,
+		'dp_position' => $dp_position,
+		'dp_status' => $dp_status,
+		'dp_update_by' => $dp_update_by,
+		);
+		$this->db->insert('docs_position', $data);
+	}
 	
+	# update docs flow
+	function update_docs_flow($df_docs_id, $df_flow, $df_from, $df_to, $df_subject, $df_description, $df_update_by)
+	{
+		$data = array(
+		'df_docs_id' => $df_docs_id,
+		'df_flow' => $df_flow,
+		'df_from' => $df_from,
+		'df_to' => $df_to,
+		'df_subject' => $df_subject,
+		'df_description' => $df_description,
+		'df_update_by' => $df_update_by,
+		);
+		$this->db->insert('docs_flow', $data);
+	}
 	
+	function get_manager_nipp($cabang, $unit)
+	{
+		$this->db->where('ui_cabang', $cabang);
+		$this->db->where('ui_unit', $unit);
+		$this->db->where('ui_jabatan', 'manager');
+		$query = $this->db->get('user_identity'); 
+		return $query->result();
+	}
+	
+	function get_position_open()
+	{
+		$query = ("SELECT COUNT(DISTINCT `dp_docs_id`) FROM docs_position WHERE `dp_status`= 'close' and `dp_position` = '\' . $nipp . \''");
+	}
+	
+// =====================================================================================	
 	
 	# category by group
 	function total_category_file_by_group_ext($cabang, $unit, $nama, $email)

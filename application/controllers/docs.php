@@ -20,16 +20,28 @@ class Docs extends CI_Controller {
         parent::__construct();
 		$this->load->model('docs_model','', TRUE);
 		
-		/*# restrict all function access after log in
+		# restrict all function access after log in
 		if ( ! $this->session->userdata('logged_in'))
         { 
             redirect('login');
-        }*/
-		
+        }
+    }
+	
+	public function index()
+	{
+		redirect('dashboard');
+	}
+	
+	public function add()
+	{
 		# get data from login session
 		$session_data = $this->session->userdata('logged_in');
+		
 		$nama = $session_data['ui_nama'];
 		$data['nama'] = $nama;
+		
+		$nipp = $session_data['ui_nipp'];
+		$data['nipp'] = $nipp;
 		
 		$email = $session_data['ui_email'];
 		$data['email'] = $email;
@@ -40,23 +52,13 @@ class Docs extends CI_Controller {
 		$unit = $session_data['ui_unit'];
 		$data['unit'] = $unit;
 		
-		
-    }
-	
-	public function index()
-	{
-		redirect('docs/category');
-	}
-	
-	public function add()
-	{
+		# set error message  
+		$data['error'] ='';
 		  
-		  $data['error'] ='';
-		  
-		  # get variable for docs category
-		  #$data['query'] = $this->docs_model->get_all_category_for_combo($cabang, $unit);
+		# get variable for docs category
+		#$data['query'] = $this->docs_model->get_all_category_for_combo($cabang, $unit);
 		
-		 # redirect to upload form
+		# redirect to upload form
 		$this->load->view('template/header');
 		$this->load->view('template/sidebar', $data);
 		$this->load->view('template/breadcumb');
@@ -66,60 +68,119 @@ class Docs extends CI_Controller {
 
 	function save()
 	{
-		  	# get data from form
-			$docs_type = $this->input->post('docs_type');
-		  	$docs_no = $this->input->post('docs_no');
-			$docs_date = $this->input->post('docs_date');
-			$docs_to = $this->input->post('docs_to');
-			$docs_from = $this->input->post('docs_from');
-			$docs_copy = $this->input->post('docs_copy');
-			$docs_subject = $this->input->post('docs_subject');
-			$docs_remarks = $this->input->post('docs_remarks');
-			
-			# do form validation ( next )
-			
-			# do save data
-			$docs_id = $this->docs_model->save_docs($docs_type,$docs_no,$docs_date,$docs_from,$docs_to,$docs_copy,$docs_subject,$docs_remarks);
-			
-			# set upload config
-			$config['upload_path'] = './assets/uploads/files/';
-			$config['allowed_types'] = 'pdf|gif|jpg|png|jpeg|bmp|doc|docx|xls|xlsx|ppt|pptx|pps|ppsx';
-			$config['max_size']	= '99999';
-			$config['max_width']  = '99999';
-			$config['max_height']  = '99999';
+		# get data from login session
+		$session_data = $this->session->userdata('logged_in');
 		
-			# call upload lib
-		  	$this->load->library('upload', $config);
-					
-			# check is there any file to upload	
-			if ($this->upload->do_upload('file'))
-			{
-				echo 'ada';
+		$nama = $session_data['ui_nama'];
+		$data['nama'] = $nama;
+		
+		$nipp = $session_data['ui_nipp'];
+		$data['nipp'] = $nipp;
+		
+		$email = $session_data['ui_email'];
+		$data['email'] = $email;
+		
+		$cabang = $session_data['ui_cabang'];
+		$data['cabang'] = $cabang;
+		
+		$unit = $session_data['ui_unit'];
+		$data['unit'] = $unit;
+		
+		# set error message  
+		$data['error'] ='';
+		
+		# get data from form
+		$docs_type 		= $this->input->post('docs_type');
+		$docs_no 		= $this->input->post('docs_no');
+		$docs_date 		= mdate("%Y-%m-%d", strtotime($this->input->post('docs_date')));
+		$docs_to 		= $this->input->post('docs_to');
+		$docs_from 		= $this->input->post('docs_from');
+		$docs_copy 		= $this->input->post('docs_copy');
+		$docs_subject 	= $this->input->post('docs_subject');
+		$docs_remarks 	= $this->input->post('docs_remarks');
+		$docs_update_by = $nipp;
+		
+		# do form validation ( next )
+		
+		# do save data
+		$docs_id = $this->docs_model->save_docs($docs_type,$docs_no,$docs_date,$docs_from,$docs_to,$docs_copy,$docs_subject,$docs_remarks, $docs_update_by);
+		
+		# set upload config
+		$config['upload_path'] = './assets/uploads/files/';
+		$config['allowed_types'] = 'pdf|gif|jpg|png|jpeg|bmp|doc|docx|xls|xlsx|ppt|pptx|pps|ppsx';
+		$config['max_size']	= '99999';
+		$config['max_width']  = '99999';
+		$config['max_height']  = '99999';
+	
+		# call upload lib
+		$this->load->library('upload', $config);
+				
+		# check is there any file to upload	
+		if ($this->upload->do_upload('file'))
+		{
+			# file to upload = true
+			$upload_data = $this->upload->data();
 			
-				# file to upload = true
-				$upload_data = $this->upload->data();
-				
-				# GET REAL DATA FOR DB
-				$docs_user_name = $this->input->post('docs_no');
-				$docs_real_name	= $this->encrypt->encode($upload_data['file_name'], 'eman_elif');
-				$docs_system_name	= $this->encrypt->encode(date("YmdHis"), 'siHdmY');	
-				$system_file_name = date("YmdHis");		 	 	 	 	 	 	
-				$docs_ext	= $this->encrypt->encode($upload_data['file_ext'], 'txe_elif');	 	 	 	 	 	 	
-				$docs_size	= $upload_data['file_size'];	 	 	 	 	 	 	
-				$docs_type	= $this->input->post('docs_type');	 	 	 	 	 	 	
-				$docs_owner	= $this->input->post('docs_from');
-				$docs_upload_by = 'email';
-				$file_path = $upload_data['file_path'];
-				
-				echo $docs_id.$docs_user_name. $docs_real_name. $docs_system_name. $docs_ext. $docs_size. $docs_type. $docs_owner.  $docs_upload_by. $file_path;
-				
-				# call model
-				$this->docs_model->save_file($docs_id,$docs_user_name, $docs_real_name, $docs_system_name, $docs_ext, $docs_size, $docs_type, $docs_owner,  $docs_upload_by, $file_path);
-				
-				# rename file after upload and remove ext
-				rename($upload_data['full_path'], $upload_data['file_path'] . $system_file_name);
-			}
+			# GET REAL DATA FOR DB
+			$df_docs_id 	= $docs_id;
+			$df_user_name 	= $this->input->post('docs_no');
+			$df_real_name	= $this->encrypt->encode($upload_data['file_name'], 'eman_elif');
+			$df_file_path 	= $upload_data['file_path'];
+			$df_system_name	= $this->encrypt->encode(date("YmdHis"), 'siHdmY');	
+			$df_ext			= $this->encrypt->encode($upload_data['file_ext'], 'txe_elif');	 	 	 	 	 	 	
+			$df_size		= $upload_data['file_size'];	 	 	 	 	 	 	
+			$df_type		= $this->input->post('docs_type');	 	 	 	 	 	 	
+			$df_owner		= $this->input->post('docs_from');
+			$df_update_by 	= $nipp;
+			$system_file_name = date("YmdHis");	
+			
+			# call model
+			$this->docs_model->save_file($df_docs_id, $df_user_name, $df_real_name, $df_file_path, $df_system_name, $df_ext, $df_size, $df_type, $df_owner, $df_update_by);
+			
+			# rename file after upload and remove ext
+			rename($upload_data['full_path'], $upload_data['file_path'] . $system_file_name);
+		}
+		
+		# get manager nipp
+		$query = $this->docs_model->get_manager_nipp($cabang, $unit);
+		foreach($query as $manager) :
+			$manager_nipp = $manager->ui_nipp;	
+		endforeach;
+		
+		# update own docs_position
+		$dp_docs_id = $docs_id;
+		$dp_position = $nipp;
+		$dp_status = 'close';
+		$dp_update_by = $nipp;
+		
+		$this->docs_model->update_docs_position($dp_docs_id, $dp_position, $dp_status, $dp_update_by);
+		
+		# update docs_flow
+		$df_docs_id = $docs_id;
+		$df_flow = 'report';
+		$df_from = $nipp;
+		$df_to = $manager_nipp;
+		$df_subject = 'penerimaan dokumen dari pihak lain';
+		$df_description = 'penerimaan dokumen dari pihak lain';
+		$df_update_by = $nipp;
+		
+		$this->docs_model->update_docs_flow($df_docs_id, $df_flow, $df_from, $df_to, $df_subject, $df_description, $df_update_by);
+		
+		# update target docs_position
+		$dp_docs_id = $docs_id;
+		$dp_position = $manager_nipp;
+		$dp_status = 'open';
+		$dp_update_by = $nipp;
+		
+		$this->docs_model->update_docs_position($dp_docs_id, $dp_position, $dp_status, $dp_update_by);
+		
+		redirect('dashboard');
 	}
+
+
+
+
+
 
 	
 	public function category()

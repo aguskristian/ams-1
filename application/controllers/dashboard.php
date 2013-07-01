@@ -20,7 +20,7 @@ class Dashboard extends CI_Controller {
 			# other function need login
 			if (! in_array($this->router->method, $allowed)) 
 			{
-    			redirect('user');
+    			redirect('user/login');
 			}
    		 }
 		
@@ -37,6 +37,9 @@ class Dashboard extends CI_Controller {
 		# data
 		$nama = $session_data['ui_nama'];
 		$data['nama'] = $nama;
+		
+		$nipp = $session_data['ui_nipp'];
+		$data['nipp'] = $nipp;
 		  
 		$email = $session_data['ui_email'];
 		$data['email'] = $email;
