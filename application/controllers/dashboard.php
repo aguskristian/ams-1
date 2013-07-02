@@ -78,6 +78,8 @@ class Dashboard extends CI_Controller {
 		# call model
 		$data['list_open'] = $this->docs_model->docs_open($nipp);
 		$data['link'] = $this->pagination->create_links();
+		# open list pagination
+		
 		
 		# progress list pagination
 		$config = array();
@@ -97,6 +99,8 @@ class Dashboard extends CI_Controller {
 		# call model
 		$data['list_progress'] = $this->docs_model->docs_open($nipp);
 		$data['link'] = $this->pagination->create_links();
+		# progress list pagination
+		
 		
 		print_r($data);
 		
