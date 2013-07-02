@@ -72,6 +72,7 @@ class Docs_model extends CI_Model
 		$this->db->insert('docs_flow', $data);
 	}
 	
+	# get manager nipp
 	function get_manager_nipp($cabang, $unit)
 	{
 		$this->db->where('ui_cabang', $cabang);
@@ -81,9 +82,84 @@ class Docs_model extends CI_Model
 		return $query->result();
 	}
 	
-	function get_position_open()
+	# get my statistic open status
+	function stat_my_open($nipp)
 	{
-		$query = ("SELECT COUNT(DISTINCT `dp_docs_id`) FROM docs_position WHERE `dp_status`= 'close' and `dp_position` = '\' . $nipp . \''");
+		$query = ('
+		SELECT COUNT(DISTINCT dp_docs_id) as open FROM docs_position 
+		WHERE dp_status= \'open\' 
+		AND dp_position = \'' . $nipp . '\'
+		');
+		$query = $this->db->query($query);
+		return $query->result();		
+	}
+	
+	# get my statistic progress status
+	function stat_my_progress($nipp)
+	{
+		$query = ('
+		SELECT COUNT(DISTINCT dp_docs_id) as progress FROM docs_position 
+		WHERE dp_status= \'progress\' 
+		AND dp_position = \'' . $nipp . '\'
+		');
+		$query = $this->db->query($query);
+		return $query->result();		
+	}
+	
+	# get my statistic completed status
+	function stat_my_completed($nipp)
+	{
+		$query = ('
+		SELECT COUNT(DISTINCT dp_docs_id) as completed FROM docs_position 
+		WHERE dp_status= \'completed\' 
+		AND dp_position = \'' . $nipp . '\'
+		');
+		$query = $this->db->query($query);
+		return $query->result();		
+	}
+	
+	# get my statistic closed status
+	function stat_my_closed($nipp)
+	{
+		$query = ('
+		SELECT COUNT(DISTINCT dp_docs_id) as closed FROM docs_position 
+		WHERE dp_status= \'closed\' 
+		AND dp_position = \'' . $nipp . '\'
+		');
+		$query = $this->db->query($query);
+		return $query->result();		
+	}
+	
+	# list open document
+	function docs_open($nipp)
+	{
+		$query = ('
+		SELECT * from docs_position
+		LEFT JOIN docs
+		ON docs.docs_id = docs_position.dp_docs_id
+		LEFT JOIN docs_flow
+		ON docs_flow.df_docs_id = docs_position.dp_docs_id
+		WHERE docs_position.dp_position = \'' . $nipp . '\'
+		AND docs_position.dp_status = \'open\'
+		');
+		$query = $this->db->query($query);
+		return $query->result();		
+	}
+	
+	# list progress document
+	function docs_progress($nipp)
+	{
+		$query = ('
+		SELECT * from docs_position
+		LEFT JOIN docs
+		ON docs.docs_id = docs_position.dp_docs_id
+		LEFT JOIN docs_flow
+		ON docs_flow.df_docs_id = docs_position.dp_docs_id
+		WHERE docs_position.dp_position = \'' . $nipp . '\'
+		AND docs_position.dp_status = \'progress\'
+		');
+		$query = $this->db->query($query);
+		return $query->result();		
 	}
 	
 // =====================================================================================	

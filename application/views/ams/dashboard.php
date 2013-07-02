@@ -16,29 +16,29 @@
             <div class="stat-widget-container">
                 <div class="stat-widget">
                     <div class="stat-button">
-                        <p class="title">2,500</p>
-                        <p class="detail">Accounts</p>
-                    </div>
-                </div>
-
-                <div class="stat-widget">
-                    <div class="stat-button">
-                        <p class="title">3,299</p>
+                        <p class="title"><?php foreach($query_open as $stat):echo $stat->open;endforeach;?></p>
                         <p class="detail">Open</p>
                     </div>
                 </div>
 
                 <div class="stat-widget">
                     <div class="stat-button">
-                        <p class="title">$1,500</p>
-                        <p class="detail">Pending</p>
+                        <p class="title"><?php foreach($query_progress as $stat):echo $stat->progress;endforeach;?></p>
+                        <p class="detail">Progress</p>
                     </div>
                 </div>
 
                 <div class="stat-widget">
                     <div class="stat-button">
-                        <p class="title">$12,675</p>
+                        <p class="title"><?php foreach($query_completed as $stat):echo $stat->completed;endforeach;?></p>
                         <p class="detail">Completed</p>
+                    </div>
+                </div>
+
+                <div class="stat-widget">
+                    <div class="stat-button">
+                        <p class="title"><?php foreach($query_closed as $stat):echo $stat->closed;endforeach;?></p>
+                        <p class="detail">Closed</p>
                     </div>
                 </div>
 
@@ -49,60 +49,55 @@
 
 <div class="row-fluid">
     <div class="block span6">
-        <a href="#tablewidget" class="block-heading" data-toggle="collapse">Users<span class="label label-warning">+10</span></a>
+        <a href="#widget1container" class="block-heading" data-toggle="collapse">OPEN </a>
         <div id="tablewidget" class="block-body collapse in">
             <table class="table">
               <thead>
                 <tr>
-                  <th>First Name</th>
-                  <th>Last Name</th>
-                  <th>Username</th>
+                  <th>Tanggal</th>
+                  <th>No Agenda</th>
+                  <th>No Document</th>
+                  <th>Judul</th>
                 </tr>
               </thead>
               <tbody>
+                <?php foreach ($list_open as $open):{ ?>
                 <tr>
-                  <td>Mark</td>
-                  <td>Tompson</td>
-                  <td>the_mark7</td>
+                  <td><?php echo mdate("%d-%m-%Y %h:%i", strtotime($open->dp_update_on)) ;?></td>
+                  <td><?php echo $open->docs_no ;?></td>
+                  <td><?php echo $open->docs_no ;?></td>
+                  <td><?php echo $open->docs_subject ;?></td>
                 </tr>
-                <tr>
-                  <td>Ashley</td>
-                  <td>Jacobs</td>
-                  <td>ash11927</td>
-                </tr>
-                <tr>
-                  <td>Audrey</td>
-                  <td>Ann</td>
-                  <td>audann84</td>
-                </tr>
-                <tr>
-                  <td>John</td>
-                  <td>Robinson</td>
-                  <td>jr5527</td>
-                </tr>
-                <tr>
-                  <td>Aaron</td>
-                  <td>Butler</td>
-                  <td>aaron_butler</td>
-                </tr>
-                <tr>
-                  <td>Chris</td>
-                  <td>Albert</td>
-                  <td>cab79</td>
-                </tr>
+                <?php } endforeach; ?> 
               </tbody>
             </table>
             <p><a href="users.html">More...</a></p>
         </div>
     </div>
     <div class="block span6">
-        <a href="#widget1container" class="block-heading" data-toggle="collapse">Collapsible </a>
+        <a href="#widget1container" class="block-heading" data-toggle="collapse">PROGRESS </a>
         <div id="widget1container" class="block-body collapse in">
-            <h2>Using Ruby?</h2>
-            <p>This template was developed with <a href="http://middlemanapp.com/" target="_blank">Middleman</a> and includes .erb layouts and views.</p>
-            <p>All of the views you see here (sign in, sign up, users, etc) are already split up so you don't have to waste your time doing it yourself!</p>
-            <p>The layout.erb file includes the header, footer, and side navigation and all of the views are broken out into their own files.</p>
-            <p>If you aren't using Ruby, there is also a set of plain HTML files for each page, just like you would expect.</p>
+        	<table class="table">
+              <thead>
+                <tr>
+                  <th>Tanggal</th>
+                  <th>No Agenda</th>
+                  <th>No Document</th>
+                  <th>Judul</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php foreach ($list_open as $open):{ ?>
+                <tr>
+                  <td><?php echo mdate("%d-%m-%Y %h:%i", strtotime($open->dp_update_on)) ;?></td>
+                  <td><?php echo $open->docs_no ;?></td>
+                  <td><?php echo $open->docs_no ;?></td>
+                  <td><?php echo $open->docs_subject ;?></td>
+                </tr>
+                <?php } endforeach; ?> 
+              </tbody>
+            </table>
+            <p><a href="users.html">More...</a></p>    
         </div>
     </div>
 </div>
