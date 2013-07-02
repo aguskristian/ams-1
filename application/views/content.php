@@ -123,7 +123,7 @@
                 <a href="#" class="demo-cancel-click" rel="tooltip" title="Click to refresh"><i class="icon-refresh"></i></a>
             </span>
 
-            <a href="#widget2container" data-toggle="collapse">History</a>
+            <a href="#widget2container" data-toggle="collapse">complete</a>
         </div>
         <div id="widget2container" class="block-body collapse in">
             <table class="table list">
@@ -182,7 +182,7 @@
         </div>
     </div>
     <div class="block span6">
-        <p class="block-heading">Not Collapsible</p>
+        <p class="block-heading">Closed</p>
         <div class="block-body">
             <h2>Built with Less</h2>
             <p>The CSS is built with Less. There is a compiled version included if you prefer plain CSS.</p>

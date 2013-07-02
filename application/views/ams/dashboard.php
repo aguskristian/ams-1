@@ -109,7 +109,7 @@
                 <a href="#" class="demo-cancel-click" rel="tooltip" title="Click to refresh"><i class="icon-refresh"></i></a>
             </span>
 
-            <a href="#widget2container" data-toggle="collapse">History</a>
+            <a href="#widget2container" data-toggle="collapse">Complete</a>
         </div>
         <div id="widget2container" class="block-body collapse in">
             <table class="table list">
@@ -168,7 +168,7 @@
         </div>
     </div>
     <div class="block span6">
-        <p class="block-heading">Not Collapsible</p>
+        <p class="block-heading">Closed</p>
         <div class="block-body">
             <h2>Tip of the Day</h2>
             <p>Fava bean jícama seakale beetroot courgette shallot amaranth pea garbanzo carrot radicchio peanut leek pea sprouts arugula brussels sprout green bean. Spring onion broccoli chicory shallot winter purslane pumpkin gumbo cabbage squash beet greens lettuce celery. Gram zucchini swiss chard mustard burdock radish brussels sprout groundnut. Asparagus horseradish beet greens broccoli brussels sprout bitterleaf groundnut cress sweet pepper leek bok choy shallot celtuce scallion chickpea radish pea sprouts.</p>

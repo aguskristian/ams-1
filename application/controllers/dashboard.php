@@ -55,10 +55,10 @@ class Dashboard extends CI_Controller {
 		$data['title'] = 'Dashboard';
 		
 		# statistic
-		$data['query_open'] = $this->docs_model->stat_my_open($nipp);
-		$data['query_progress'] = $this->docs_model->stat_my_progress($nipp);
-		$data['query_completed'] = $this->docs_model->stat_my_completed($nipp);
-		$data['query_closed'] = $this->docs_model->stat_my_closed($nipp);
+		$data['query_open'] 		= $this->docs_model->stat_my_open($nipp);
+		$data['query_progress'] 	= $this->docs_model->stat_my_progress($nipp);
+		$data['query_completed'] 	= $this->docs_model->stat_my_completed($nipp);
+		$data['query_closed'] 		= $this->docs_model->stat_my_closed($nipp);
 		
 		# open list pagination
 		$config = array();
@@ -98,6 +98,46 @@ class Dashboard extends CI_Controller {
 		
 		# call model
 		$data['list_progress'] = $this->docs_model->docs_open($nipp);
+		$data['link'] = $this->pagination->create_links();
+		# progress list pagination
+		
+		# progress list pagination
+		$config = array();
+		$config['base_url'] = site_url() . '/dashboard/';
+		$config['per_page'] = 10; 
+		$config["uri_segment"] = 3;
+		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+		$limit = $config["per_page"];
+		$offset = $page;
+		
+		$data['total_complete'] = $this->docs_model->stat_my_completed($nipp);
+		foreach($data['total_complete'] as $stat):$total_rows = $stat->complete;endforeach;
+		$config['total_rows'] = $total_rows;
+		
+		$this->pagination->initialize($config);
+		
+		# call model
+		$data['list_complete'] = $this->docs_model->docs_open($nipp);
+		$data['link'] = $this->pagination->create_links();
+		# progress list pagination
+		
+		# progress list pagination
+		$config = array();
+		$config['base_url'] = site_url() . '/dashboard/';
+		$config['per_page'] = 10; 
+		$config["uri_segment"] = 3;
+		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+		$limit = $config["per_page"];
+		$offset = $page;
+		
+		$data['total_closed'] = $this->docs_model->stat_my_closed($nipp);
+		foreach($data['total_closed'] as $stat):$total_rows = $stat->closed;endforeach;
+		$config['total_rows'] = $total_rows;
+		
+		$this->pagination->initialize($config);
+		
+		# call model
+		$data['list_closed'] = $this->docs_model->docs_open($nipp);
 		$data['link'] = $this->pagination->create_links();
 		# progress list pagination
 		
