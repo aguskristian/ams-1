@@ -162,6 +162,38 @@ class Docs_model extends CI_Model
 		return $query->result();		
 	}
 	
+	# list open Completed
+	function docs_completed($nipp)
+	{
+		$query = ('
+		SELECT * from docs_position
+		LEFT JOIN docs
+		ON docs.docs_id = docs_position.dp_docs_id
+		LEFT JOIN docs_flow
+		ON docs_flow.df_docs_id = docs_position.dp_docs_id
+		WHERE docs_position.dp_position = \'' . $nipp . '\'
+		AND docs_position.dp_status = \'completed\'
+		');
+		$query = $this->db->query($query);
+		return $query->result();		
+	}
+	
+	# list open document
+	function docs_closed($nipp)
+	{
+		$query = ('
+		SELECT * from docs_position
+		LEFT JOIN docs
+		ON docs.docs_id = docs_position.dp_docs_id
+		LEFT JOIN docs_flow
+		ON docs_flow.df_docs_id = docs_position.dp_docs_id
+		WHERE docs_position.dp_position = \'' . $nipp . '\'
+		AND docs_position.dp_status = \'closed\'
+		');
+		$query = $this->db->query($query);
+		return $query->result();		
+	}
+	
 // =====================================================================================	
 	
 	# category by group

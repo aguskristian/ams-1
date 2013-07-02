@@ -117,7 +117,7 @@ class Dashboard extends CI_Controller {
 		$this->pagination->initialize($config);
 		
 		# call model
-		$data['list_completed'] = $this->docs_model->docs_open($nipp);
+		$data['list_completed'] = $this->docs_model->docs_completed($nipp);
 		$data['link'] = $this->pagination->create_links();
 		# progress list pagination
 		
@@ -137,7 +137,7 @@ class Dashboard extends CI_Controller {
 		$this->pagination->initialize($config);
 		
 		# call model
-		$data['list_closed'] = $this->docs_model->docs_open($nipp);
+		$data['list_closed'] = $this->docs_model->docs_closed($nipp);
 		$data['link'] = $this->pagination->create_links();
 		# progress list pagination
 		
