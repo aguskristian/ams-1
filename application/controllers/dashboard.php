@@ -55,10 +55,10 @@ class Dashboard extends CI_Controller {
 		$data['title'] = 'Dashboard';
 		
 		# statistic
-		$data['query_open'] 		= $this->docs_model->stat_my_open($nipp);
-		$data['query_progress'] 	= $this->docs_model->stat_my_progress($nipp);
-		$data['query_completed'] 	= $this->docs_model->stat_my_completed($nipp);
-		$data['query_closed'] 		= $this->docs_model->stat_my_closed($nipp);
+		$data['query_open'] = $this->docs_model->stat_my_open($nipp);
+		$data['query_progress'] = $this->docs_model->stat_my_progress($nipp);
+		$data['query_completed'] = $this->docs_model->stat_my_completed($nipp);
+		$data['query_closed'] = $this->docs_model->stat_my_closed($nipp);
 		
 		# open list pagination
 		$config = array();
