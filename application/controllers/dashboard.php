@@ -25,7 +25,7 @@ class Dashboard extends CI_Controller {
    		 }
 		
 		# load model, library and helper
-		$this->load->model('user_model','', TRUE);
+		$this->load->model('docs_model','', TRUE);
     }
 
 
@@ -53,6 +53,52 @@ class Dashboard extends CI_Controller {
 		$data['error'] ='';
 		  
 		$data['title'] = 'Dashboard';
+		
+		# statistic
+		$data['query_open'] = $this->docs_model->stat_my_open($nipp);
+		$data['query_progress'] = $this->docs_model->stat_my_progress($nipp);
+		$data['query_completed'] = $this->docs_model->stat_my_completed($nipp);
+		$data['query_closed'] = $this->docs_model->stat_my_closed($nipp);
+		
+		# open list pagination
+		$config = array();
+		$config['base_url'] = site_url() . '/dashboard/';
+		$config['per_page'] = 10; 
+		$config["uri_segment"] = 3;
+		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+		$limit = $config["per_page"];
+		$offset = $page;
+		
+		$data['total_open'] = $this->docs_model->stat_my_open($nipp);
+		foreach($data['total_open'] as $stat):$total_rows = $stat->open;endforeach;
+		$config['total_rows'] = $total_rows;
+		
+		$this->pagination->initialize($config);
+		
+		# call model
+		$data['list_open'] = $this->docs_model->docs_open($nipp);
+		$data['link'] = $this->pagination->create_links();
+		
+		# progress list pagination
+		$config = array();
+		$config['base_url'] = site_url() . '/dashboard/';
+		$config['per_page'] = 10; 
+		$config["uri_segment"] = 3;
+		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+		$limit = $config["per_page"];
+		$offset = $page;
+		
+		$data['total_progress'] = $this->docs_model->stat_my_progress($nipp);
+		foreach($data['total_progress'] as $stat):$total_rows = $stat->progress;endforeach;
+		$config['total_rows'] = $total_rows;
+		
+		$this->pagination->initialize($config);
+		
+		# call model
+		$data['list_progress'] = $this->docs_model->docs_open($nipp);
+		$data['link'] = $this->pagination->create_links();
+		
+		print_r($data);
 		
 		$this->load->view('template/header');
 		$this->load->view('template/sidebar', $data);
