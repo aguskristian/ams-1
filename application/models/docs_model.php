@@ -9,18 +9,20 @@ class Docs_model extends CI_Model
     }
 
 	# docs upload
-	function save_docs($docs_type,$docs_no,$docs_date,$docs_from,$docs_to,$docs_copy,$docs_subject,$docs_remarks, $docs_update_by)
+	function save_docs($docs_date_in, $docs_reg_no, $docs_type,$docs_no,$docs_date,$docs_from,$docs_to,$docs_copy,$docs_subject,$docs_remarks, $docs_update_by)
 	{
 		$data = array(
-		'docs_type'	=>	 $docs_type,	 	 	 	 	 	 	
-		'docs_no'	=>	 $docs_no,
-		'docs_date' => $docs_date,	 	 	 	 	 	 	
-		'docs_to'	=>	 $docs_to,	 	 	 	 	 	 	
-		'docs_from'	=>	 $docs_from,	 	 	 	 	 	 	
-		'docs_copy'	=> $docs_copy,		 	 	 	 	 	 	
+		'docs_date_in'	=>	 $docs_date_in,
+		'docs_reg_no'	=>	 $docs_reg_no,
+		'docs_type'		=>	 $docs_type,	 	 	 	 	 	 	
+		'docs_no'		=>	 $docs_no,
+		'docs_date' 	=> 	 $docs_date,	 	 	 	 	 	 	
+		'docs_to'		=>	 $docs_to,	 	 	 	 	 	 	
+		'docs_from'		=>	 $docs_from,	 	 	 	 	 	 	
+		'docs_copy'		=>   $docs_copy,		 	 	 	 	 	 	
 		'docs_subject'	=>	 $docs_subject,	 	 	 	 	 	 	
 		'docs_remarks'	=>	 $docs_remarks,	 	 	 	 	 	 	
-		'docs_update_by' => $docs_update_by,
+		'docs_update_by' =>  $docs_update_by,
 		);
 		$this->db->insert('docs', $data);
 		return $this->db->insert_id();
@@ -46,12 +48,14 @@ class Docs_model extends CI_Model
 	}
 	
 	# update docs position
-	function update_docs_position($dp_docs_id, $dp_position, $dp_status, $dp_update_by)
+	function update_docs_position($dp_docs_id, $dp_position, $dp_status, $dp_date_in, $dp_date_out, $dp_update_by)
 	{
 		$data = array(
 		'dp_docs_id' => $dp_docs_id,
 		'dp_position' => $dp_position,
 		'dp_status' => $dp_status,
+		'dp_date_in' => $dp_date_in,
+		'dp_date_out' => $dp_date_out,
 		'dp_update_by' => $dp_update_by,
 		);
 		$this->db->insert('docs_position', $data);
@@ -194,6 +198,29 @@ class Docs_model extends CI_Model
 		return $query->result();		
 	}
 	
+	# get doc by id
+	function get_doc_by_id($docs_id)
+	{
+		$query_docs_view =('
+		SELECT * FROM docs
+		LEFT JOIN docs_files 
+		ON docs_files.df_docs_id = docs.docs_id 
+		LEFT JOIN docs_flow 
+		ON docs_flow.df_docs_id = docs.docs_id 
+		
+		WHERE docs_id = \'' . $docs_id . '\'
+		');
+		$query = $this->db->query($query_docs_view);
+		return $query->result();
+	}
+	
+	function docs_position($docs_id)
+	{
+		$this->db->where('dp_docs_id', $docs_id);
+		$this->db->join('user_identity', 'user_identity.ui_nipp = docs_position.dp_position');
+		$query_position = $this->db->get('docs_position'); 
+		return $query_position->result();
+	}
 // =====================================================================================	
 	
 	# category by group
@@ -276,18 +303,7 @@ class Docs_model extends CI_Model
 
 
 
-# get doc by id
-	function get_doc_by_id($docs_id)
-	{
-		$query_docs_view =('
-		SELECT * FROM `docs`
-		LEFT JOIN docs_category 
-		ON docs_category.dc_id = docs.docs_category_id 
-		WHERE `docs_id` = \'' . $docs_id . '\'
-		');
-		$query_docs_view = $this->db->query($query_docs_view);
-		return $query_docs_view->result();
-	}
+	
 
 # delete doc
 	function del_doc($docs_id)

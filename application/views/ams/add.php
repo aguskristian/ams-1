@@ -16,6 +16,20 @@
 						<fieldset>
 							
                            <div class="control-group">
+								<label class="control-label" for="input01">Tanggal Penerimaan</label>
+								<div class="controls">
+									<input name="docs_date_in" type="text" id="docs_date_in" />
+                           		</div>
+						   </div>
+                           
+                           <div class="control-group">
+								<label class="control-label" for="input01">Nomer Agenda</label>
+								<div class="controls">
+									<input name="docs_reg_no" type="text" value="" />
+								</div>
+							</div>
+                           
+                           <div class="control-group">
 								<label class="control-label" for="input01">Jenis</label>
 								<div class="controls">
                                 	<select name="docs_type">
@@ -37,9 +51,9 @@
 							</div>
                            
                            <div class="control-group">
-								<label class="control-label" for="input01">Tanggal</label>
+								<label class="control-label" for="input01">Tanggal Dokumen</label>
 								<div class="controls">
-									<input name="docs_date" type="text" id="datepicker" />
+									<input name="docs_date" type="text" id="docs_date" />
                            		</div>
 						   </div>
                            

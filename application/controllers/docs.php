@@ -90,6 +90,8 @@ class Docs extends CI_Controller {
 		$data['error'] ='';
 		
 		# get data from form
+		$docs_date_in 	= mdate("%Y-%m-%d %H:%i:%s", strtotime($this->input->post('docs_date_in')));
+		$docs_reg_no 	= $this->input->post('docs_reg_no');
 		$docs_type 		= $this->input->post('docs_type');
 		$docs_no 		= $this->input->post('docs_no');
 		$docs_date 		= mdate("%Y-%m-%d", strtotime($this->input->post('docs_date')));
@@ -103,7 +105,7 @@ class Docs extends CI_Controller {
 		# do form validation ( next )
 		
 		# do save data
-		$docs_id = $this->docs_model->save_docs($docs_type,$docs_no,$docs_date,$docs_from,$docs_to,$docs_copy,$docs_subject,$docs_remarks, $docs_update_by);
+		$docs_id = $this->docs_model->save_docs($docs_date_in, $docs_reg_no, $docs_type,$docs_no,$docs_date,$docs_from,$docs_to,$docs_copy,$docs_subject,$docs_remarks, $docs_update_by);
 		
 		# set upload config
 		$config['upload_path'] = './assets/uploads/files/';
@@ -150,34 +152,74 @@ class Docs extends CI_Controller {
 		# update own docs_position
 		$dp_docs_id = $docs_id;
 		$dp_position = $nipp;
-		$dp_status = 'close';
+		$dp_status = 'completed';
+		$dp_date_in = $docs_date_in;
+		$dp_date_out = date('Y-m-d H:i:s');
 		$dp_update_by = $nipp;
 		
-		$this->docs_model->update_docs_position($dp_docs_id, $dp_position, $dp_status, $dp_update_by);
+		$this->docs_model->update_docs_position($dp_docs_id, $dp_position, $dp_status, $dp_date_in, $dp_date_out, $dp_update_by);
 		
 		# update docs_flow
 		$df_docs_id = $docs_id;
 		$df_flow = 'report';
 		$df_from = $nipp;
 		$df_to = $manager_nipp;
-		$df_subject = 'penerimaan dokumen dari pihak lain';
-		$df_description = 'penerimaan dokumen dari pihak lain';
+		$df_subject = 'penerimaan dokumen ' . $docs_no;
+		$df_description = 'penerimaan dokumen ' . $docs_no . ' dari pihak lain';
 		$df_update_by = $nipp;
 		
 		$this->docs_model->update_docs_flow($df_docs_id, $df_flow, $df_from, $df_to, $df_subject, $df_description, $df_update_by);
 		
-		# update target docs_position
+		
+		
+		# update target docs_position to manager
 		$dp_docs_id = $docs_id;
 		$dp_position = $manager_nipp;
 		$dp_status = 'open';
+		$dp_date_in = date('Y-m-d H:i:s');
+		$dp_date_out = '0000-00-00 00:00:00';
 		$dp_update_by = $nipp;
 		
-		$this->docs_model->update_docs_position($dp_docs_id, $dp_position, $dp_status, $dp_update_by);
+		$this->docs_model->update_docs_position($dp_docs_id, $dp_position, $dp_status, $dp_date_in, $dp_date_out, $dp_update_by);
 		
 		redirect('dashboard');
 	}
 
-
+	public function details()
+	{
+		# get data from login session
+		$session_data = $this->session->userdata('logged_in');
+		
+		$nama = $session_data['ui_nama'];
+		$data['nama'] = $nama;
+		
+		$nipp = $session_data['ui_nipp'];
+		$data['nipp'] = $nipp;
+		
+		$email = $session_data['ui_email'];
+		$data['email'] = $email;
+		
+		$cabang = $session_data['ui_cabang'];
+		$data['cabang'] = $cabang;
+		
+		$unit = $session_data['ui_unit'];
+		$data['unit'] = $unit;
+		
+		# set error message  
+		$data['error'] ='';
+		
+		# get data from form
+		$docs_id = $this->uri->segment(3, 0);
+		$data['query'] = $this->docs_model->get_doc_by_id($docs_id);
+		$data['query_position'] = $this->docs_model->docs_position($docs_id);
+		
+		# call view
+		$this->load->view('template/header');
+		$this->load->view('template/sidebar', $data);
+		$this->load->view('template/breadcumb');
+		$this->load->view('ams/details', $data);
+		$this->load->view('template/footer');
+	}
 
 
 
