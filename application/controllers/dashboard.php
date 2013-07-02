@@ -28,8 +28,12 @@ class Dashboard extends CI_Controller {
 		$this->load->model('docs_model','', TRUE);
     }
 
-
 	function index()
+	{
+		redirect('dashboard/document');
+	}
+
+	function document()
 	{
 		# get data from session
 		$session_data = $this->session->userdata('logged_in');
@@ -62,7 +66,7 @@ class Dashboard extends CI_Controller {
 		
 		# open list pagination
 		$config = array();
-		$config['base_url'] = site_url() . '/dashboard/';
+		$config['base_url'] = site_url() . '/dashboard/document/';
 		$config['per_page'] = 3; 
 		$config["uri_segment"] = 3;
 		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
@@ -83,7 +87,7 @@ class Dashboard extends CI_Controller {
 		
 		# progress list pagination
 		$config = array();
-		$config['base_url'] = site_url() . '/dashboard/';
+		$config['base_url'] = site_url() . '/dashboard/document/';
 		$config['per_page'] = 10; 
 		$config["uri_segment"] = 3;
 		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
@@ -103,7 +107,7 @@ class Dashboard extends CI_Controller {
 		
 		# progress list pagination
 		$config = array();
-		$config['base_url'] = site_url() . '/dashboard/';
+		$config['base_url'] = site_url() . '/dashboard/document/';
 		$config['per_page'] = 10; 
 		$config["uri_segment"] = 3;
 		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
@@ -123,7 +127,7 @@ class Dashboard extends CI_Controller {
 		
 		# progress list pagination
 		$config = array();
-		$config['base_url'] = site_url() . '/dashboard/';
+		$config['base_url'] = site_url() . '/dashboard/document/';
 		$config['per_page'] = 10; 
 		$config["uri_segment"] = 3;
 		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
