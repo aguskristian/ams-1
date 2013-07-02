@@ -57,16 +57,16 @@
                   <th>Tanggal</th>
                   <th>No Agenda</th>
                   <th>No Document</th>
-                  <th>Judul</th>
+                  <th>Perihal</th>
                 </tr>
               </thead>
               <tbody>
                 <?php foreach ($list_open as $open):{ ?>
                 <tr>
-                  <td><?php echo mdate("%d-%m-%Y %h:%i", strtotime($open->dp_update_on)) ;?></td>
+                  <td><?php echo mdate("%d-%m-%Y %H:%i", strtotime($open->dp_update_on)) ;?></td>
+                   <td><?php echo $open->docs_reg_no ;?></td>
                   <td><?php echo $open->docs_no ;?></td>
-                  <td><?php echo $open->docs_no ;?></td>
-                  <td><?php echo $open->docs_subject ;?></td>
+                  <td><?php echo anchor( 'docs/details/' . $open->docs_id, $open->docs_subject) ;?></td>
                 </tr>
                 <?php } endforeach; ?> 
               </tbody>
@@ -84,16 +84,16 @@
                   <th>Tanggal</th>
                   <th>No Agenda</th>
                   <th>No Document</th>
-                  <th>Judul</th>
+                  <th>Perihal</th>
                 </tr>
               </thead>
               <tbody>
                 <?php foreach ($list_progress as $open):{ ?>
                 <tr>
-                  <td><?php echo mdate("%d-%m-%Y %h:%i", strtotime($open->dp_update_on)) ;?></td>
+                  <td><?php echo mdate("%d-%m-%Y %H:%i", strtotime($open->dp_update_on)) ;?></td>
+                   <td><?php echo $open->docs_reg_no ;?></td>
                   <td><?php echo $open->docs_no ;?></td>
-                  <td><?php echo $open->docs_no ;?></td>
-                  <td><?php echo $open->docs_subject ;?></td>
+                  <td><?php echo anchor( 'docs/details/' . $open->docs_id, $open->docs_subject) ;?></td>
                 </tr>
                 <?php } endforeach; ?> 
               </tbody>
@@ -113,16 +113,16 @@
                   <th>Tanggal</th>
                   <th>No Agenda</th>
                   <th>No Document</th>
-                  <th>Judul</th>
+                  <th>Perihal</th>
                 </tr>
               </thead>
               <tbody>
                 <?php foreach ($list_completed as $open):{ ?>
                 <tr>
-                  <td><?php echo mdate("%d-%m-%Y %h:%i", strtotime($open->dp_update_on)) ;?></td>
+                  <td><?php echo mdate("%d-%m-%Y %H:%i", strtotime($open->dp_update_on)) ;?></td>
+                  <td><?php echo $open->docs_reg_no ;?></td>
                   <td><?php echo $open->docs_no ;?></td>
-                  <td><?php echo $open->docs_no ;?></td>
-                  <td><?php echo $open->docs_subject ;?></td>
+                  <td><?php echo anchor( 'docs/details/' . $open->docs_id, $open->docs_subject) ;?></td>
                 </tr>
                 <?php } endforeach; ?> 
               </tbody>
@@ -141,16 +141,16 @@
                   <th>Tanggal</th>
                   <th>No Agenda</th>
                   <th>No Document</th>
-                  <th>Judul</th>
+                  <th>Perihal</th>
                 </tr>
               </thead>
               <tbody>
                 <?php foreach ($list_closed as $open):{ ?>
                 <tr>
-                  <td><?php echo mdate("%d-%m-%Y %h:%i", strtotime($open->dp_update_on)) ;?></td>
+                  <td><?php echo mdate("%d-%m-%Y %H:%i", strtotime($open->dp_update_on)) ;?></td>
+                   <td><?php echo $open->docs_reg_no ;?></td>
                   <td><?php echo $open->docs_no ;?></td>
-                  <td><?php echo $open->docs_no ;?></td>
-                  <td><?php echo $open->docs_subject ;?></td>
+                  <td><?php echo anchor( 'docs/details/' . $open->docs_id, $open->docs_subject) ;?></td>
                 </tr>
                 <?php } endforeach; ?> 
               </tbody>
