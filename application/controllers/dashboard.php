@@ -63,7 +63,7 @@ class Dashboard extends CI_Controller {
 		# open list pagination
 		$config = array();
 		$config['base_url'] = site_url() . '/dashboard/';
-		$config['per_page'] = 10; 
+		$config['per_page'] = 3; 
 		$config["uri_segment"] = 3;
 		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 		$limit = $config["per_page"];
@@ -77,7 +77,7 @@ class Dashboard extends CI_Controller {
 		
 		# call model
 		$data['list_open'] = $this->docs_model->docs_open($nipp);
-		$data['link'] = $this->pagination->create_links();
+		$data['link_open'] = $this->pagination->create_links();
 		# open list pagination
 		
 		
@@ -98,7 +98,7 @@ class Dashboard extends CI_Controller {
 		
 		# call model
 		$data['list_progress'] = $this->docs_model->docs_progress($nipp);
-		$data['link'] = $this->pagination->create_links();
+		$data['link_progress'] = $this->pagination->create_links();
 		# progress list pagination
 		
 		# progress list pagination
@@ -118,7 +118,7 @@ class Dashboard extends CI_Controller {
 		
 		# call model
 		$data['list_completed'] = $this->docs_model->docs_completed($nipp);
-		$data['link'] = $this->pagination->create_links();
+		$data['link_completed'] = $this->pagination->create_links();
 		# progress list pagination
 		
 		# progress list pagination
@@ -138,11 +138,11 @@ class Dashboard extends CI_Controller {
 		
 		# call model
 		$data['list_closed'] = $this->docs_model->docs_closed($nipp);
-		$data['link'] = $this->pagination->create_links();
+		$data['link_closed'] = $this->pagination->create_links();
 		# progress list pagination
 		
 		
-		print_r($data);
+		#print_r($data);
 		
 		$this->load->view('template/header');
 		$this->load->view('template/sidebar', $data);

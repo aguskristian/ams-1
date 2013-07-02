@@ -10,7 +10,7 @@
     </div>
 
     <div class="block">
-        <a href="#page-stats" class="block-heading" data-toggle="collapse">Latest Stats</a>
+        <a href="#page-stats" class="block-heading" data-toggle="collapse">STATISTIK</a>
         <div id="page-stats" class="block-body collapse in">
 
             <div class="stat-widget-container">
@@ -71,7 +71,7 @@
                 <?php } endforeach; ?> 
               </tbody>
             </table>
-            <p><a href="users.html">More...</a></p>
+            <div class="pagination"><?php echo $link_open; ?></div>
         </div>
     </div>
 
@@ -88,7 +88,7 @@
                 </tr>
               </thead>
               <tbody>
-                <?php foreach ($list_open as $open):{ ?>
+                <?php foreach ($list_progress as $open):{ ?>
                 <tr>
                   <td><?php echo mdate("%d-%m-%Y %h:%i", strtotime($open->dp_update_on)) ;?></td>
                   <td><?php echo $open->docs_no ;?></td>
@@ -98,7 +98,7 @@
                 <?php } endforeach; ?> 
               </tbody>
             </table>
-            <p><a href="users.html">More...</a></p>    
+            <div class="pagination"><?php echo $link_progress; ?></div>  
         </div>
     </div>
 </div>
@@ -117,7 +117,7 @@
                 </tr>
               </thead>
               <tbody>
-                <?php foreach ($list_open as $open):{ ?>
+                <?php foreach ($list_completed as $open):{ ?>
                 <tr>
                   <td><?php echo mdate("%d-%m-%Y %h:%i", strtotime($open->dp_update_on)) ;?></td>
                   <td><?php echo $open->docs_no ;?></td>
@@ -127,7 +127,7 @@
                 <?php } endforeach; ?> 
               </tbody>
             </table>
-            <p><a href="users.html">More...</a></p>
+            <div class="pagination"><?php echo $link_completed; ?></div>  
         </div>
     </div>
 	
@@ -145,7 +145,7 @@
                 </tr>
               </thead>
               <tbody>
-                <?php foreach ($list_open as $open):{ ?>
+                <?php foreach ($list_closed as $open):{ ?>
                 <tr>
                   <td><?php echo mdate("%d-%m-%Y %h:%i", strtotime($open->dp_update_on)) ;?></td>
                   <td><?php echo $open->docs_no ;?></td>
@@ -155,7 +155,7 @@
                 <?php } endforeach; ?> 
               </tbody>
             </table>
-            <p><a href="users.html">More...</a></p>
+            <div class="pagination"><?php echo $link_closed; ?></div>
         </div>
     </div>
 </div>
