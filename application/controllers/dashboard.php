@@ -110,14 +110,14 @@ class Dashboard extends CI_Controller {
 		$limit = $config["per_page"];
 		$offset = $page;
 		
-		$data['total_complete'] = $this->docs_model->stat_my_completed($nipp);
-		foreach($data['total_complete'] as $stat):$total_rows = $stat->complete;endforeach;
+		$data['total_completed'] = $this->docs_model->stat_my_completed($nipp);
+		foreach($data['total_completed'] as $stat):$total_rows = $stat->completed;endforeach;
 		$config['total_rows'] = $total_rows;
 		
 		$this->pagination->initialize($config);
 		
 		# call model
-		$data['list_complete'] = $this->docs_model->docs_open($nipp);
+		$data['list_completed'] = $this->docs_model->docs_open($nipp);
 		$data['link'] = $this->pagination->create_links();
 		# progress list pagination
 		
