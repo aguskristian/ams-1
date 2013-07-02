@@ -8,9 +8,9 @@
         <a href="#accounts-menu" class="nav-header" data-toggle="collapse"><i class="icon-file"></i>Incoming<span class="label label-info">+3</span></a>
         <ul id="accounts-menu" class="nav nav-list collapse">
         	<li ><?php echo anchor('docs/add','New'); ?></li>
-            <li ><a href="sign-in.html">Open</a></li>
-            <li ><a href="sign-up.html">Progress</a></li>
-            <li ><a href="reset-password.html">Archive</a></li>
+            <li ><?php echo anchor('docs/add','Open'); ?></li>
+            <li ><?php echo anchor('docs/add','Progress'); ?></li>
+            <li ><?php echo anchor('docs/add','Completed'); ?></li>
         </ul>
 
         <a href="#error-menu" class="nav-header collapsed" data-toggle="collapse"><i class="icon-exclamation-sign"></i>Error  <i class="icon-chevron-up"></i></a>
