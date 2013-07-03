@@ -30,5 +30,6 @@
 		<p>user : <?php echo $nama; ?></p>
         <p>cabang : <?php echo $cabang; ?></p>        
         <p>unit : <?php echo $unit; ?></p>
+        <p>unit : <?php echo $function; ?></p>
       
     </div>

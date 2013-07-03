@@ -187,32 +187,41 @@ class Docs extends CI_Controller {
 
 	public function details()
 	{
-		# get data from login session
+		# get data from session
 		$session_data = $this->session->userdata('logged_in');
-		
+		  
+		# data
 		$nama = $session_data['ui_nama'];
 		$data['nama'] = $nama;
 		
 		$nipp = $session_data['ui_nipp'];
 		$data['nipp'] = $nipp;
-		
+		  
 		$email = $session_data['ui_email'];
 		$data['email'] = $email;
-		
+		  
 		$cabang = $session_data['ui_cabang'];
 		$data['cabang'] = $cabang;
-		
+		  
 		$unit = $session_data['ui_unit'];
 		$data['unit'] = $unit;
 		
-		# set error message  
+		$ui_function = $session_data['ui_function'];
+		$data['ui_function'] = $ui_function;
+		  
 		$data['error'] ='';
+		  
+		$data['title'] = 'Dashboard';
 		
 		# get data from form
 		$docs_id = $this->uri->segment(3, 0);
 		$data['query'] = $this->docs_model->get_doc_by_id($docs_id);
 		$data['query_position'] = $this->docs_model->docs_position($docs_id);
-		
+		$data['query_files'] = $this->docs_model->get_files_by_id($docs_id);
+		$data['query_upline'] = $this->docs_model->get_upline($nipp, $ui_function);
+		$data['query_colleagues'] = $this->docs_model->get_colleagues($nipp, $ui_function);
+		$data['query_downline'] = $this->docs_model->get_downline($nipp, $ui_function);
+		print_r($data);
 		# call view
 		$this->load->view('template/header');
 		$this->load->view('template/sidebar', $data);
@@ -221,7 +230,49 @@ class Docs extends CI_Controller {
 		$this->load->view('template/footer');
 	}
 
-
+	public function document_action()
+	{
+		# get data from session
+		$session_data = $this->session->userdata('logged_in');
+		  
+		# data
+		$nama = $session_data['ui_nama'];
+		$data['nama'] = $nama;
+		
+		$nipp = $session_data['ui_nipp'];
+		$data['nipp'] = $nipp;
+		  
+		$email = $session_data['ui_email'];
+		$data['email'] = $email;
+		  
+		$cabang = $session_data['ui_cabang'];
+		$data['cabang'] = $cabang;
+		  
+		$unit = $session_data['ui_unit'];
+		$data['unit'] = $unit;
+		
+		##$ui_function = $session_data['ui_function'];
+		#$data['ui_function'] = $ui_function;
+		$ui_function = '0405020212';
+		  
+		$data['error'] ='';
+		  
+		$data['title'] = 'Dashboard';
+		
+		# get upline
+		$data['query'] = $this->docs_model->get_upline($nipp, $ui_function);
+		print_r($data);
+		#get staff
+		#echo 'staff' . substr($ui_function, 8, 2);
+		
+		#get staff non team
+		#echo substr($ui_function, 0, 4);
+		
+		# get colleague
+		
+		# get downline
+		
+	}
 
 
 	

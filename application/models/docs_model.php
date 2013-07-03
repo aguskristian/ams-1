@@ -203,11 +203,23 @@ class Docs_model extends CI_Model
 	{
 		$query_docs_view =('
 		SELECT * FROM docs
-		LEFT JOIN docs_files 
-		ON docs_files.df_docs_id = docs.docs_id 
 		LEFT JOIN docs_flow 
 		ON docs_flow.df_docs_id = docs.docs_id 
 		
+		WHERE docs_id = \'' . $docs_id . '\'
+		');
+		$query = $this->db->query($query_docs_view);
+		return $query->result();
+	}
+	
+	# get files by id
+	function get_files_by_id($docs_id)
+	{
+		$query_docs_view =('
+		SELECT * FROM docs
+		LEFT JOIN docs_files 
+		ON docs_files.df_docs_id = docs.docs_id 
+				
 		WHERE docs_id = \'' . $docs_id . '\'
 		');
 		$query = $this->db->query($query_docs_view);
@@ -221,6 +233,144 @@ class Docs_model extends CI_Model
 		$query_position = $this->db->get('docs_position'); 
 		return $query_position->result();
 	}
+	
+	# get upline
+	function get_upline($nipp, $ui_function)
+	{
+		
+		if(substr($ui_function, 8, 2) == '12') # staff non team
+		{
+			if(substr($ui_function, 6, 2) == '01')
+			{
+				$query =('
+				SELECT * FROM user_identity
+				WHERE ui_function LIKE \'' . substr($ui_function, 0, 6) . '__10\'
+				');
+			}
+			else
+			{
+				$query =('
+				SELECT * FROM user_identity
+				WHERE ui_function LIKE \'' . substr($ui_function, 0, 6) . '__11\'
+				');
+			}
+		}
+		elseif(substr($ui_function, 8, 2) == '11') # supervisor
+		{
+			$query =('
+			SELECT * FROM user_identity
+			WHERE ui_function LIKE \'' . substr($ui_function, 0, 6) . '__10\'
+			');
+		}
+		elseif(substr($ui_function, 8, 2) == '10') # assman
+		{
+			$query =('
+			SELECT * FROM user_identity
+			WHERE ui_function LIKE \'' . substr($ui_function, 0, 4) . '____09\'
+			');
+		}
+		elseif(substr($ui_function, 8, 2) == '09') # assman
+		{
+			$query =('
+			SELECT * FROM user_identity
+			WHERE ui_function LIKE \'' . substr($ui_function, 0, 2) . '______06\'
+			');
+		}
+		
+		$query = $this->db->query($query);
+		return $query->result();
+	}
+	
+	
+	# get colleagues
+	function get_colleagues($nipp, $ui_function)
+	{
+		
+		if(substr($ui_function, 8, 2) == '12') # staff non team
+		{
+				$query =('
+				SELECT * FROM user_identity
+				WHERE ui_function LIKE \'' . substr($ui_function, 0, 8) . '12\'
+				AND ui_nipp <> \'' . $nipp . '\'
+				');
+		}
+		elseif(substr($ui_function, 8, 2) == '11') # supervisor
+		{
+			$query =('
+			SELECT * FROM user_identity
+			WHERE ui_function LIKE \'' . substr($ui_function, 0, 6) . '__11\'
+			AND ui_nipp <> \'' . $nipp . '\'
+			');
+		}
+		elseif(substr($ui_function, 8, 2) == '10') # assman
+		{
+			$query =('
+			SELECT * FROM user_identity
+			WHERE ui_function LIKE \'' . substr($ui_function, 0, 4) . '____10\'
+			AND ui_nipp <> \'' . $nipp . '\'
+			');
+		}
+		elseif(substr($ui_function, 8, 2) == '09') # assman
+		{
+			$query =('
+			SELECT * FROM user_identity
+			WHERE ui_function LIKE \'' . substr($ui_function, 0, 2) . '______09\'
+			AND ui_nipp <> \'' . $nipp . '\'
+			');
+		}
+		
+		$query = $this->db->query($query);
+		return $query->result();
+	}
+	
+	
+	# get downline
+	function get_downline($nipp, $ui_function)
+	{
+		
+		if(substr($ui_function, 8, 2) == '12') # staff non team
+		{
+			if(substr($ui_function, 6, 2) == '01')
+			{
+				$query =('
+				SELECT * FROM user_identity
+				WHERE ui_function LIKE \'' . substr($ui_function, 0, 6) . '__16\'
+				');
+			}
+			else
+			{
+				$query =('
+				SELECT * FROM user_identity
+				WHERE ui_function LIKE \'' . substr($ui_function, 0, 6) . '__16\'
+				');
+			}
+		}
+		elseif(substr($ui_function, 8, 2) == '11') # supervisor
+		{
+			$query =('
+			SELECT * FROM user_identity
+			WHERE ui_function LIKE \'' . substr($ui_function, 0, 6) . '__12\'
+			');
+		}
+		elseif(substr($ui_function, 8, 2) == '10') # assman
+		{
+			$query =('
+			SELECT * FROM user_identity
+			WHERE ui_function LIKE \'' . substr($ui_function, 0, 4) . '____11\'
+			');
+		}
+		elseif(substr($ui_function, 8, 2) == '09') # manager
+		{
+			$query =('
+			SELECT * FROM user_identity
+			WHERE ui_function LIKE \'' . substr($ui_function, 0, 2) . '______10\'
+			');
+		}
+		
+		$query = $this->db->query($query);
+		return $query->result();
+	}
+	
 // =====================================================================================	
 	
 	# category by group

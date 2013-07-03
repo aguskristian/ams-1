@@ -100,16 +100,16 @@ class User_model extends CI_Model
 # do verification --------------------------------------------------------
 	function do_verification($email, $pin)
  	{
-	   $this -> db -> select('uv_email, uv_pin, uv_link');
-	   $this -> db -> from('user_verification');
-	   $this -> db -> where('uv_email', $email);
-	   $this -> db -> where('uv_pin', $pin);
+	   $this->db->select('uv_email, uv_pin, uv_link');
+	   $this->db->from('user_verification');
+	   $this->db->where('uv_email', $email);
+	   $this->db->where('uv_pin', $pin);
 	   
-	   $this -> db -> limit(1);
+	   $this->db-> limit(1);
 	
-	   $query = $this -> db -> get();
+	   $query = $this->db->get();
 
-	   if($query -> num_rows() == 1)
+	   if($query->num_rows() == 1)
 	   {
 		 # update verification field on user identity table
 		 $data = array(
@@ -123,7 +123,7 @@ class User_model extends CI_Model
 		 $this->db->delete('user_verification', array('uv_email' => $email)); 
 		 
 		 # autologin verified user
-		 $this -> db -> select('ui_id, ui_nama, ui_nipp, ui_hp, ui_email, ui_cabang, ui_unit, ui_jabatan, ui_app_level, ui_app_role, ui_verification, ui_ver_date');
+		 $this -> db -> select('*');
 	     $this -> db -> from('user_identity');
 	     $this -> db -> where('ui_email', $email);
 		 $this -> db -> where('ui_verification', 'y');

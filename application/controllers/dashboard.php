@@ -53,6 +53,9 @@ class Dashboard extends CI_Controller {
 		  
 		$unit = $session_data['ui_unit'];
 		$data['unit'] = $unit;
+		
+		$function = $session_data['ui_function'];
+		$data['function'] = $function;
 		  
 		$data['error'] ='';
 		  

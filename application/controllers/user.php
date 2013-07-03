@@ -264,6 +264,7 @@ class User extends CI_Controller {
 				 'ui_cabang' => $row->ui_cabang, 
 				 'ui_unit' => $row->ui_unit, 
 				 'ui_jabatan' => $row->ui_jabatan, 
+				 'ui_function' => $row->ui_function,
 				 'ui_app_level' => $row->ui_app_level, 
 				 'ui_app_role' => $row->ui_app_role, 
 				 'ui_verification' => $row->ui_verification, 
