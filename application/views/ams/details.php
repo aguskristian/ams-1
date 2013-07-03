@@ -18,6 +18,8 @@
 -->              <tbody>
                 <?php foreach ($query as $row):{ ?>
                 
+                <?php $docs_id = $row->docs_id; ?>
+                
                 <tr>
                   <td width="35%">Tanggal Penerimaan</td>
                   <td> : </td>
@@ -139,6 +141,7 @@
 						?>
 					</td>
                 </tr>
+                <?php $latest_nipp = $pos->ui_nipp ; ?>
                 <?php } endforeach; ?> 
               </tbody>
             </table>
@@ -151,6 +154,9 @@
     <div class="block span6">
         <a href="#widget1container" class="block-heading" data-toggle="collapse">ACTION </a>
         <div id="tablewidget" class="block-body collapse in">
+            
+            <?php if($nipp == $latest_nipp){ ?>
+            
             <table class="table">
               <thead>
                 <tr>
@@ -160,9 +166,9 @@
               </thead>
               <tbody>
               
-                
+                <?php echo form_open('docs/document_action'); ?>
                 <tr>
-                  <td width="35%"><?php echo form_radio('newsletter', 'report', FALSE); ?> Report</td>
+                  <td width="35%"><?php echo form_radio('docs_action', 'report', FALSE); ?> Report</td>
                   <td>
 				  	<?php
                   		$dropdown = array();
@@ -170,51 +176,55 @@
                             {
                             $dropdown[$row->ui_nipp] = strtoupper($row->ui_nama);
                             }
-                         echo form_dropdown('ds_content', $dropdown, 'unknown');
+                         echo form_dropdown('report', $dropdown, 'unknown');
 					?>
                   </td>
                  
              	</tr>
                  <tr>
-                  <td width="35%"><?php echo form_radio('newsletter', 'coordination', FALSE); ?> Coordination</td>
+                  <td width="35%"><?php echo form_radio('docs_action', 'coordination', FALSE); ?> Coordination</td>
                   <td><?php
 				  		$dropdown_colleagues = array();
                             foreach($query_colleagues as $row_colleagues) 
                             {
                             $dropdown_colleagues[$row_colleagues->ui_nipp] = strtoupper($row_colleagues->ui_nama);
                             }
-                         echo form_dropdown('colleagues', $dropdown_colleagues, '222');
+                         echo form_dropdown('coordination', $dropdown_colleagues, '222');
 					?></td>
                  
              	</tr>
                 <tr>
-                  <td><?php echo form_radio('newsletter', 'disposition', TRUE); ?> Disposition</td>
+                  <td><?php echo form_radio('docs_action', 'disposition', TRUE); ?> Disposition</td>
                   <td><?php
 				  		$dropdown_downline = array();
                             foreach($query_downline as $row_downline) 
                             {
                             $dropdown_downline[$row_downline->ui_nipp] = strtoupper($row_downline->ui_nama);
                             }
-                         echo form_dropdown('colleagues', $dropdown_downline, '222');
+                         echo form_dropdown('disposition', $dropdown_downline, '222');
 					?></td>
                 </tr>
                 <tr>
-                  <td width="35%">&nbsp;</td>
-                  <td><?php echo form_textarea('report_description',''); ?></td>
+                  <td width="35%">Judul</td>
+                  <td><?php echo form_input('docs_subject',''); ?></td>
              	</tr>
                 <tr>
-                  <td width="35%">&nbsp;</td>
+                  <td width="35%">Keterangan</td>
+                  <td><?php echo form_textarea('docs_description',''); ?></td>
+             	</tr>
+                <tr>
+                  <td width="35%">Upload file (optional)</td>
                   <td><?php echo form_upload('file',''); ?></td>
              	</tr>
                 <tr>
                   <td width="35%">&nbsp;</td>
                   <td><?php echo form_submit('submit','submit'); ?></td>
              	</tr>
-               
-               
+               <?php echo form_hidden('docs_id', $docs_id); ?>
+               <?php echo form_close(); ?>
               </tbody>
             </table>
-           
+         <?php } ?>  
         </div>
     </div>
 	

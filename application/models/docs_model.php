@@ -76,15 +76,7 @@ class Docs_model extends CI_Model
 		$this->db->insert('docs_flow', $data);
 	}
 	
-	# get manager nipp
-	function get_manager_nipp($cabang, $unit)
-	{
-		$this->db->where('ui_cabang', $cabang);
-		$this->db->where('ui_unit', $unit);
-		$this->db->where('ui_jabatan', 'manager');
-		$query = $this->db->get('user_identity'); 
-		return $query->result();
-	}
+	
 	
 	# get my statistic open status
 	function stat_my_open($nipp)
@@ -145,6 +137,7 @@ class Docs_model extends CI_Model
 		ON docs_flow.df_docs_id = docs_position.dp_docs_id
 		WHERE docs_position.dp_position = \'' . $nipp . '\'
 		AND docs_position.dp_status = \'open\'
+		GROUP BY docs.docs_id
 		');
 		$query = $this->db->query($query);
 		return $query->result();		
@@ -161,6 +154,7 @@ class Docs_model extends CI_Model
 		ON docs_flow.df_docs_id = docs_position.dp_docs_id
 		WHERE docs_position.dp_position = \'' . $nipp . '\'
 		AND docs_position.dp_status = \'progress\'
+		GROUP BY docs.docs_id
 		');
 		$query = $this->db->query($query);
 		return $query->result();		
@@ -177,6 +171,7 @@ class Docs_model extends CI_Model
 		ON docs_flow.df_docs_id = docs_position.dp_docs_id
 		WHERE docs_position.dp_position = \'' . $nipp . '\'
 		AND docs_position.dp_status = \'completed\'
+		GROUP BY docs.docs_id
 		');
 		$query = $this->db->query($query);
 		return $query->result();		
@@ -193,6 +188,7 @@ class Docs_model extends CI_Model
 		ON docs_flow.df_docs_id = docs_position.dp_docs_id
 		WHERE docs_position.dp_position = \'' . $nipp . '\'
 		AND docs_position.dp_status = \'closed\'
+		GROUP BY docs.docs_id
 		');
 		$query = $this->db->query($query);
 		return $query->result();		
@@ -230,9 +226,23 @@ class Docs_model extends CI_Model
 	{
 		$this->db->where('dp_docs_id', $docs_id);
 		$this->db->join('user_identity', 'user_identity.ui_nipp = docs_position.dp_position');
+		$this->db->order_by("dp_id", "asc"); 
 		$query_position = $this->db->get('docs_position'); 
 		return $query_position->result();
 	}
+	
+	# get manager nipp
+	function get_manager_nipp($nipp, $ui_function)
+	{
+		$query =('
+		SELECT * FROM user_identity
+		WHERE ui_function LIKE \'' . substr($ui_function, 0, 4) . '____09\'
+		AND ui_nipp <> \'' . $nipp . '\'
+		');
+		$query = $this->db->query($query);
+		return $query->result();
+	}
+	
 	
 	# get upline
 	function get_upline($nipp, $ui_function)
@@ -354,10 +364,21 @@ class Docs_model extends CI_Model
 		}
 		elseif(substr($ui_function, 8, 2) == '10') # assman
 		{
-			$query =('
+			if(substr($ui_function, 6, 2) == '01')
+			{
+				$query =('
 			SELECT * FROM user_identity
-			WHERE ui_function LIKE \'' . substr($ui_function, 0, 4) . '____11\'
+			WHERE ui_function LIKE \'' . substr($ui_function, 0, 6) . '__12\'
 			');
+			}
+			else
+			{
+				$query =('
+			SELECT * FROM user_identity
+			WHERE ui_function LIKE \'' . substr($ui_function, 0, 6) . '__11\'
+			');			}
+			
+			
 		}
 		elseif(substr($ui_function, 8, 2) == '09') # manager
 		{

@@ -80,6 +80,9 @@ class Docs extends CI_Controller {
 		$email = $session_data['ui_email'];
 		$data['email'] = $email;
 		
+		$ui_function = $session_data['ui_function'];
+		$data['ui_function'] = $ui_function;
+		
 		$cabang = $session_data['ui_cabang'];
 		$data['cabang'] = $cabang;
 		
@@ -144,7 +147,7 @@ class Docs extends CI_Controller {
 		}
 		
 		# get manager nipp
-		$query = $this->docs_model->get_manager_nipp($cabang, $unit);
+		$query = $this->docs_model->get_manager_nipp($nipp, $ui_function);
 		foreach($query as $manager) :
 			$manager_nipp = $manager->ui_nipp;	
 		endforeach;
@@ -221,7 +224,7 @@ class Docs extends CI_Controller {
 		$data['query_upline'] = $this->docs_model->get_upline($nipp, $ui_function);
 		$data['query_colleagues'] = $this->docs_model->get_colleagues($nipp, $ui_function);
 		$data['query_downline'] = $this->docs_model->get_downline($nipp, $ui_function);
-		print_r($data);
+		
 		# call view
 		$this->load->view('template/header');
 		$this->load->view('template/sidebar', $data);
@@ -251,27 +254,49 @@ class Docs extends CI_Controller {
 		$unit = $session_data['ui_unit'];
 		$data['unit'] = $unit;
 		
-		##$ui_function = $session_data['ui_function'];
-		#$data['ui_function'] = $ui_function;
-		$ui_function = '0405020212';
-		  
-		$data['error'] ='';
-		  
-		$data['title'] = 'Dashboard';
+		# get data from form
+		$docs_id = $this->input->post('docs_id');
+		$docs_action = $this->input->post('docs_action');
+		$nipp_target = $this->input->post('' . $docs_action . '');
+		$docs_subject = $this->input->post('docs_subject');
+		$docs_description = $this->input->post('docs_description');
 		
-		# get upline
-		$data['query'] = $this->docs_model->get_upline($nipp, $ui_function);
-		print_r($data);
-		#get staff
-		#echo 'staff' . substr($ui_function, 8, 2);
 		
-		#get staff non team
-		#echo substr($ui_function, 0, 4);
+		# update own docs_position
+		$dp_docs_id = $docs_id;
+		$dp_position = $nipp;
+		$dp_status = 'completed';
+		$dp_date_in = '0000-00-00 00:00:00';
+		$dp_date_out = date('Y-m-d H:i:s');
+		$dp_update_by = $nipp;
 		
-		# get colleague
+		$this->docs_model->update_docs_position($dp_docs_id, $dp_position, $dp_status, $dp_date_in, $dp_date_out, $dp_update_by);
 		
-		# get downline
+		# update docs_flow
+		$df_docs_id = $docs_id;
+		$df_flow = $docs_action;
+		$df_from = $nipp;
+		$df_to = $nipp_target;
+		$df_subject = $docs_subject;
+		$df_description = $docs_description;
+		$df_update_by = $nipp;
 		
+		$this->docs_model->update_docs_flow($df_docs_id, $df_flow, $df_from, $df_to, $df_subject, $df_description, $df_update_by);
+		
+		
+		
+		# update target docs_position to manager
+		$dp_docs_id = $docs_id;
+		$dp_position = $nipp_target;
+		$dp_status = 'open';
+		$dp_date_in = date('Y-m-d H:i:s');
+		$dp_date_out = '0000-00-00 00:00:00';
+		$dp_update_by = $nipp;
+		
+		$this->docs_model->update_docs_position($dp_docs_id, $dp_position, $dp_status, $dp_date_in, $dp_date_out, $dp_update_by);
+		
+		
+		redirect('dashboard');
 	}
 
 
