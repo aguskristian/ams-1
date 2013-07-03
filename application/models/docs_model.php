@@ -9,7 +9,7 @@ class Docs_model extends CI_Model
     }
 
 	# docs upload
-	function save_docs($docs_date_in, $docs_reg_no, $docs_type,$docs_no,$docs_date,$docs_from,$docs_to,$docs_copy,$docs_subject,$docs_remarks, $docs_update_by)
+	function save_docs($docs_date_in, $docs_reg_no, $docs_type,$docs_no,$docs_date,$docs_from,$docs_to,$docs_copy,$docs_subject,$docs_description, $docs_update_by)
 	{
 		$data = array(
 		'docs_date_in'	=>	 $docs_date_in,
@@ -21,7 +21,7 @@ class Docs_model extends CI_Model
 		'docs_from'		=>	 $docs_from,	 	 	 	 	 	 	
 		'docs_copy'		=>   $docs_copy,		 	 	 	 	 	 	
 		'docs_subject'	=>	 $docs_subject,	 	 	 	 	 	 	
-		'docs_remarks'	=>	 $docs_remarks,	 	 	 	 	 	 	
+		'docs_description'	=>	 $docs_description,	 	 	 	 	 	 	
 		'docs_update_by' =>  $docs_update_by,
 		);
 		$this->db->insert('docs', $data);
@@ -48,7 +48,7 @@ class Docs_model extends CI_Model
 	}
 	
 	# update docs position
-	function update_docs_position($dp_docs_id, $dp_position, $dp_status, $dp_date_in, $dp_date_out, $dp_update_by)
+	function set_docs_position($dp_docs_id, $dp_position, $dp_status, $dp_date_in, $dp_date_out, $dp_update_by)
 	{
 		$data = array(
 		'dp_docs_id' => $dp_docs_id,
@@ -59,6 +59,25 @@ class Docs_model extends CI_Model
 		'dp_update_by' => $dp_update_by,
 		);
 		$this->db->insert('docs_position', $data);
+		
+		 
+	}
+	
+	# update docs position
+	function update_docs_position($dp_docs_id, $dp_position, $dp_status, $dp_date_out, $dp_update_by)
+	{
+		$data = array(
+		'dp_status' => $dp_status,
+		'dp_date_out' => $dp_date_out,
+		'dp_update_by' => $dp_update_by,
+		);
+		#$this->db->insert('docs_position', $data);
+		
+		$this->db->where('dp_docs_id', $dp_docs_id);
+		$this->db->where('dp_position', $dp_position);
+		$this->db->where('dp_status', 'open');
+		$this->db->where('dp_date_out', '0000-00-00 00:00:00');
+		$this->db->update('docs_position', $data); 
 	}
 	
 	# update docs flow
@@ -74,6 +93,7 @@ class Docs_model extends CI_Model
 		'df_update_by' => $df_update_by,
 		);
 		$this->db->insert('docs_flow', $data);
+		
 	}
 	
 	
@@ -199,9 +219,6 @@ class Docs_model extends CI_Model
 	{
 		$query_docs_view =('
 		SELECT * FROM docs
-		LEFT JOIN docs_flow 
-		ON docs_flow.df_docs_id = docs.docs_id 
-		
 		WHERE docs_id = \'' . $docs_id . '\'
 		');
 		$query = $this->db->query($query_docs_view);
@@ -220,6 +237,23 @@ class Docs_model extends CI_Model
 		');
 		$query = $this->db->query($query_docs_view);
 		return $query->result();
+	}
+	
+	
+	function get_flow_by_id($docs_id)
+	{
+		$query_flow =('
+			SELECT docs_flow.*, user_from.ui_nama as from_user, user_to.ui_nama as to_user
+			FROM docs_flow
+			LEFT JOIN ( select * from user_identity ) as user_from on docs_flow.df_from = user_from.ui_nipp
+			LEFT JOIN ( select * from user_identity ) as user_to on docs_flow.df_to = user_to.ui_nipp
+					
+			WHERE df_docs_id = \'' . $docs_id . '\'
+		');
+		$query_flow = $this->db->query($query_flow);
+		return $query_flow->result();
+
+		
 	}
 	
 	function docs_position($docs_id)

@@ -16,7 +16,7 @@
                 </tr>
               </thead>
 -->              <tbody>
-                <?php foreach ($query as $row):{ ?>
+                <?php foreach ($query_docs as $row):{ ?>
                 
                 <?php $docs_id = $row->docs_id; ?>
                 
@@ -63,7 +63,7 @@
                 <tr>
                   <td>Keterangan</td>
                    <td> : </td>
-                  <td><?php echo $row->docs_remarks ;?></td>
+                  <td><?php echo $row->docs_description ;?></td>
                 </tr>
                 
                 <?php } endforeach; ?>
@@ -96,52 +96,38 @@
     
     
     <div class="block span6">
-        <a href="#widget1container" class="block-heading" data-toggle="collapse">HISTORY </a>
+        <a href="#widget1container" class="block-heading" data-toggle="collapse">DOCUMENT TRACKING </a>
         <div id="widget1container" class="block-body collapse in">
         	<table class="table">
              <thead>
                 <tr>
-                  <th width="20%">PIC</th>
-                  <th width="20%">IN</th>
-                  <th width="20%">OUT</th>
+                  <th width="20%">FROM</th>
+                  <th width="20%">TO</th>
                   <th width="20%">STATUS</th>
-                  <th width="20%">Duration</th>
+                  <th width="20%">DATE</th>
+                 
                 </tr>
               </thead>
               <tbody>
-                <?php foreach ($query_position as $pos):{ ?>
+                <?php foreach ($query_flow as $pos):{ ?>
                 
                 <tr>
-                	<td><?php echo $pos->ui_nama ;?></td>
-                  	<td><?php echo mdate("%d-%m-%Y %h:%i", strtotime($pos->dp_date_in)) ;?></td>
-                    <td>
-						<?php
-							if($pos->dp_date_out == '0000-00-00 00:00:00')
-							{
-								echo $pos->dp_date_out ;
-							}
-							else
-							{
-								echo mdate("%d-%m-%Y %h:%i", strtotime($pos->dp_date_out)) ;
-							}
-						?>
-                   	</td>
-                    <td><?php echo $pos->dp_status ;?></td>
-                    <td>
-						<?php
-							if($pos->dp_date_out == '0000-00-00 00:00:00')
-							{
-								
-								echo number_format((strtotime(date('Y-m-d H:i:s')) - strtotime($pos->dp_date_in))/(60*60*24),1) . ' hari';
-							}
-							else
-							{
-								echo number_format((strtotime($pos->dp_date_out) - strtotime($pos->dp_date_in))/(60*60*24), 1) . ' hari';
-							}
-						?>
-					</td>
+                	<td><?php echo ucwords($pos->from_user) ;?></td>
+                    <td><?php echo ucwords($pos->to_user) ;?></td>
+                    <td><?php echo $pos->df_flow ;?></td>
+                  	<td><?php echo mdate("%d-%m-%Y %h:%i", strtotime($pos->df_update_on)) ;?></td>
+                   
                 </tr>
-                <?php $latest_nipp = $pos->ui_nipp ; ?>
+                <?php 
+					if (! $pos->df_to == NULL )
+					{
+						$latest_nipp = $pos->df_to ; 
+					}
+					else
+					{
+						$latest_nipp = '0000000';
+					}
+					?>
                 <?php } endforeach; ?> 
               </tbody>
             </table>
@@ -152,7 +138,7 @@
 
 <div class="row-fluid">
     <div class="block span6">
-        <a href="#widget1container" class="block-heading" data-toggle="collapse">ACTION </a>
+        <a href="#widget2container" class="block-heading" data-toggle="collapse">ACTION </a>
         <div id="tablewidget" class="block-body collapse in">
             
             <?php if($nipp == $latest_nipp){ ?>
@@ -231,13 +217,15 @@
      
     
     <div class="block span6">
-        <a href="#widget1container" class="block-heading" data-toggle="collapse">DISCUSSION </a>
+        <a href="#widget1container" class="block-heading" data-toggle="collapse">MAN HOURS </a>
         <div id="widget1container" class="block-body collapse in">
         	<table class="table">
              <thead>
                 <tr>
                   <th>PIC</th>
-                  <th>COMMENT</th>
+                  <th>DATE IN</th>
+                  <th>DATE OUT</th>
+                  <th>DURATION</th>
                 </tr>
               </thead>
               <tbody>
@@ -246,6 +234,18 @@
                 <tr>
                 	<td><?php echo $pos->ui_nama ;?></td>
                   	<td><?php echo mdate("%d-%m-%Y %h:%i", strtotime($pos->dp_date_in)) ;?></td>
+                    <td><?php echo mdate("%d-%m-%Y %h:%i", strtotime($pos->dp_date_out)) ;?></td>
+                    <td><?php 
+							if($pos->dp_date_out == '0000-00-00 00:00:00')
+							{
+								echo floor((time() - strtotime($pos->dp_date_in))/(60*60*24)) . ' day';
+							}
+							else
+							{
+								echo floor((strtotime($pos->dp_date_out) - strtotime($pos->dp_date_in))/(60*60*24)) . ' day';
+							}
+							?>
+                 	</td>
                 </tr>
                 <?php } endforeach; ?> 
               </tbody>

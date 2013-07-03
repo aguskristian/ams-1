@@ -102,13 +102,13 @@ class Docs extends CI_Controller {
 		$docs_from 		= $this->input->post('docs_from');
 		$docs_copy 		= $this->input->post('docs_copy');
 		$docs_subject 	= $this->input->post('docs_subject');
-		$docs_remarks 	= $this->input->post('docs_remarks');
+		$docs_description 	= $this->input->post('docs_description');
 		$docs_update_by = $nipp;
 		
 		# do form validation ( next )
 		
 		# do save data
-		$docs_id = $this->docs_model->save_docs($docs_date_in, $docs_reg_no, $docs_type,$docs_no,$docs_date,$docs_from,$docs_to,$docs_copy,$docs_subject,$docs_remarks, $docs_update_by);
+		$docs_id = $this->docs_model->save_docs($docs_date_in, $docs_reg_no, $docs_type,$docs_no,$docs_date,$docs_from,$docs_to,$docs_copy,$docs_subject,$docs_description, $docs_update_by);
 		
 		# set upload config
 		$config['upload_path'] = './assets/uploads/files/';
@@ -160,7 +160,7 @@ class Docs extends CI_Controller {
 		$dp_date_out = date('Y-m-d H:i:s');
 		$dp_update_by = $nipp;
 		
-		$this->docs_model->update_docs_position($dp_docs_id, $dp_position, $dp_status, $dp_date_in, $dp_date_out, $dp_update_by);
+		$this->docs_model->set_docs_position($dp_docs_id, $dp_position, $dp_status, $dp_date_in, $dp_date_out, $dp_update_by);
 		
 		# update docs_flow
 		$df_docs_id = $docs_id;
@@ -183,7 +183,7 @@ class Docs extends CI_Controller {
 		$dp_date_out = '0000-00-00 00:00:00';
 		$dp_update_by = $nipp;
 		
-		$this->docs_model->update_docs_position($dp_docs_id, $dp_position, $dp_status, $dp_date_in, $dp_date_out, $dp_update_by);
+		$this->docs_model->set_docs_position($dp_docs_id, $dp_position, $dp_status, $dp_date_in, $dp_date_out, $dp_update_by);
 		
 		redirect('dashboard');
 	}
@@ -218,13 +218,16 @@ class Docs extends CI_Controller {
 		
 		# get data from form
 		$docs_id = $this->uri->segment(3, 0);
-		$data['query'] = $this->docs_model->get_doc_by_id($docs_id);
-		$data['query_position'] = $this->docs_model->docs_position($docs_id);
+		$data['query_docs'] = $this->docs_model->get_doc_by_id($docs_id);
 		$data['query_files'] = $this->docs_model->get_files_by_id($docs_id);
+		$data['query_flow'] = $this->docs_model->get_flow_by_id($docs_id);
+		
+		$data['query_position'] = $this->docs_model->docs_position($docs_id);
+		
 		$data['query_upline'] = $this->docs_model->get_upline($nipp, $ui_function);
 		$data['query_colleagues'] = $this->docs_model->get_colleagues($nipp, $ui_function);
 		$data['query_downline'] = $this->docs_model->get_downline($nipp, $ui_function);
-		
+		#print_r($data);
 		# call view
 		$this->load->view('template/header');
 		$this->load->view('template/sidebar', $data);
@@ -266,11 +269,10 @@ class Docs extends CI_Controller {
 		$dp_docs_id = $docs_id;
 		$dp_position = $nipp;
 		$dp_status = 'completed';
-		$dp_date_in = '0000-00-00 00:00:00';
 		$dp_date_out = date('Y-m-d H:i:s');
 		$dp_update_by = $nipp;
 		
-		$this->docs_model->update_docs_position($dp_docs_id, $dp_position, $dp_status, $dp_date_in, $dp_date_out, $dp_update_by);
+		$this->docs_model->update_docs_position($dp_docs_id, $dp_position, $dp_status, $dp_date_out, $dp_update_by);
 		
 		# update docs_flow
 		$df_docs_id = $docs_id;
@@ -293,7 +295,7 @@ class Docs extends CI_Controller {
 		$dp_date_out = '0000-00-00 00:00:00';
 		$dp_update_by = $nipp;
 		
-		$this->docs_model->update_docs_position($dp_docs_id, $dp_position, $dp_status, $dp_date_in, $dp_date_out, $dp_update_by);
+		$this->docs_model->set_docs_position($dp_docs_id, $dp_position, $dp_status, $dp_date_in, $dp_date_out, $dp_update_by);
 		
 		
 		redirect('dashboard');
