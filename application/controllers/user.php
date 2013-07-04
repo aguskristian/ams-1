@@ -25,7 +25,7 @@ class User extends CI_Controller {
 		$this->load->model('user_model','', TRUE);
 		
 		# user restriction
-		/*if ( ! $this->session->userdata('logged_in'))
+		if ( ! $this->session->userdata('logged_in'))
     	{ 
         	# function allowed for access without login
 			$allowed = array('index', 'login', 'do_login', 'pin_verification', 'do_pin_verification', 'registration', 'do_registration', 'select_unit');
@@ -35,7 +35,7 @@ class User extends CI_Controller {
 			{
     			redirect('user/login');
 			}
-   		 }*/
+   		 }
     }
 # constuction ------------------------------	
 
@@ -181,7 +181,7 @@ class User extends CI_Controller {
 						<p>Your verification code : ' . $pin . '</p>
 						<p>or</p>
 						<p>Please click link below to verify your request :</p>
-						<p>{unwrap}' . anchor("user/verification/" . $email_link, 'http://ams.gapura.co.id/user/verification/' . $email_link) . '{/unwrap}</p>
+						<p>{unwrap}' . anchor("user/verification/" . $email_link, 'http://ams.dps.gapura.co.id/user/verification/' . $email_link) . '{/unwrap}</p>
 						<p>Thank you</p>
 						<p>Best regards</p>
 						<p>SIGAP Team</p>
@@ -193,7 +193,7 @@ class User extends CI_Controller {
 						$this->email->send();
 						
 						# show link for develope mode only, please disable on run mode
-						echo $email . ' - ' . $pin . ' - ' . $email_link;
+						#echo $email . ' - ' . $pin . ' - ' . $email_link;
 						
 						# call views
 						$data['message'] = 'masukan kode verifikasi yang anda terima di inbox email.';

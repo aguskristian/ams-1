@@ -86,14 +86,16 @@
                    <td> : </td>
                   <td>
 				  	<?php 
-						$docs_real_name = $this->encrypt->decode($row_files->df_real_name, 'eman_elif');
-						$docs_system_name = $this->encrypt->decode($row_files->df_system_name, 'siHdmY');
-						$docs_ext = $this->encrypt->decode($row_files->df_ext, 'txe_elif');
-						$docs_file_path = $row_files->df_file_path;
-						$filename = $docs_system_name . $docs_ext;
+						#$docs_real_name = $this->encrypt->decode($row_files->df_real_name, 'eman_elif');
+						#$docs_system_name = $this->encrypt->decode($row_files->df_system_name, 'siHdmY');
+						#$docs_ext = $this->encrypt->decode($row_files->df_ext, 'txe_elif');
+						#$docs_file_path = $row_files->df_file_path;
+						#$filename = $docs_system_name . $docs_ext;
 						#echo base_url() . 'assets/uploads/files/' . $row_files->df_real_name ;
 					?>
-                    <a href="<?php echo $row_files->df_file_path; ?>wp-uploads/<?php echo $row_files->df_real_name; ?> "><?php echo $row_files->df_real_name; ?></a>
+                    <a href="<?php echo base_url(); ?>wp-uploads/<?php echo $row_files->df_system_name . '-' . $row_files->df_real_name; ?> "><?php echo $row_files->df_real_name; ?></a>
+                    
+                   
                 	</td>
                 </tr>
                 

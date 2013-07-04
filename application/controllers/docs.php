@@ -241,8 +241,6 @@ class Docs extends CI_Controller {
 		$data['query_colleagues'] = $this->docs_model->get_colleagues($nipp, $ui_function);
 		$data['query_downline'] = $this->docs_model->get_downline($nipp, $ui_function);
 		
-		print_r($data);
-		
 		# call view
 		$this->load->view('template/header');
 		$this->load->view('template/sidebar', $data);
@@ -352,7 +350,8 @@ class Docs extends CI_Controller {
 		
 		
 		# set upload config
-		$config['upload_path'] = './assets/uploads/files/';
+		#$config['upload_path'] = './assets/uploads/files/';
+		$config['upload_path'] = './wp-uploads/';
 		$config['allowed_types'] = 'pdf|gif|jpg|png|jpeg|bmp|doc|docx|xls|xlsx|ppt|pptx|pps|ppsx';
 		$config['max_size']	= '99999';
 		$config['max_width']  = '99999';
