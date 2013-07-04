@@ -7,10 +7,11 @@
 
 <div id="tabs">
   <ul>
-    <li><a href="#tabs-1">Details</a></li>
-    <li><a href="#tabs-2">Tracking</a></li>
-    <li><a href="#tabs-3">Action</a></li>
-    <li><a href="#tabs-4">Man Hours</a></li>
+    <li><a href="#tabs-1">details</a></li>
+    <li><a href="#tabs-2">tracking</a></li>
+    <li><a href="#tabs-3">action</a></li>
+    <li><a href="#tabs-4">discussion</a></li>
+    <li><a href="#tabs-5">flow control</a></li>
   </ul>
   <div id="tabs-1">
 <p><strong>DOCUMENT DETAILS</strong></p>
@@ -90,8 +91,9 @@
 						$docs_ext = $this->encrypt->decode($row_files->df_ext, 'txe_elif');
 						$docs_file_path = $row_files->df_file_path;
 						$filename = $docs_system_name . $docs_ext;
-						echo $row_files->df_user_name ;
+						#echo base_url() . 'assets/uploads/files/' . $row_files->df_real_name ;
 					?>
+                    <a href="<?php echo $row_files->df_file_path; ?>wp-uploads/<?php echo $row_files->df_real_name; ?> "><?php echo $row_files->df_real_name; ?></a>
                 	</td>
                 </tr>
                 
@@ -158,7 +160,7 @@
               </thead>
               <tbody>
               
-                <?php echo form_open('docs/document_action'); ?>
+                <?php echo form_open_multipart('docs/document_action'); ?>
                 <tr>
                   <td width="35%"><?php echo form_radio('docs_action', 'report', FALSE); ?> Report</td>
                   <td>
@@ -237,6 +239,70 @@
   </div>
   
   <div id="tabs-4">
+  	<p><strong>OPEN DISCUSSION</strong></p>
+  	<p>Diskusi antar pertugas yang pernah di assignment document ini</p>
+  	<p>&nbsp;</p>
+    <p>
+    	<table>
+        	
+        	<tr>
+            	<td width="40%">
+                	<strong>ADD NEW MESSAGE</strong>
+					<?php echo form_open('docs/add_discussion'); ?>
+                    <?php echo form_hidden('docs_id', $docs_id); ?>
+                	<table>
+                    	<tr>
+                        	<td>subject</td>
+                        </tr>
+                    	<tr>
+                        	<td><?php echo form_input('subject','');?></td>
+                        </tr>
+                        <tr>
+                        	<td>message</td>
+                        </tr>
+                        <tr>
+                        	<td><?php echo form_textarea('message',''); ?></td>
+                        </tr>
+                        <tr>
+                        	<td><?php echo form_submit('submit', 'post'); ?></td>
+                        </tr>
+                    </table>
+                    <?php echo form_close(); ?>
+                    
+                </td>
+                <td valign="top" width="60%">
+                   <table class="table">
+                             <thead>
+                                <tr>
+                                  <th colspan="4">FORUM DISKUSI</th>
+                                </tr>
+                                <tr>
+                                	<th>sender</th>
+                                    <th>date</th>
+                                    <th>subject</th>
+                                    <th>message</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <?php foreach ($query_discussion as $dis):{ ?>
+                                
+                                <tr>
+                                    <td><small><?php echo $dis->ui_nama ;?></small></td>
+                                    <td><small><?php echo mdate("%d-%m-%Y %h:%i", strtotime($dis->dd_update_on)) ;?></small></td>
+                                    <td><?php echo $dis->dd_subject ;?></td>
+                                    <td><?php echo $dis->dd_message ;?></td>
+                                </tr>
+                                <?php } endforeach; ?> 
+                              </tbody>
+                    </table>
+              
+              		</td>
+            	</tr>        
+        	</table>
+       </p>
+  </div>
+  
+  <div id="tabs-5">
   	<p><table class="table">
              <thead>
                 <tr>

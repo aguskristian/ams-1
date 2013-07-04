@@ -117,7 +117,8 @@ class Docs extends CI_Controller {
 		$docs_id = $this->docs_model->save_docs($docs_date_in, $docs_reg_no, $docs_type,$docs_no,$docs_date,$docs_from,$docs_to,$docs_copy,$docs_subject,$docs_description, $docs_update_by);
 		
 		# set upload config
-		$config['upload_path'] = './assets/uploads/files/';
+		#$config['upload_path'] = './assets/uploads/files/';
+		$config['upload_path'] = './wp-uploads/';
 		$config['allowed_types'] = 'pdf|gif|jpg|png|jpeg|bmp|doc|docx|xls|xlsx|ppt|pptx|pps|ppsx';
 		$config['max_size']	= '99999';
 		$config['max_width']  = '99999';
@@ -135,10 +136,13 @@ class Docs extends CI_Controller {
 			# GET REAL DATA FOR DB
 			$df_docs_id 	= $docs_id;
 			$df_user_name 	= $this->input->post('docs_no');
-			$df_real_name	= $this->encrypt->encode($upload_data['file_name'], 'eman_elif');
+			#$df_real_name	= $this->encrypt->encode($upload_data['file_name'], 'eman_elif');
+			$df_real_name	= $this->security->sanitize_filename($upload_data['file_name']);
 			$df_file_path 	= $upload_data['file_path'];
-			$df_system_name	= $this->encrypt->encode(date("YmdHis"), 'siHdmY');	
-			$df_ext			= $this->encrypt->encode($upload_data['file_ext'], 'txe_elif');	 	 	 	 	 	 	
+			#$df_system_name	= $this->encrypt->encode(date("YmdHis"), 'siHdmY');	
+			$df_system_name	= date("YmdHis");	
+			#$df_ext			= $this->encrypt->encode($upload_data['file_ext'], 'txe_elif');
+			$df_ext			= $upload_data['file_ext'];	  	 	 	 	 	 	
 			$df_size		= $upload_data['file_size'];	 	 	 	 	 	 	
 			$df_type		= $this->input->post('docs_type');	 	 	 	 	 	 	
 			$df_owner		= $this->input->post('docs_from');
@@ -149,7 +153,7 @@ class Docs extends CI_Controller {
 			$this->docs_model->save_file($df_docs_id, $df_user_name, $df_real_name, $df_file_path, $df_system_name, $df_ext, $df_size, $df_type, $df_owner, $df_update_by);
 			
 			# rename file after upload and remove ext
-			rename($upload_data['full_path'], $upload_data['file_path'] . $system_file_name);
+			rename($upload_data['full_path'], $upload_data['file_path'] . $system_file_name . '-' . $df_real_name);
 		}
 		
 		# get manager nipp
@@ -229,19 +233,60 @@ class Docs extends CI_Controller {
 		$data['query_docs'] = $this->docs_model->get_doc_by_id($docs_id);
 		$data['query_files'] = $this->docs_model->get_files_by_id($docs_id);
 		$data['query_flow'] = $this->docs_model->get_flow_by_id($docs_id);
-		
 		$data['query_position'] = $this->docs_model->docs_position($docs_id);
+		$data['query_discussion'] = $this->docs_model->docs_discussion($docs_id);
 		
+		# get upline, colleagues and downline data
 		$data['query_upline'] = $this->docs_model->get_upline($nipp, $ui_function);
 		$data['query_colleagues'] = $this->docs_model->get_colleagues($nipp, $ui_function);
 		$data['query_downline'] = $this->docs_model->get_downline($nipp, $ui_function);
-		#print_r($data);
+		
+		print_r($data);
+		
 		# call view
 		$this->load->view('template/header');
 		$this->load->view('template/sidebar', $data);
 		$this->load->view('template/breadcumb');
 		$this->load->view('ams/details', $data);
 		$this->load->view('template/footer');
+	}
+	
+	public function add_discussion()
+	{
+		# get data from session
+		$session_data = $this->session->userdata('logged_in');
+		  
+		# data
+		$nama = $session_data['ui_nama'];
+		$data['nama'] = $nama;
+		
+		$nipp = $session_data['ui_nipp'];
+		$data['nipp'] = $nipp;
+		  
+		$email = $session_data['ui_email'];
+		$data['email'] = $email;
+		  
+		$cabang = $session_data['ui_cabang'];
+		$data['cabang'] = $cabang;
+		  
+		$unit = $session_data['ui_unit'];
+		$data['unit'] = $unit;
+		
+		$ui_function = $session_data['ui_function'];
+		$data['ui_function'] = $ui_function;
+		  
+		$data['error'] ='';
+		  
+		$data['title'] = 'Details Document';
+		
+		$data['breadcumb'] = '<li class="active">Detail</li>';
+		
+		$dd_docs_id = $this->input->post('docs_id');
+		$dd_subject = $this->input->post('subject');
+		$dd_message = $this->input->post('message');
+		$this->docs_model->add_docs_discussion($dd_docs_id, $dd_subject, $dd_message, $nipp);
+		
+		redirect('docs/details/' . $dd_docs_id );
 	}
 
 	public function document_action()
@@ -304,6 +349,46 @@ class Docs extends CI_Controller {
 		$dp_update_by = $nipp;
 		
 		$this->docs_model->set_docs_position($dp_docs_id, $dp_position, $dp_status, $dp_date_in, $dp_date_out, $dp_update_by);
+		
+		
+		# set upload config
+		$config['upload_path'] = './assets/uploads/files/';
+		$config['allowed_types'] = 'pdf|gif|jpg|png|jpeg|bmp|doc|docx|xls|xlsx|ppt|pptx|pps|ppsx';
+		$config['max_size']	= '99999';
+		$config['max_width']  = '99999';
+		$config['max_height']  = '99999';
+	
+		# call upload lib
+		$this->load->library('upload', $config);
+				
+		# check is there any file to upload	
+		if ($this->upload->do_upload('file'))
+		{
+			# file to upload = true
+			$upload_data = $this->upload->data();
+			
+			# GET REAL DATA FOR DB
+			$df_docs_id 	= $docs_id;
+			$df_user_name 	= $docs_subject;
+			#$df_real_name	= $this->encrypt->encode($upload_data['file_name'], 'eman_elif');
+			$df_real_name	= $this->security->sanitize_filename($upload_data['file_name']);
+			$df_file_path 	= $upload_data['file_path'];
+			#$df_system_name	= $this->encrypt->encode(date("YmdHis"), 'siHdmY');	
+			$df_system_name	= date("YmdHis");	
+			#$df_ext			= $this->encrypt->encode($upload_data['file_ext'], 'txe_elif');
+			$df_ext			= $upload_data['file_ext'];	  	 	 	 	 	 	
+			$df_size		= $upload_data['file_size'];	 	 	 	 	 	 	
+			$df_type		= $docs_action;	 	 	 	 	 	 	
+			$df_owner		= $nipp;
+			$df_update_by 	= $nipp;
+			$system_file_name = date("YmdHis");	
+			
+			# call model
+			$this->docs_model->save_file($df_docs_id, $df_user_name, $df_real_name, $df_file_path, $df_system_name, $df_ext, $df_size, $df_type, $df_owner, $df_update_by);
+			
+			# rename file after upload and remove ext
+			rename($upload_data['full_path'], $upload_data['file_path'] . $system_file_name . '-' . $df_real_name);
+		}
 		
 		
 		redirect('dashboard');

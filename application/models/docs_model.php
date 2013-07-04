@@ -265,6 +265,28 @@ class Docs_model extends CI_Model
 		return $query_position->result();
 	}
 	
+	function docs_discussion($docs_id)
+	{
+		$this->db->where('dd_docs_id', $docs_id);
+		$this->db->join('user_identity', 'user_identity.ui_nipp = docs_discussion.dd_nipp');
+		$this->db->order_by("dd_id", "asc"); 
+		$query_discussion = $this->db->get('docs_discussion'); 
+		return $query_discussion->result();
+	}
+	
+	function add_docs_discussion($dd_docs_id, $dd_subject, $dd_message, $nipp)
+	{
+		$data = array(
+		'dd_docs_id' => $dd_docs_id,
+		'dd_subject' => $dd_subject,
+		'dd_message' => $dd_message,
+		'dd_nipp' => $nipp,
+		'dd_update_by' => $nipp,
+		);
+		$this->db->insert('docs_discussion', $data);
+		
+	}
+	
 	# get manager nipp
 	function get_manager_nipp($nipp, $ui_function)
 	{
