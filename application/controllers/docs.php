@@ -54,6 +54,12 @@ class Docs extends CI_Controller {
 		
 		# set error message  
 		$data['error'] ='';
+		
+		# title
+		$data['title'] = 'ADD NEW INCOMING DOCUMENT';
+		
+		# breadcumb
+		$data['breadcumb'] = '<li class="active">Document</li>';
 		  
 		# get variable for docs category
 		#$data['query'] = $this->docs_model->get_all_category_for_combo($cabang, $unit);
@@ -214,7 +220,9 @@ class Docs extends CI_Controller {
 		  
 		$data['error'] ='';
 		  
-		$data['title'] = 'Dashboard';
+		$data['title'] = 'Details Document';
+		
+		$data['breadcumb'] = '<li class="active">Detail</li>';
 		
 		# get data from form
 		$docs_id = $this->uri->segment(3, 0);

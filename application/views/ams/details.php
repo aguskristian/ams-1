@@ -3,10 +3,20 @@
 
 
 <div class="row-fluid">
-    <div class="block span6">
-        <a href="#widget1container" class="block-heading" data-toggle="collapse">DETAILS </a>
-        <div id="tablewidget" class="block-body collapse in">
-            <table class="table">
+
+
+<div id="tabs">
+  <ul>
+    <li><a href="#tabs-1">Details</a></li>
+    <li><a href="#tabs-2">Tracking</a></li>
+    <li><a href="#tabs-3">Action</a></li>
+    <li><a href="#tabs-4">Man Hours</a></li>
+  </ul>
+  <div id="tabs-1">
+<p><strong>DOCUMENT DETAILS</strong></p>
+  <p>Details informasi tentang document</p>
+  <p>&nbsp;</p>
+<p><table class="table">
 <!--              <thead>
                 <tr>
                   <th>Tanggal</th>
@@ -88,24 +98,22 @@
 				<?php } endforeach; ?> 
                 
               </tbody>
-            </table>
-           
-        </div>
-    </div>
-	
-    
-    
-    <div class="block span6">
-        <a href="#widget1container" class="block-heading" data-toggle="collapse">DOCUMENT TRACKING </a>
-        <div id="widget1container" class="block-body collapse in">
-        	<table class="table">
+            </table></p>
+  </div>
+  
+  <div id="tabs-2">
+  <p><strong>DOCUMENT TRACKING</strong></p>
+  <p>Track record penanganan document dari user ke user</p>
+  <p>&nbsp;</p>
+    <p><table class="table">
              <thead>
                 <tr>
-                  <th width="20%">FROM</th>
-                  <th width="20%">TO</th>
-                  <th width="20%">STATUS</th>
-                  <th width="20%">DATE</th>
-                 
+                  <th width="10%">FROM</th>
+                  <th width="10%">TO</th>
+                  <th width="10%">STATUS</th>
+                  <th width="10%">DATE</th>
+                  <th width="20%">SUBJECT</th>
+                  <th width="40%">DESCRIPTION</th>
                 </tr>
               </thead>
               <tbody>
@@ -116,7 +124,8 @@
                     <td><?php echo ucwords($pos->to_user) ;?></td>
                     <td><?php echo $pos->df_flow ;?></td>
                   	<td><?php echo mdate("%d-%m-%Y %h:%i", strtotime($pos->df_update_on)) ;?></td>
-                   
+                	<td><?php echo $pos->df_subject ;?></td>
+                    <td colspan="3"><?php echo $pos->df_description ;?></td>
                 </tr>
                 <?php 
 					if (! $pos->df_to == NULL )
@@ -130,24 +139,21 @@
 					?>
                 <?php } endforeach; ?> 
               </tbody>
-            </table>
-            
-        </div>
-    </div>
-</div>
-
-<div class="row-fluid">
-    <div class="block span6">
-        <a href="#widget2container" class="block-heading" data-toggle="collapse">ACTION </a>
-        <div id="tablewidget" class="block-body collapse in">
-            
-            <?php if($nipp == $latest_nipp){ ?>
+            </table></p>
+  </div>
+  
+  <div id="tabs-3">
+  <p><strong>DOCUMENT ACTION</strong></p>
+  <p>Penangangan terhadap document yg akan anda lakukan, apabila form ini tidak tersedia, berarti document saat ini tidak dalam kendali anda.</p>
+  <p>&nbsp;</p>
+    <p><?php if($nipp == $latest_nipp){ ?>
             
             <table class="table">
               <thead>
                 <tr>
-                  <th>Action</th>
-                  <th>Details</th>
+                  <th width="20%">ACTION</th>
+                  <th width="30%">DETAILS</th>
+                  <th width="50%">&nbsp;</th>
                 </tr>
               </thead>
               <tbody>
@@ -165,6 +171,7 @@
                          echo form_dropdown('report', $dropdown, 'unknown');
 					?>
                   </td>
+                  <td><small>gunakan opsi ini untuk melapor pada atasan</small></td>
                  
              	</tr>
                  <tr>
@@ -175,8 +182,9 @@
                             {
                             $dropdown_colleagues[$row_colleagues->ui_nipp] = strtoupper($row_colleagues->ui_nama);
                             }
-                         echo form_dropdown('coordination', $dropdown_colleagues, '222');
+                         echo form_dropdown('coordination', $dropdown_colleagues, '');
 					?></td>
+                    <td><small>gunakan opsi ini untuk melakukan koordinasi dengan rekan sejawat</small></td>
                  
              	</tr>
                 <tr>
@@ -189,7 +197,22 @@
                             }
                          echo form_dropdown('disposition', $dropdown_downline, '222');
 					?></td>
+                    <td><small>gunakan opsi ini untuk melakukan disposisi</small></td>
                 </tr>
+                
+				<?php if (substr($ui_function, 8, 2) == '09') { ?>
+                <tr>
+                  <td><?php echo form_radio('docs_action', 'canceled', FALSE); ?> Canceled</td>
+                  <td><?php echo form_input('canceled',''); ?></td>
+                  <td><small>gunakan opsi ini untuk mengabaikan document dengan memasukan alasannya</small></td>
+                </tr>
+                <tr>
+                  <td><?php echo form_radio('docs_action', 'completed', FALSE); ?> Completed</td>
+                  <td><?php echo form_input('completed',''); ?></td>
+                  <td><small>gunakan opsi ini untuk menyatakan proses thd document telah diselesaikan dengan baik</small></td>
+                </tr>
+                <?php } ?>
+                
                 <tr>
                   <td width="35%">Judul</td>
                   <td><?php echo form_input('docs_subject',''); ?></td>
@@ -210,16 +233,11 @@
                <?php echo form_close(); ?>
               </tbody>
             </table>
-         <?php } ?>  
-        </div>
-    </div>
-	
-     
-    
-    <div class="block span6">
-        <a href="#widget1container" class="block-heading" data-toggle="collapse">MAN HOURS </a>
-        <div id="widget1container" class="block-body collapse in">
-        	<table class="table">
+         <?php } ?>  </p>
+  </div>
+  
+  <div id="tabs-4">
+  	<p><table class="table">
              <thead>
                 <tr>
                   <th>PIC</th>
@@ -249,8 +267,8 @@
                 </tr>
                 <?php } endforeach; ?> 
               </tbody>
-            </table>
-            
-        </div>
-    </div>
+            </table></p>
+  </div>
+</div>
+
 </div>

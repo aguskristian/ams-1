@@ -7,12 +7,13 @@
                 <p class="stat"><span class="number">15</span>completed</p>
 			</div>
 
-            <h1 class="page-title">Dashboard</h1>
+            <h1 class="page-title"><?php echo $title; ?></h1>
         </div>
         
                 <ul class="breadcrumb">
-                    <li><a href="index.html">Home</a> <span class="divider">/</span></li>
-                    <li class="active">Dashboard</li>
+                    <li><?php echo anchor('dashboard', 'Home'); ?></li>
+                    <span class="divider">/</span>
+                    <?php echo $breadcumb; ?>
         		</ul>
 
         <div class="container-fluid">

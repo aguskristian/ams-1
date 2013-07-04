@@ -282,38 +282,38 @@ class Docs_model extends CI_Model
 	function get_upline($nipp, $ui_function)
 	{
 		
-		if(substr($ui_function, 8, 2) == '12') # staff non team
+		if(substr($ui_function, 8, 2) == '12') # staff find upline
 		{
-			if(substr($ui_function, 6, 2) == '01')
+			if(substr($ui_function, 6, 2) == '01') # staff no team find ass man
 			{
 				$query =('
 				SELECT * FROM user_identity
-				WHERE ui_function LIKE \'' . substr($ui_function, 0, 6) . '__10\'
+				WHERE ui_function LIKE \'' . substr($ui_function, 0, 8) . '10\'
 				');
 			}
-			else
+			else  # staff with tema find supv
 			{
 				$query =('
 				SELECT * FROM user_identity
-				WHERE ui_function LIKE \'' . substr($ui_function, 0, 6) . '__11\'
+				WHERE ui_function LIKE \'' . substr($ui_function, 0, 8) . '11\'
 				');
 			}
 		}
-		elseif(substr($ui_function, 8, 2) == '11') # supervisor
+		elseif(substr($ui_function, 8, 2) == '11') # spv find assman
 		{
 			$query =('
 			SELECT * FROM user_identity
 			WHERE ui_function LIKE \'' . substr($ui_function, 0, 6) . '__10\'
 			');
 		}
-		elseif(substr($ui_function, 8, 2) == '10') # assman
+		elseif(substr($ui_function, 8, 2) == '10') # assman find mgr
 		{
 			$query =('
 			SELECT * FROM user_identity
 			WHERE ui_function LIKE \'' . substr($ui_function, 0, 4) . '____09\'
 			');
 		}
-		elseif(substr($ui_function, 8, 2) == '09') # assman
+		elseif(substr($ui_function, 8, 2) == '09') # mgr find gm
 		{
 			$query =('
 			SELECT * FROM user_identity
@@ -330,15 +330,15 @@ class Docs_model extends CI_Model
 	function get_colleagues($nipp, $ui_function)
 	{
 		
-		if(substr($ui_function, 8, 2) == '12') # staff non team
+		if(substr($ui_function, 8, 2) == '12') # staff find staff
 		{
 				$query =('
 				SELECT * FROM user_identity
-				WHERE ui_function LIKE \'' . substr($ui_function, 0, 8) . '12\'
+				WHERE ui_function LIKE \'' . $ui_function . '\'
 				AND ui_nipp <> \'' . $nipp . '\'
 				');
 		}
-		elseif(substr($ui_function, 8, 2) == '11') # supervisor
+		elseif(substr($ui_function, 8, 2) == '11') # supervisor find supervisor
 		{
 			$query =('
 			SELECT * FROM user_identity
@@ -346,7 +346,7 @@ class Docs_model extends CI_Model
 			AND ui_nipp <> \'' . $nipp . '\'
 			');
 		}
-		elseif(substr($ui_function, 8, 2) == '10') # assman
+		elseif(substr($ui_function, 8, 2) == '10') # assman find ass assman
 		{
 			$query =('
 			SELECT * FROM user_identity
@@ -354,7 +354,7 @@ class Docs_model extends CI_Model
 			AND ui_nipp <> \'' . $nipp . '\'
 			');
 		}
-		elseif(substr($ui_function, 8, 2) == '09') # assman
+		elseif(substr($ui_function, 8, 2) == '09') # mgr find mgr
 		{
 			$query =('
 			SELECT * FROM user_identity

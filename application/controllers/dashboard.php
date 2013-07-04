@@ -61,6 +61,8 @@ class Dashboard extends CI_Controller {
 		  
 		$data['title'] = 'Dashboard';
 		
+		$data['breadcumb'] = '<li class="active">Dashboard</li>';
+		
 		# statistic
 		$data['query_open'] 		= $this->docs_model->stat_my_open($nipp);
 		$data['query_progress'] 	= $this->docs_model->stat_my_progress($nipp);

@@ -16,10 +16,17 @@
 	<script src="<?php echo base_url(); ?>wp-content/themes/gapura-angkasa/ams/lib/js/jquery-1.9.1.js" type="text/javascript"></script>
     <script src="<?php echo base_url(); ?>wp-content/themes/gapura-angkasa/ams/lib/js/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
 	<script>
-  $(function() {
-    $( "#docs_date_in" ).datepicker();
-	$( "#docs_date" ).datepicker();
-  });
+		$(function() {
+		$( "#tabs" ).tabs();
+	  });
+  
+	  $(function() {
+		$( "#docs_date_in" ).datepicker();
+		$( "#docs_date" ).datepicker();
+	  });
+  	</script>
+    <script>
+  
   </script>
 
 	
