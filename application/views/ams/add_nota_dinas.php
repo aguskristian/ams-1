@@ -5,7 +5,7 @@
 
 
     <div class="block">
-        <a href="#page-stats" class="block-heading" data-toggle="collapse">INPUT SURAT MASUK</a>
+        <a href="#page-stats" class="block-heading" data-toggle="collapse">NOTA DINAS</a>
         <div id="page-stats" class="block-body collapse in">
         
         <br /><br  />
@@ -15,33 +15,9 @@
                     
 						<fieldset>
 							
-                           <div class="control-group">
-								<label class="control-label" for="input01">Tanggal Penerimaan</label>
-								<div class="controls">
-									<input name="docs_date_in" type="text" id="docs_date_in" />
-                           		</div>
-						   </div>
                            
-                           <div class="control-group">
-								<label class="control-label" for="input01">Nomer Agenda</label>
-								<div class="controls">
-									<input name="docs_reg_no" type="text" value="" />
-								</div>
-							</div>
                            
-                           <div class="control-group">
-								<label class="control-label" for="input01">Jenis</label>
-								<div class="controls">
-                                	<select name="docs_type">
-                                      <option value="memo">Memo</option>
-                                      <option value="notadinas" selected="selected">Nota Dinas</option>
-                                      <option value="surat">Surat</option>
-                                      <option value="sk">Surat Keputusan</option>
-                                      <option value="ba">Berita Acara</option>
-                                      <option value="sk">Surat Keputusan</option>
-                                    </select>
-								</div>
-							</div>
+                          
                             
                             <div class="control-group">
 								<label class="control-label" for="input01">Nomer</label>
@@ -51,7 +27,7 @@
 							</div>
                            
                            <div class="control-group">
-								<label class="control-label" for="input01">Tanggal Dokumen</label>
+								<label class="control-label" for="input01">Tanggal</label>
 								<div class="controls">
 									<input name="docs_date" type="text" id="docs_date" />
                            		</div>
@@ -67,7 +43,16 @@
 							<div class="control-group">
 								<label class="control-label" for="input01">Kepada</label>
 								<div class="controls">
-									<input name="docs_to" type="text" value="" />
+									<select>
+                                      <option value="gm">General Manager</option>
+                                      <option value="mc">Manager Customer Service</option>
+                                      <option value="mf">Manager Keuangan</option>
+                                      <option value="mi">Manager Internal Service</option>
+                                      <option value="mo">Manager Operasi</option>
+                                      <option value="mq">Manager Safety Security & Quality Control</option>
+                                      <option value="mt">Manager Teknik</option>
+                                      <option value="mw">Manager Cargo</option>
+                                    </select>
 								</div>
 							</div>	
 							

@@ -56,7 +56,7 @@ class Docs extends CI_Controller {
 		$data['error'] ='';
 		
 		# title
-		$data['title'] = 'ADD NEW INCOMING DOCUMENT';
+		$data['title'] = 'INPUT SURAT MASUK';
 		
 		# breadcumb
 		$data['breadcumb'] = '<li class="active">Document</li>';
