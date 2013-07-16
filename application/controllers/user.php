@@ -366,7 +366,7 @@ class User extends CI_Controller {
 		# send mesg to view
 		$data['message']='silahkan melakukan registrasi, silahkan mendaftar melalui supervisor on duty apabila tidak memiliki email corporate';
 		# call view
-		$this->load->view('user/header');
+		$this->load->view('template/header');
 		$this->load->view('user/registration', $data);
 		$this->load->view('template/footer');
 	}
