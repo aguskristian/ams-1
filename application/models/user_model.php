@@ -54,30 +54,65 @@ class User_model extends CI_Model
 # get all stn available
 	function get_station() 
 	{
-		 return $this->db->get( 'station' )->result();
+		 $this->db->order_by('vs_level', 'ASC');
+		 return $this->db->get( 'var_station' )->result();
 	}
 
 # get unit  available 		
 	function get_unit($station)
 	{
-		$result = $this->db->where('stn_level', $station)->get('unit')->result();
+		$result = $this->db->where('vu_vs_code', $station)->get('var_unit')->result();
 		return $result ? $result : false;	}
 
 # get all sub unit available 		
 	function get_subunit($unit) 
 	{
-		$result = $this->db->where( 'unit_id', $unit )->get( 'sub_unit' )->result();
+		$result = $this->db->where( 'vsu_vu_code', $unit )->get( 'var_sub_unit' )->result();
 		return $result ? $result : false;
 	}
 
 # get all sub unit available 		
 	function get_team($subunit) 
 	{
-		$result = $this->db->where( 'sub_unit_id', $subunit )->get( 'team' )->result();
+		$result = $this->db->where( 'vt_vsu_code', $subunit )->get( 'var_team' )->result();
 		return $result ? $result : false;
 	}
 
+# get all function available
+	function get_function() 
+	{
+		 $this->db->order_by('vf_level', 'DESC');
+		 return $this->db->get( 'var_function' )->result();
+		 
+	}
 
+# get stn level
+	function get_stn_level($station) 
+	{
+		$result = $this->db->where( 'vs_code', $station )->get( 'var_station' )->result();
+		return $result ? $result : false;
+	}
+
+# get unit level
+	function get_unit_level($unit) 
+	{
+		$result = $this->db->where( 'vu_code', $unit )->get( 'var_unit' )->result();
+		return $result ? $result : false;
+	}
+	
+# get sub unit level
+	function get_sub_unit_level($sub_unit) 
+	{
+		$result = $this->db->where( 'vsu_code', $sub_unit )->get( 'var_sub_unit' )->result();
+		return $result ? $result : false;
+	}
+
+# get team level
+	function get_team_level($team) 
+	{
+		$result = $this->db->where( 'vt_code', $team )->get( 'var_team' )->result();
+		return $result ? $result : false;
+	}
 
 # save data on user verification table ---------------------------------
 	function save_verification($full_email, $hp, $pin, $email_link, $type, $request, $expired)

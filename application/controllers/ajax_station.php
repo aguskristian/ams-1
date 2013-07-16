@@ -13,7 +13,7 @@ class Ajax_station extends CI_Controller {
 		$units = $this->user_model->get_unit( $station );
 		
 		if ( $units ) foreach ( $units as $unit ) {
-			echo '<option value="'.$unit->unit_id.'">'.ucfirst( $unit->unit_name ).'</option>';
+			echo '<option value="'.$unit->vu_code.'">'.ucfirst( $unit->vu_name ).'</option>';
 		}
 	}
 	
@@ -22,7 +22,7 @@ class Ajax_station extends CI_Controller {
 		$subunits = $this->user_model->get_subunit( $unit );
 		
 		if ( $subunits ) foreach ( $subunits as $subunit ) {
-			echo '<option value="'.$subunit->sub_unit_id.'">'.ucfirst( $subunit->sub_unit_name ).'</option>';
+			echo '<option value="'.$subunit->vsu_code.'">'.ucfirst( $subunit->vsu_name ).'</option>';
 		}
 	}
 	
@@ -31,7 +31,7 @@ class Ajax_station extends CI_Controller {
 		$teams = $this->user_model->get_team( $subunit );
 		
 		if ( $teams ) foreach ( $teams as $team ) {
-			echo '<option value="'.$team->team_level.'">'.ucfirst( $team->team_name ).'</option>';
+			echo '<option value="'.$team->vt_code.'">'.ucfirst( $team->vt_name ).'</option>';
 		}
 	}
 

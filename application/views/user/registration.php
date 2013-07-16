@@ -29,7 +29,7 @@
                     <select name="station" id="station">
 						<option value="none">select station</option>
 						<?php foreach ( $station as $item ) : ?>
-							<option value="<?php echo $item->stn_level ?>"><?php echo ucfirst( $item->stn_name ) ?></option>
+							<option value="<?php echo $item->vs_code ?>"><?php echo ucfirst( $item->vs_name ) ?></option>
 						<?php endforeach ?>
                     </select>
                     
@@ -50,11 +50,9 @@
                                     
                     <label>Jabatan</label>
                     <select name="jabatan" id="jabatan">
-                        <option value="12">Staff</option>
-                        <option value="11">Supervisor</option>
-                        <option value="10">Assistant Manager</option>
-                        <option value="09">Manager</option>
-                        <option value="06">General Manager</option>
+                        <?php foreach ( $function as $item ) : ?>
+							<option value="<?php echo $item->vf_level ?>"><?php echo ucfirst( $item->vf_name ) ?></option>
+						<?php endforeach ?>
                     </select>
                     
                    <!-- <label>Password</label>

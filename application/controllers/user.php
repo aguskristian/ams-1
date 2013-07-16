@@ -167,7 +167,7 @@ class User extends CI_Controller {
 						
 						$this->email->from('admin@gapura.co.id', 'Team Sigap');
 						$this->email->to($email); 
-						$this->email->subject('PT Gapura Angkasa AMS Registration');
+						$this->email->subject('AMS Login PT Gapura Angkasa Denpasar');
 						$this->email->message('
 						
 						<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -178,7 +178,7 @@ class User extends CI_Controller {
 						</head>
 						
 						<body>
-						<p>Your verification code : ' . $pin . '</p>
+						<p>Your PIN : ' . $pin . '</p>
 						<p>or</p>
 						<p>Please click link below to verify your request :</p>
 						<p>{unwrap}' . anchor("user/verification/" . $email_link, 'http://ams.dps.gapura.co.id/user/verification/' . $email_link) . '{/unwrap}</p>
@@ -361,6 +361,7 @@ class User extends CI_Controller {
 	{
 		# get stn available
 		$data['station'] = $this->user_model->get_station();
+		$data['function'] = $this->user_model->get_function();
 		
 		# send mesg to view
 		$data['message']='silahkan melakukan registrasi, silahkan mendaftar melalui supervisor on duty apabila tidak memiliki email corporate';
@@ -388,13 +389,33 @@ class User extends CI_Controller {
 		$nipp = $this->input->post('nipp');
 		$hp = $this->input->post('hp');
 		$email = $this->input->post('email');
+		
 		$station = $this->input->post('station');
+		$station_level = $this->user_model->get_stn_level($station);
+		foreach($station_level as $items):$station_level = $items->vs_level;endforeach;
+		
+		
 		$unit = $this->input->post('unit');
+		$unit_level = $this->user_model->get_unit_level($unit);
+		foreach($unit_level as $items):$unit_level = $items->vu_level;endforeach;
+		
+		
 		$sub_unit = $this->input->post('sub_unit');
+		$sub_unit_level = $this->user_model->get_sub_unit_level($sub_unit);
+		foreach($sub_unit_level as $items):$sub_unit_level = $items->vsu_level;endforeach;
+		
+		
 		$team = $this->input->post('team');
+		$team_level = $this->user_model->get_team_level($team);
+		foreach($team_level as $items):$team_level = $items->vt_level;endforeach;
+		
+		
 		$jabatan = $this->input->post('jabatan');
-		echo $station . $unit . $sub_unit . $team . $jabatan . $nipp;
-		/*# do validation rules
+		
+		$ui_function = $station_level . $unit_level . $sub_unit_level . $team_level . $jabatan;
+		$ui_app_role = '077';
+				
+		# do validation rules
 		$this->form_validation->set_rules('email', 'email', 'trim|required|min_length[3]|alpha_dash|xss_clean');
 		$this->form_validation->set_rules('hp', 'hp', 'trim|required|min_length[3]|numeric|xss_clean');
 		$this->form_validation->set_rules('nipp', 'nipp', 'trim|required|min_length[3]|numeric|xss_clean');
@@ -405,6 +426,7 @@ class User extends CI_Controller {
 					
 					# get stn available
 					$data['station'] = $this->user_model->get_station();
+					$data['function'] = $this->user_model->get_function();
 					
 					# send mesg to view
 					$data['message']='silahkan melakukan registrasi, bila anda tidak memiliki email perusahaan, silahkan mendaftar melalui supervisor on duty';
@@ -462,7 +484,7 @@ class User extends CI_Controller {
 					
 					$this->email->from('admin@gapura.co.id', 'Team Sigap');
 					$this->email->to($full_email); 
-					$this->email->subject('PT Gapura Angkasa Registration Verification System');
+					$this->email->subject('AMS Registration PT Gapura Angkasa Denpasar');
 					$this->email->message('
 					
 					<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -473,10 +495,10 @@ class User extends CI_Controller {
 					</head>
 					
 					<body>
-					<p>Your verification code : ' . $pin . '</p>
+					<p>Your PIN : ' . $pin . '</p>
 					<p>or</p>
 					<p>Please click link below to verify your request :</p>
-					<p>{unwrap}' . anchor("user/verification/" . $email_link, 'http://ams.gapura.co.id/user/verification/' . $email_link) . '{/unwrap}</p>
+					<p>{unwrap}' . anchor("user/verification/" . $email_link, 'http://ams.dps.gapura.co.id/user/verification/' . $email_link) . '{/unwrap}</p>
 					<p>Thank you</p>
 					<p>Best regards</p>
 					<p>SIGAP Team</p>
@@ -508,8 +530,6 @@ class User extends CI_Controller {
 			$crud->set_theme('datatables');
 			$crud->set_table('user_station');
 			$crud->set_subject('Station');
-			#$crud->required_fields('city');
-			#$crud->columns('city','country','phone','addressLine1','postalCode');
 			$crud->display_as('us_code','Station Code');
 			$crud->display_as('us_name','Station Name');
 			$crud->order_by('us_id','asc');
@@ -545,10 +565,6 @@ class User extends CI_Controller {
 			$crud->set_theme('datatables');
 			$crud->set_table('user_unit');
 			$crud->set_subject('Unit');
-			#$crud->required_fields('city');
-			#$crud->columns('city','country','phone','addressLine1','postalCode');
-			#$crud->display_as('us_code','Station Code');
-			#$crud->display_as('us_name','Station Name');
 			$crud->set_relation('uu_us_id','user_station','{us_code} [{us_id}] ');
 			
 			$output = $crud->render();
@@ -582,14 +598,9 @@ class User extends CI_Controller {
 			$crud->set_theme('datatables');
 			$crud->set_table('user_sub_unit');
 			$crud->set_subject('Unit');
-			#$crud->required_fields('city');
-			#$crud->columns('city','country','phone','addressLine1','postalCode');
-			#$crud->display_as('us_code','Station Code');
-			#$crud->display_as('us_name','Station Name');
 			
 			$output = $crud->render();
 			
-			#$this->_example_output($output);
 			$data['nama']= '';
 			$data['cabang']= '';
 			$data['unit']= '';
