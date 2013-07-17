@@ -28,7 +28,7 @@ class User extends CI_Controller {
 		if ( ! $this->session->userdata('logged_in'))
     	{ 
         	# function allowed for access without login
-			$allowed = array('index', 'login', 'do_login', 'pin_verification', 'do_pin_verification', 'registration', 'do_registration', 'select_unit');
+			$allowed = array('index', 'login', 'do_login', 'verification', 'pin_verification', 'do_pin_verification', 'registration', 'do_registration', 'select_unit');
         
 			# other function need login
 			if (! in_array($this->router->method, $allowed)) 
@@ -97,11 +97,11 @@ class User extends CI_Controller {
 						 $nipp = $row->ui_nipp; 
 						 $hp = $row->ui_hp; 
 						 $email = $row->ui_email; 
-						 $cabang = $row->ui_cabang; 
-						 $unit = $row->ui_unit; 
-						 $jabatan = $row->ui_jabatan; 
-						 $app_level = $row->ui_app_level; 
-						 $app_role = $row->ui_app_role; 
+						 //$cabang = $row->ui_cabang; 
+						 //$unit = $row->ui_unit; 
+						 //$jabatan = $row->ui_jabatan; 
+						 //$app_level = $row->ui_app_level; 
+						 //$app_role = $row->ui_app_role; 
 						 $verification = $row->ui_verification; 
 						 $ver_date = $row->ui_ver_date;
 						 $approval = $row->ui_approval;
@@ -193,7 +193,7 @@ class User extends CI_Controller {
 						$this->email->send();
 						
 						# show link for develope mode only, please disable on run mode
-						#echo $email . ' - ' . $pin . ' - ' . $email_link;
+						echo $email . ' - ' . $pin . ' - ' . $email_link;
 						
 						# call views
 						$data['message'] = 'masukan kode verifikasi yang anda terima di inbox email.';
@@ -261,12 +261,12 @@ class User extends CI_Controller {
 				 'ui_nipp' => $row->ui_nipp, 
 				 'ui_hp' => $row->ui_hp, 
 				 'ui_email' => $row->ui_email, 
-				 'ui_cabang' => $row->ui_cabang, 
-				 'ui_unit' => $row->ui_unit, 
-				 'ui_jabatan' => $row->ui_jabatan, 
-				 'ui_function' => $row->ui_function,
-				 'ui_app_level' => $row->ui_app_level, 
-				 'ui_app_role' => $row->ui_app_role, 
+				 //'ui_cabang' => $row->ui_cabang, 
+				 //'ui_unit' => $row->ui_unit, 
+				 //'ui_jabatan' => $row->ui_jabatan, 
+				 //'ui_function' => $row->ui_function,
+				 //'ui_app_level' => $row->ui_app_level, 
+				 //'ui_app_role' => $row->ui_app_role, 
 				 'ui_verification' => $row->ui_verification, 
 				 'ui_ver_date' => $row->ui_ver_date
 			   );
@@ -275,7 +275,7 @@ class User extends CI_Controller {
 			 }
 			 # redirect to dashboard after logged in
 			 redirect('dashboard');
-			 return TRUE;
+			
 		   }
 		   else
 		   {
@@ -285,7 +285,7 @@ class User extends CI_Controller {
 			 $this->load->view('template/header');
 			 $this->load->view('user/verification', $data);
 			 $this->load->view('template/footer');
-			 return FALSE;
+			 
 		   }
 		
 		
@@ -301,14 +301,16 @@ class User extends CI_Controller {
 		$email_link= $this->uri->segment(3, 0);
 		$email_link = urldecode($email_link);
 		$email_link = base64_decode($email_link);
-		
+		$this->load->library('user_agent');
+		echo $this->agent->referrer();
 		# split data			
 		$url_result = explode("+", $email_link);
 		$email = $url_result[0];
 		$pin = $url_result[1];
+		echo $email . '/' . $pin;
 		
 		# call model
-		$result = $this->login_model->do_verification($email, $pin);
+		$result = $this->user_model->do_verification($email, $pin);
 		
 		# check verification link
 		if($result)
@@ -323,21 +325,20 @@ class User extends CI_Controller {
 				 'ui_nipp' => $row->ui_nipp, 
 				 'ui_hp' => $row->ui_hp, 
 				 'ui_email' => $row->ui_email, 
-				 'ui_cabang' => $row->ui_cabang, 
-				 'ui_unit' => $row->ui_unit, 
-				 'ui_jabatan' => $row->ui_jabatan, 
-				 'ui_app_level' => $row->ui_app_level, 
-				 'ui_app_role' => $row->ui_app_role, 
+				 //'ui_cabang' => $row->ui_cabang, 
+				 //'ui_unit' => $row->ui_unit, 
+				 //'ui_jabatan' => $row->ui_jabatan, 
+				 //'ui_app_level' => $row->ui_app_level, 
+				 //'ui_app_role' => $row->ui_app_role, 
 				 'ui_verification' => $row->ui_verification, 
 				 'ui_ver_date' => $row->ui_ver_date
 			   );
 			   # set session
-			   $this->session->set_userdata('logged_in', $sess_array);
+			  $this->session->set_userdata('logged_in', $sess_array);
 			   
 			 }
 			 # logged in and redirect user to dashboard
-			 redirect('team');
-			 return TRUE;
+			 redirect('dashboard');
 		   }
 		   else
 		   {
@@ -347,9 +348,6 @@ class User extends CI_Controller {
 			 $this->load->view('team/header', $nav);
 			 $this->load->view('login/login_verification_view', $data);
 			 $this->load->view('team/footer');
-			 
-			 
-			 return FALSE;
 		   }
 		   
 	}

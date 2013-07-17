@@ -48,14 +48,14 @@ class Dashboard extends CI_Controller {
 		$email = $session_data['ui_email'];
 		$data['email'] = $email;
 		  
-		$cabang = $session_data['ui_cabang'];
+		/*$cabang = $session_data['ui_cabang'];
 		$data['cabang'] = $cabang;
 		  
 		$unit = $session_data['ui_unit'];
 		$data['unit'] = $unit;
 		
 		$function = $session_data['ui_function'];
-		$data['function'] = $function;
+		$data['function'] = $function;*/
 		  
 		$data['error'] ='';
 		  
