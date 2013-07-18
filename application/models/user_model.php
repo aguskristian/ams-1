@@ -10,18 +10,15 @@ class User_model extends CI_Model
 # constructor ------------------------------------------------------------------------------
 
 # save data on user identity table -------------------------------------
-	function save_user($nama, $nipp, $hp, $full_email, $cabang, $unit, $jabatan)
+	function save_user($nama, $nipp, $hp, $full_email, $level)
 	{
 		$data = array(
 		'ui_nama' => $nama,
 		'ui_hp' => $hp,
 		'ui_nipp' => $nipp,
 		'ui_email' => $full_email,
-		'ui_cabang' => $cabang,
-		'ui_unit' => $unit,
-		'ui_jabatan' => $jabatan,
-		'ui_app_level' => 'user',
-		'ui_app_role' => '0000000000000',
+		'ui_level' => $level,
+		'ui_function' => $level,
 		'ui_verification' => 'n',
 		'ui_ver_date' => '0000-00-00 00:00:00',
 		'ui_approval' => 'n',

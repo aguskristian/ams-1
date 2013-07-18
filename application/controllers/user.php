@@ -193,7 +193,7 @@ class User extends CI_Controller {
 						$this->email->send();
 						
 						# show link for develope mode only, please disable on run mode
-						echo $email . ' - ' . $pin . ' - ' . $email_link;
+						#echo $email . ' - ' . $pin . ' - ' . $email_link;
 						
 						# call views
 						$data['message'] = 'masukan kode verifikasi yang anda terima di inbox email.';
@@ -290,9 +290,9 @@ class User extends CI_Controller {
 		
 		
 		
-		$this->load->view('template/header');
-		$this->load->view('user/dashboard');
-		$this->load->view('template/footer');
+		/*$this->load->view('template/header');
+		$this->load->view('ams/dashboard');
+		$this->load->view('template/footer');*/
 	}
 	
 	public function verification()
@@ -307,7 +307,7 @@ class User extends CI_Controller {
 		$url_result = explode("+", $email_link);
 		$email = $url_result[0];
 		$pin = $url_result[1];
-		echo $email . '/' . $pin;
+		#echo $email . '/' . $pin;
 		
 		# call model
 		$result = $this->user_model->do_verification($email, $pin);
@@ -407,11 +407,11 @@ class User extends CI_Controller {
 		$team_level = $this->user_model->get_team_level($team);
 		foreach($team_level as $items):$team_level = $items->vt_level;endforeach;
 		
-		
 		$jabatan = $this->input->post('jabatan');
 		
-		$ui_function = $station_level . $unit_level . $sub_unit_level . $team_level . $jabatan;
-		$ui_app_role = '077';
+		$level = $station_level . $unit_level . $sub_unit_level . $team_level . $jabatan;
+		
+		$app_role = '077';
 				
 		# do validation rules
 		$this->form_validation->set_rules('email', 'email', 'trim|required|min_length[3]|alpha_dash|xss_clean');
@@ -421,9 +421,10 @@ class User extends CI_Controller {
 				if ($this->form_validation->run() == FALSE)
 				{
 					# if fail force to do registration again
-					
 					# get stn available
 					$data['station'] = $this->user_model->get_station();
+					
+					# get function ( fungsi )
 					$data['function'] = $this->user_model->get_function();
 					
 					# send mesg to view
@@ -451,7 +452,7 @@ class User extends CI_Controller {
 					$this->user_model->del_dup_prev_user_unver_data($full_email);
 					
 					# call models to save data
-					$this->user_model->save_user($nama, $nipp, $hp, $full_email, $cabang, $unit, $jabatan);
+					$this->user_model->save_user($nama, $nipp, $hp, $full_email, $level);
 					
 					# create random pin
 					$this->load->helper('pin');

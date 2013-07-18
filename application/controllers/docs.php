@@ -86,14 +86,14 @@ class Docs extends CI_Controller {
 		$email = $session_data['ui_email'];
 		$data['email'] = $email;
 		
-		$ui_function = $session_data['ui_function'];
+		/*$ui_function = $session_data['ui_function'];
 		$data['ui_function'] = $ui_function;
 		
 		$cabang = $session_data['ui_cabang'];
 		$data['cabang'] = $cabang;
 		
 		$unit = $session_data['ui_unit'];
-		$data['unit'] = $unit;
+		$data['unit'] = $unit;*/
 		
 		# set error message  
 		$data['error'] ='';
@@ -213,14 +213,14 @@ class Docs extends CI_Controller {
 		$email = $session_data['ui_email'];
 		$data['email'] = $email;
 		  
-		$cabang = $session_data['ui_cabang'];
+		/*$cabang = $session_data['ui_cabang'];
 		$data['cabang'] = $cabang;
 		  
 		$unit = $session_data['ui_unit'];
 		$data['unit'] = $unit;
 		
 		$ui_function = $session_data['ui_function'];
-		$data['ui_function'] = $ui_function;
+		$data['ui_function'] = $ui_function;*/
 		  
 		$data['error'] ='';
 		  
@@ -264,14 +264,14 @@ class Docs extends CI_Controller {
 		$email = $session_data['ui_email'];
 		$data['email'] = $email;
 		  
-		$cabang = $session_data['ui_cabang'];
+		/*$cabang = $session_data['ui_cabang'];
 		$data['cabang'] = $cabang;
 		  
 		$unit = $session_data['ui_unit'];
 		$data['unit'] = $unit;
 		
 		$ui_function = $session_data['ui_function'];
-		$data['ui_function'] = $ui_function;
+		$data['ui_function'] = $ui_function;*/
 		  
 		$data['error'] ='';
 		  
@@ -302,11 +302,11 @@ class Docs extends CI_Controller {
 		$email = $session_data['ui_email'];
 		$data['email'] = $email;
 		  
-		$cabang = $session_data['ui_cabang'];
+		/*$cabang = $session_data['ui_cabang'];
 		$data['cabang'] = $cabang;
 		  
 		$unit = $session_data['ui_unit'];
-		$data['unit'] = $unit;
+		$data['unit'] = $unit;*/
 		
 		# get data from form
 		$docs_id = $this->input->post('docs_id');
@@ -410,8 +410,8 @@ class Docs extends CI_Controller {
 		  $email = $session_data['ui_email'];
 		  $data['email'] = $email;
 		  
-		  $cabang = $session_data['ui_cabang'];
-		  $data['cabang'] = $cabang;
+		/*  $cabang = $session_data['ui_cabang'];
+		  $data['cabang'] = $cabang;*/
 		  
 		  # total file by category
 		  $data['query_category_group_ext'] = $this->docs_model->total_category_file_by_group_ext($cabang, $unit, $nama, $email);
@@ -478,8 +478,8 @@ class Docs extends CI_Controller {
 		  $email = $session_data['ui_email'];
 		  $data['email'] = $email;
 		  
-		  $cabang = $session_data['ui_cabang'];
-		  $data['cabang'] = $cabang;
+		/*  $cabang = $session_data['ui_cabang'];
+		  $data['cabang'] = $cabang;*/
 		  
 		  $data['error'] ='';
 		  
@@ -508,8 +508,8 @@ class Docs extends CI_Controller {
 		  $email = $session_data['ui_email'];
 		  $data['email'] = $email;
 		  
-		  $cabang = $session_data['ui_cabang'];
-		  $data['cabang'] = $cabang;
+		/*  $cabang = $session_data['ui_cabang'];
+		  $data['cabang'] = $cabang;*/
 		  
 		  $config['upload_path'] = './files/';
 		  $config['allowed_types'] = 'pdf|gif|jpg|png|jpeg|bmp|doc|docx|xls|xlsx|ppt|pptx|pps|ppsx';
