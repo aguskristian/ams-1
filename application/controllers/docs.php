@@ -86,10 +86,10 @@ class Docs extends CI_Controller {
 		$email = $session_data['ui_email'];
 		$data['email'] = $email;
 		
-		/*$ui_function = $session_data['ui_function'];
+		$ui_function = $session_data['ui_function'];
 		$data['ui_function'] = $ui_function;
 		
-		$cabang = $session_data['ui_cabang'];
+		/*$cabang = $session_data['ui_cabang'];
 		$data['cabang'] = $cabang;
 		
 		$unit = $session_data['ui_unit'];
@@ -212,6 +212,9 @@ class Docs extends CI_Controller {
 		  
 		$email = $session_data['ui_email'];
 		$data['email'] = $email;
+		
+		$ui_function = $session_data['ui_function'];
+		$data['ui_function'] = $ui_function;
 		  
 		/*$cabang = $session_data['ui_cabang'];
 		$data['cabang'] = $cabang;
@@ -219,8 +222,7 @@ class Docs extends CI_Controller {
 		$unit = $session_data['ui_unit'];
 		$data['unit'] = $unit;
 		
-		$ui_function = $session_data['ui_function'];
-		$data['ui_function'] = $ui_function;*/
+		*/
 		  
 		$data['error'] ='';
 		  

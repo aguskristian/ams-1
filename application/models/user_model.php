@@ -10,15 +10,26 @@ class User_model extends CI_Model
 # constructor ------------------------------------------------------------------------------
 
 # save data on user identity table -------------------------------------
-	function save_user($nama, $nipp, $hp, $full_email, $level)
+	function save_user($nama, $nipp, $hp, $full_email, $emergency_password, $function)
 	{
 		$data = array(
-		'ui_nama' => $nama,
+		/*'ui_nama' => $nama,
 		'ui_hp' => $hp,
 		'ui_nipp' => $nipp,
 		'ui_email' => $full_email,
 		'ui_level' => $level,
 		'ui_function' => $level,
+		'ui_verification' => 'n',
+		'ui_ver_date' => '0000-00-00 00:00:00',
+		'ui_approval' => 'n',
+		'ui_approval_by' => '',
+		'ui_approval_on' => '0000-00-00 00:00:00',*/
+		'ui_nama' => $nama,
+		'ui_hp' => $hp,
+		'ui_nipp' => $nipp,
+		'ui_email' => $full_email,
+		'ui_password' => $emergency_password,
+		'ui_function' => $function,
 		'ui_verification' => 'n',
 		'ui_ver_date' => '0000-00-00 00:00:00',
 		'ui_approval' => 'n',
@@ -84,7 +95,7 @@ class User_model extends CI_Model
 	}
 
 # get stn level
-	function get_stn_level($station) 
+	function get_station_level($station) 
 	{
 		$result = $this->db->where( 'vs_code', $station )->get( 'var_station' )->result();
 		return $result ? $result : false;

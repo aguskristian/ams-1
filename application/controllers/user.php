@@ -93,18 +93,19 @@ class User extends CI_Controller {
 					# if email found on database
 					foreach($result as $row)
 					{
+						 $id = $row->ui_id; 
 						 $nama = $row->ui_nama; 
 						 $nipp = $row->ui_nipp; 
 						 $hp = $row->ui_hp; 
 						 $email = $row->ui_email; 
-						 //$cabang = $row->ui_cabang; 
-						 //$unit = $row->ui_unit; 
-						 //$jabatan = $row->ui_jabatan; 
-						 //$app_level = $row->ui_app_level; 
-						 //$app_role = $row->ui_app_role; 
+						 $password = $row->ui_password; 
+						 $function = $row->ui_function; 
+						 $registration_on = $row->ui_registration_on; 
 						 $verification = $row->ui_verification; 
 						 $ver_date = $row->ui_ver_date;
 						 $approval = $row->ui_approval;
+						 $approval_by = $row->ui_approval_by;
+						 $approval_on = $row->ui_approval_on;
 					}
 			 		
 					# if user exist then check user approval by admin
@@ -178,12 +179,12 @@ class User extends CI_Controller {
 						</head>
 						
 						<body>
-						<p>Your PIN : ' . $pin . '</p>
-						<p>or</p>
-						<p>Please click link below to verify your request :</p>
-						<p>{unwrap}' . anchor("user/verification/" . $email_link, 'http://ams.dps.gapura.co.id/user/verification/' . $email_link) . '{/unwrap}</p>
-						<p>Thank you</p>
-						<p>Best regards</p>
+						<p>Untuk melanjutkan proses login, silahkan masukan pin berikut :</p>
+						<p>PIN : ' . $pin . '</p>
+						<p>atau</p>
+						<p>klik link dibawah ini :</p>
+						<p>{unwrap}' . anchor("user/verification/" . $email_link, 'http://ams.gapura.co.id/user/verification/' . $email_link) . '{/unwrap}</p>
+						<p>Terima kasih</p>
 						<p>SIGAP Team</p>
 						<p>&nbsp;</p>
 						</body>
@@ -256,19 +257,19 @@ class User extends CI_Controller {
 			 foreach($result as $row)
 			 {
 			   $sess_array = array(
-			     'ui_id' => $row->ui_id,
+			    'ui_id' => $row->ui_id,
 				 'ui_nama' => $row->ui_nama, 
 				 'ui_nipp' => $row->ui_nipp, 
 				 'ui_hp' => $row->ui_hp, 
 				 'ui_email' => $row->ui_email, 
-				 //'ui_cabang' => $row->ui_cabang, 
-				 //'ui_unit' => $row->ui_unit, 
-				 //'ui_jabatan' => $row->ui_jabatan, 
-				 //'ui_function' => $row->ui_function,
-				 //'ui_app_level' => $row->ui_app_level, 
-				 //'ui_app_role' => $row->ui_app_role, 
+				 'ui_password' => $row->ui_password, 
+				 'ui_function' => $row->ui_function,
 				 'ui_verification' => $row->ui_verification, 
-				 'ui_ver_date' => $row->ui_ver_date
+				 'ui_ver_date' => $row->ui_ver_date,
+				 'ui_registration_on' => $row->ui_registration_on,
+				 'ui_approval' => $row->ui_approval,
+				 'ui_approval_by' => $row->ui_approval_by,
+				 'ui_approval_on' => $row->ui_approval_on,
 			   );
 			   # set session for auto login
 			   $this->session->set_userdata('logged_in', $sess_array);
@@ -320,18 +321,19 @@ class User extends CI_Controller {
 			 foreach($result as $row)
 			 {
 			   $sess_array = array(
-			     'ui_id' => $row->ui_id, 
+			    'ui_id' => $row->ui_id,
 				 'ui_nama' => $row->ui_nama, 
 				 'ui_nipp' => $row->ui_nipp, 
 				 'ui_hp' => $row->ui_hp, 
 				 'ui_email' => $row->ui_email, 
-				 //'ui_cabang' => $row->ui_cabang, 
-				 //'ui_unit' => $row->ui_unit, 
-				 //'ui_jabatan' => $row->ui_jabatan, 
-				 //'ui_app_level' => $row->ui_app_level, 
-				 //'ui_app_role' => $row->ui_app_role, 
+				 'ui_password' => $row->ui_password, 
+				 'ui_function' => $row->ui_function,
 				 'ui_verification' => $row->ui_verification, 
-				 'ui_ver_date' => $row->ui_ver_date
+				 'ui_ver_date' => $row->ui_ver_date,
+				 'ui_registration_on' => $row->ui_registration_on,
+				 'ui_approval' => $row->ui_approval,
+				 'ui_approval_by' => $row->ui_approval_by,
+				 'ui_approval_on' => $row->ui_approval_on,
 			   );
 			   # set session
 			  $this->session->set_userdata('logged_in', $sess_array);
@@ -389,29 +391,29 @@ class User extends CI_Controller {
 		$email = $this->input->post('email');
 		
 		$station = $this->input->post('station');
-		$station_level = $this->user_model->get_stn_level($station);
-		foreach($station_level as $items):$station_level = $items->vs_level;endforeach;
-		
+		$result = $this->user_model->get_station_level($station);
+		foreach($result as $items):$station=$items->vs_level;endforeach;
 		
 		$unit = $this->input->post('unit');
-		$unit_level = $this->user_model->get_unit_level($unit);
-		foreach($unit_level as $items):$unit_level = $items->vu_level;endforeach;
-		
+		$result = $this->user_model->get_unit_level($unit);
+		foreach($result as $items):$unit=$items->vu_level;endforeach;
 		
 		$sub_unit = $this->input->post('sub_unit');
-		$sub_unit_level = $this->user_model->get_sub_unit_level($sub_unit);
-		foreach($sub_unit_level as $items):$sub_unit_level = $items->vsu_level;endforeach;
-		
+		$result = $this->user_model->get_sub_unit_level($sub_unit);
+		foreach($result as $items):$sub_unit=$items->vsu_level;endforeach;
 		
 		$team = $this->input->post('team');
-		$team_level = $this->user_model->get_team_level($team);
-		foreach($team_level as $items):$team_level = $items->vt_level;endforeach;
+		$result = $this->user_model->get_team_level($team);
+		foreach($result as $items):$team=$items->vt_level;endforeach;
 		
-		$jabatan = $this->input->post('jabatan');
+		$fungsi = $this->input->post('fungsi');
 		
-		$level = $station_level . $unit_level . $sub_unit_level . $team_level . $jabatan;
+		# function code
+		$function = $station . $unit . $sub_unit . $team . $fungsi;
 		
-		$app_role = '077';
+		# prepare password to run system locale
+		$password = $this->input->post('password');
+		$emergency_password = $this->encrypt->sha1($password, $this->config->item('encryption_key'));
 				
 		# do validation rules
 		$this->form_validation->set_rules('email', 'email', 'trim|required|min_length[3]|alpha_dash|xss_clean');
@@ -452,7 +454,8 @@ class User extends CI_Controller {
 					$this->user_model->del_dup_prev_user_unver_data($full_email);
 					
 					# call models to save data
-					$this->user_model->save_user($nama, $nipp, $hp, $full_email, $level);
+					#$this->user_model->save_user($nama, $nipp, $hp, $full_email, $level);
+					$this->user_model->save_user($nama, $nipp, $hp, $full_email, $emergency_password, $function);
 					
 					# create random pin
 					$this->load->helper('pin');
@@ -494,12 +497,24 @@ class User extends CI_Controller {
 					</head>
 					
 					<body>
-					<p>Your PIN : ' . $pin . '</p>
-					<p>or</p>
-					<p>Please click link below to verify your request :</p>
-					<p>{unwrap}' . anchor("user/verification/" . $email_link, 'http://ams.dps.gapura.co.id/user/verification/' . $email_link) . '{/unwrap}</p>
-					<p>Thank you</p>
-					<p>Best regards</p>
+					<p>Anda telah melakukan registrasi pada aplikasi Administration Management System</p>
+					<p>Silahkan melakukan verifikasi dengan menggunakan pin berikut pada halaman verifikasi</p>
+					<p>PIN : ' . $pin . '</p>
+					<p>atau</p>
+					<p>klik link dibawah ini</p>
+					<p>LINK : {unwrap}' . anchor("user/verification/" . $email_link, 'http://ams.gapura.co.id/user/verification/' . $email_link) . '{/unwrap}</p>
+					<p>&nbsp;</p>
+					<p>Detail data anda :</p>
+					<p>NAMA : ' . $nama . '</p>
+					<p>NIPP : ' . $nipp . '</p>
+					<p>NO HP : ' . $hp . '</p>
+					<p>EMAIL : ' . $email . '</p>
+					<p>EMERGENCY LOGIN : ' . $emergency_password . '</p>
+					<p>&nbsp;</p>
+					<p>( emergency login hanya dapat digunakan apabila terjadi gangguan pada system atau jaringan internet )</p>
+					<p>&nbsp;</p>
+					<p>Terima kasih</p>
+					<p>&nbsp;</p>
 					<p>SIGAP Team</p>
 					<p>&nbsp;</p>
 					</body>

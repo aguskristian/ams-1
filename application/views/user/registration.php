@@ -25,6 +25,10 @@
                     <label>Email</label>
                     <input type="text" name="email" width="50%" >@gapura.co.id
                     
+                    <label>Emergency Password (min 6 character)</label>
+                    <input type="password" class="span12" name="password">
+                    <font color="#FF0000" size="-1"><?php echo form_error('password'); ?></font>
+                    
                     <label>Station</label>                    
                     <select name="station" id="station">
 						<option value="none">select station</option>
@@ -48,15 +52,14 @@
                         <option value="none">select team</option>
                     </select>
                                     
-                    <label>Jabatan</label>
-                    <select name="jabatan" id="jabatan">
-                        <?php foreach ( $function as $item ) : ?>
-							<option value="<?php echo $item->vf_level ?>"><?php echo ucfirst( $item->vf_name ) ?></option>
-						<?php endforeach ?>
+                    <label>Fungsi</label>
+                    <select name="fungsi" id="fungsi">
+                        <option value="12">Staff</option>
+                        <option value="11">Supervisor</option>
+                        <option value="10">Assistant Manager</option>
+                        <option value="09">Manager</option>
+                        <option value="06">General Manager</option>
                     </select>
-                    
-                   <!-- <label>Password</label>
-                    <input type="password" class="span12">-->
                     
                     <?php echo form_submit('submit', 'Sign Up!', 'class = "btn btn-primary pull-right"'); ?>
                     
