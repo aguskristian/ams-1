@@ -19,7 +19,7 @@
             <li><?php echo anchor('docs/add','Kirim Memo'); ?></li>
 
         </ul>
-
-       
       
-    </div>
+<a href="<?php echo base_url()?>attendance"><i class="icon-exclamation-sign"></i>Attendance <i class="icon-chevron-up"></i></a>
+     
+</div>
