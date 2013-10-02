@@ -83,6 +83,8 @@ class Docs extends CI_Controller {
 		$email = $session_data['ui_email'];
 		$data['email'] = $email;
 		
+		
+		
 		# set error message  
 		$data['error'] ='';
 		

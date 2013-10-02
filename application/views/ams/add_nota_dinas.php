@@ -23,9 +23,9 @@
 							</div>
                             
                             <div class="control-group">
-								<label class="control-label" for="input01">Nomer</label>
+								<label class="control-label" for="input01">Nomor</label>
 								<div class="controls">
-									<input name="docs_no" type="text" value="DPS/<?php echo substr($ui_function, 0,2)?>" />
+									<input name="docs_no" type="text" value="<?php echo substr($ui_function, 0,2)?>/<?php echo substr($ui_function, 2,2)?>/ND/000/VII/2013" />
 								</div>
 							</div>
                             
