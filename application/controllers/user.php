@@ -68,7 +68,6 @@ class User extends CI_Controller {
 		if ($this->form_validation->run() == FALSE)
 		{
 			# validation fail do re-login
-			# send mesg to view
 			$this->form_validation->set_message('required', 'Email wajib diisi !!!');
 			$this->form_validation->set_message('valid_email', 'Email wajib diisi !!!');
 			$this->form_validation->set_error_delimiters('<div class="alert alert-error">', '</div>');
