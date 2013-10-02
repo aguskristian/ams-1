@@ -20,6 +20,6 @@
 
         </ul>
       
-<a href="<?php echo base_url()?>attendance"><i class="icon-exclamation-sign"></i>Attendance <i class="icon-chevron-up"></i></a>
+<a href="<?php echo base_url()?>attendance" class="nav-header collapsed"><i class="icon-exclamation-sign"></i>Attendance <i class="icon-chevron-up"></i></a>
      
 </div>
