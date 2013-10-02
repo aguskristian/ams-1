@@ -15,8 +15,8 @@
         <ul id="error-menu" class="nav nav-list collapse">
             <li><?php echo anchor('docs/add','Terima Nota Dinas'); ?></li>
             <li><?php echo anchor('docs/add','Terima Memo'); ?></li>
-            <li><?php echo anchor('docs/add','Kirim Nota Dinas'); ?></li>
-            <li><?php echo anchor('docs/add','Kirim Memo'); ?></li>
+            <li><?php echo anchor('docs/add_nota_dinas','Kirim Nota Dinas'); ?></li>
+            <li><?php echo anchor('docs/add_memo','Kirim Memo'); ?></li>
 
         </ul>
       

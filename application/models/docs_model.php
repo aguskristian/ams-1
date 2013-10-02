@@ -300,6 +300,7 @@ class Docs_model extends CI_Model
 	}
 	
 	
+	
 	# get upline
 	function get_upline($nipp, $ui_function)
 	{

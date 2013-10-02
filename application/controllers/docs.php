@@ -65,7 +65,78 @@ class Docs extends CI_Controller {
 		$this->load->view('ams/add', $data);
 		$this->load->view('template/footer');
 	}
+	
+	public function add_nota_dinas()
+	{
+		# get data from login session
+		$session_data = $this->session->userdata('logged_in');
+		
+		$nama = $session_data['ui_nama'];
+		$data['nama'] = $nama;
+		
+		$nipp = $session_data['ui_nipp'];
+		$data['nipp'] = $nipp;
+		
+		$email = $session_data['ui_email'];
+		$data['email'] = $email;
+		
+		# set error message  
+		$data['error'] ='';
+		
+		# title
+		$data['title'] = 'INPUT SURAT MASUK';
+		
+		# breadcumb
+		$data['breadcumb'] = '<li class="active">Document</li>';
+		  
+		# get variable for docs category
+		#$data['query'] = $this->docs_model->get_all_category_for_combo($cabang, $unit);
+		$data['query'] = $this->docs_model->get_manager_nipp($nipp, $ui_function);
+		# redirect to upload form
+		$this->load->view('template/header');
+		$this->load->view('template/sidebar', $data);
+		$this->load->view('template/breadcumb');
+		$this->load->view('ams/add_nota_dinas', $data);
+		$this->load->view('template/footer');
+	}
 
+	public function add_memo()
+	{
+		
+		
+		# get data from login session
+		$session_data = $this->session->userdata('logged_in');
+		
+		$nama = $session_data['ui_nama'];
+		$data['nama'] = $nama;
+		
+		$nipp = $session_data['ui_nipp'];
+		$data['nipp'] = $nipp;
+		
+		$email = $session_data['ui_email'];
+		$data['email'] = $email;
+		
+		# set error message  
+		$data['error'] ='';
+		
+		# title
+		$data['title'] = 'INPUT SURAT MASUK';
+		
+		# breadcumb
+		$data['breadcumb'] = '<li class="active">Document</li>';
+		  
+		# get variable for docs category
+		#$data['query'] = $this->docs_model->get_all_category_for_combo($cabang, $unit);
+		
+		#$data ['query'] = $this->docs_model->get($ui_function);
+		# redirect to upload form
+		$this->load->view('template/header');
+		$this->load->view('template/sidebar', $data);
+		$this->load->view('template/breadcumb');
+		$this->load->view('ams/add_memo', $data);
+		$this->load->view('template/footer');
+	}
+	
 	function save()
 	{
 		# get data from login session

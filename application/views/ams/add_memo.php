@@ -5,7 +5,7 @@
 
 
     <div class="block">
-        <a href="#page-stats" class="block-heading" data-toggle="collapse">NOTA DINAS</a>
+        <a href="#page-stats" class="block-heading" data-toggle="collapse">MEMO</a>
         <div id="page-stats" class="block-body collapse in">
         
         <br /><br  />
@@ -14,20 +14,30 @@
                   	<?php echo form_open_multipart('docs/save', array('class' => 'form-horizontal', 'id' => 'edit-profile')); ?>
                     
 						<fieldset>
-	                        
+							
+                           
+                           
+                          
                              <div class="control-group">
 								<label class="control-label" for="input01"></label>
 								<div class="controls">
-									<input name="docs_no" type="text" value="NOTA DINAS" />
+									<input name="docs_no" type="text" value="MEMO" />
 								</div>
 							</div>
                             
                             <div class="control-group">
 								<label class="control-label" for="input01">Nomer</label>
 								<div class="controls">
-									<input name="docs_no" type="text" value="DPS/<?php echo substr($ui_function, 0, 4)?>" />
+									<input name="docs_no" type="text" value="" />
 								</div>
 							</div>
+                            
+                             <div class="control-group">
+								<label class="control-label" for="input01">Tanggal Memo</label>
+								<div class="controls">
+									<input name="docs_date" type="text" id="docs_date" />
+                           		</div>
+						   </div>
                             
                             <div class="control-group">
 								<label class="control-label" for="input01">Kepada Yth. </label>
@@ -42,6 +52,13 @@
                                 <input name="docs_no" type="text" value="" />
                                 </div>
                             </div>
+                            
+                              <div class="control-group">
+								<label class="control-label" for="input01">Tembusan</label>
+								<div class="controls">
+									<input name="docs_subject" type="text" value="" />
+								</div>
+							</div>
                            
                            <div class="control-group">
 								<label class="control-label" for="input01">Perihal</label>

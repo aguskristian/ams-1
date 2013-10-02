@@ -60,8 +60,8 @@ class Attendance extends CI_Controller {
 # IN ------------------------------------
 	public function in(){
 		
-		 $session_data = $this->session->userdata('logged_in');
-		 $ui_nipp = $session_data['ui_nipp'];
+		$session_data = $this->session->userdata('logged_in');
+		$ui_nipp = $session_data['ui_nipp'];
 		 
 		$data['breadcumb'] = '<li class="active">Document</li>';
 		$data['title'] = 'MASUK';
