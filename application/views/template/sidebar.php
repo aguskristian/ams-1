@@ -7,9 +7,8 @@
 
         <a href="#accounts-menu" class="nav-header" data-toggle="collapse"><i class="icon-file"></i>Hardcopy <i class="icon-chevron-up"></i></a>
         <ul id="accounts-menu" class="nav nav-list collapse">
-        	<li><?php echo anchor('docs/add','Input Surat Masuk'); ?></li>
-            <li><?php echo anchor('docs/add','Input Surat Keluar'); ?></li>
-            
+        	<li><?php echo anchor('docs/add','Terima Surat Masuk'); ?></li>
+            <li><?php echo anchor('docs/add','Kirim Surat Keluar'); ?></li>
         </ul>
 
         <a href="#error-menu" class="nav-header collapsed" data-toggle="collapse"><i class="icon-exclamation-sign"></i>Softcopy  <i class="icon-chevron-up"></i></a>
