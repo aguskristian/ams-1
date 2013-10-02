@@ -74,6 +74,9 @@ class Docs extends CI_Controller {
 		$nama = $session_data['ui_nama'];
 		$data['nama'] = $nama;
 		
+		$ui_function = $session_data['ui_function'];
+		$data['ui_function'] = $ui_function;
+		
 		$nipp = $session_data['ui_nipp'];
 		$data['nipp'] = $nipp;
 		
@@ -91,6 +94,8 @@ class Docs extends CI_Controller {
 		  
 		# get variable for docs category
 		#$data['query'] = $this->docs_model->get_all_category_for_combo($cabang, $unit);
+		
+		
 		$data['query'] = $this->docs_model->get_manager_nipp($nipp, $ui_function);
 		# redirect to upload form
 		$this->load->view('template/header');
