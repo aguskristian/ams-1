@@ -123,11 +123,11 @@ class User_model extends CI_Model
 	}
 
 # save data on user verification table ---------------------------------
-	function save_verification($full_email, $hp, $pin, $email_link, $type, $request, $expired)
+	function save_verification($email, $hp, $pin, $email_link, $request, $expired, $type)
 	{
 		$data = array(
 		
-		'uv_email' => $full_email,
+		'uv_email' => $email,
 		'uv_hp' => $hp,
 		'uv_type' => $type,
 		'uv_pin' => $pin,
