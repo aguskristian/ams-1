@@ -64,6 +64,15 @@
 								</div>
 							</div>
                             
+                            
+                            <ahref "" >
+                            <div class="control-group">
+								<label class="control-label" for="input01">Create Nota Dinas</label>
+								<div class="controls">
+									<?php echo anchor('docs/create_nota_dinas','Create Noda Dinas'); ?>
+								</div>
+							</div>
+                            
                             <div class="control-group">
 								<label class="control-label" for="input01">Pilih File</label>
 								<div class="controls">

@@ -77,9 +77,6 @@ class Docs extends CI_Controller {
 		$ui_function = $session_data['ui_function'];
 		$data['ui_function'] = $ui_function;
 		
-		$ui_function = $session_data['ui_function'];
-		$data['ui_function'] = $ui_function;
-		
 		$nipp = $session_data['ui_nipp'];
 		$data['nipp'] = $nipp;
 		
@@ -107,6 +104,26 @@ class Docs extends CI_Controller {
 		$this->load->view('ams/add_nota_dinas', $data);
 		$this->load->view('template/footer');
 	}
+	
+	public function create_nota_dinas(){
+		
+		$session_data = $this->session->userdata('logged_in');
+		$ui_nipp = $session_data['ui_nipp'];
+		 
+		$data['breadcumb'] = '<li class="active">Document</li>';
+		$data['title'] = 'MASUK';
+		
+		$this->load->view ('template/header');
+		$this->load->view ('template/sidebar');
+		$this->load->view('template/breadcumb', $data);
+		$this->load->view ('ams/form_nota_dinas');
+		$this->load->view ('template/footer');
+		
+				
+		
+	}
+	
+	
 
 	public function add_memo()
 	{
@@ -120,6 +137,9 @@ class Docs extends CI_Controller {
 		
 		$nipp = $session_data['ui_nipp'];
 		$data['nipp'] = $nipp;
+		
+		$ui_function = $session_data['ui_function'];
+		$data['ui_function'] = $ui_function;
 		
 		$email = $session_data['ui_email'];
 		$data['email'] = $email;

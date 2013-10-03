@@ -29,41 +29,59 @@
 -->              <tbody>
                 <?php foreach ($query_docs as $row):{ ?>
                 
-                 <?php $docs_id = $row->docs_id; ?>
-                 
-                 <CENTER><u><?php echo $row->docs_type ;?></u></CENTER>
-                 
-                 <CENTER>Nomor : <?php echo $row->docs_no ;?></CENTER>
-                 
-                  
-                 <!--
-                <tr>
-                  <td>Tanggal Dokumen :</td> <td><?php echo mdate("%d %M %Y", strtotime($row->docs_date)) ;?></td>
-                  <td> : </td>
-                 <td></td>
-                </tr>
-            	-->
+                <?php $docs_id = $row->docs_id; ?>
                 
-             		
-                 <tr><CENTER>Dari : <?php echo $row->docs_from ;?></CENTER></tr>
-
-                 <CENTER>Kepada : <?php echo $row->docs_to ;?></CENTER>
-
-                 <CENTER>Tembusan : <?php echo $row->docs_copy ;?></CENTER>
-                  
-				 <CENTER>Perihal : <?php echo $row->docs_subject ;?></CENTER>
-                </tr>
-                <p><table class="table">---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</table></p>
-
                 <tr>
+                  <td width="35%">Jenis Dokumen</td>
+                  <td> : </td>
+                  <td><?php echo $row->docs_type ;?></td>
+             	</tr>
+                <tr>
+                  <td width="35%">Tanggal Penerimaan</td>
+                  <td> : </td>
+                  <td><?php echo mdate("%d %M %Y %H:%i", strtotime($row->docs_date_in)) ;?></td>
+             	</tr>
+                
+                <tr>
+                  <td>No Dokumen</td>
+                   <td> : </td>
+                  <td><?php echo $row->docs_no ;?></td>
+                </tr>
+                <tr>
+                  <td>Tanggal Dokumen</td>
+                   <td> : </td>
+                  <td><?php echo mdate("%d %M %Y", strtotime($row->docs_date)) ;?></td>
+                </tr>
+                <tr>
+                  <td>Dari</td>
+                   <td> : </td>
+                  <td><?php echo $row->docs_from ;?></td>
+                </tr>
+                <tr>
+                  <td>Kepada</td>
+                   <td> : </td>
+                  <td><?php echo $row->docs_to ;?></td>
+                </tr>
+                <tr>
+                  <td>Tembusan</td>
+                   <td> : </td>
+                  <td><?php echo $row->docs_copy ;?></td>
+                </tr>
+                <tr>
+                  <td>Perihal</td>
+                   <td> : </td>
+                  <td><?php echo $row->docs_subject ;?></td>
+                </tr>
+                <tr>
+                  <td>Keterangan</td>
+                   <td> : </td>
                   <td><?php echo $row->docs_description ;?></td>
                 </tr>
-                </table></p>
+                
                 <?php } endforeach; ?>
                 
                 <?php foreach ($query_files as $row_files):{ ?>
                 
-<p><table class="table">---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</table></p>
                 <tr>
                   <td>File Attachment</td>
                    <td> : </td>
@@ -76,9 +94,10 @@
 						#$filename = $docs_system_name . $docs_ext;
 						#echo base_url() . 'assets/uploads/files/' . $row_files->df_real_name ;
 					?>
- <a href="<?php echo base_url(); ?>wp-uploads/<?php echo $row_files->df_system_name . '-' . $row_files->df_real_name; ?> "><?php echo $row_files->df_real_name; ?></a>
-
-                	</td> 
+                    <a href="<?php echo base_url(); ?>wp-uploads/<?php echo $row_files->df_system_name . '-' . $row_files->df_real_name; ?> "><?php echo $row_files->df_real_name; ?></a>
+                    
+                   
+                	</td>
                 </tr>
                 
 				<?php } endforeach; ?> 
