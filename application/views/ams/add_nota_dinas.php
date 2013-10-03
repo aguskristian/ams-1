@@ -16,32 +16,39 @@
 						<fieldset>
 	                        
                              <div class="control-group">
-								<label class="control-label" for="input01"></label>
+								<label class="control-label" for="input01">Jenis Surat</label>
 								<div class="controls">
-									<input name="docs_no" type="text" value="NOTA DINAS" />
+									<input name="docs_type" type="text" value="NOTA DINAS" />
 								</div>
 							</div>
                             
                             <div class="control-group">
 								<label class="control-label" for="input01">Nomor</label>
 								<div class="controls">
-									<input name="docs_no" type="text" value="<?php echo substr($ui_function, 0,2)?>/<?php echo substr($ui_function, 2,2)?>/ND/000/VII/2013" />
+									<input name="docs_no" type="text" value="<?php echo substr($ui_function, 0,2)?>/<?php echo substr($ui_function, 2,2)?>/ND/VII/2013" />
 								</div>
 							</div>
                             
                             <div class="control-group">
 								<label class="control-label" for="input01">Kepada Yth. </label>
 								<div class="controls">
-                                <input name="docs_no" type="text" value="" />
+                                <input name="docs_from" type="text" value="<?php echo substr($ui_function, 0,2)?><?php echo substr($ui_function, 8,2)?>" />
                                 </div>
                             </div>
                             
                              <div class="control-group">
 								<label class="control-label" for="input01">Dari </label>
 								<div class="controls">
-                                <input name="docs_no" type="text" value="" />
+                                <input name="docs_to" type="text" value="<?php echo substr($ui_function, 0,2)?><?php echo substr($ui_function, 8,2)?>" />
                                 </div>
                             </div>
+                            
+                            <div class="control-group">
+								<label class="control-label" for="input01">Tembusan</label>
+								<div class="controls">
+									<input name="docs_copy" type="text" value="" />
+								</div>
+							</div>
                            
                            <div class="control-group">
 								<label class="control-label" for="input01">Perihal</label>

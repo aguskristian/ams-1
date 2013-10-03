@@ -77,14 +77,15 @@ class Docs extends CI_Controller {
 		$ui_function = $session_data['ui_function'];
 		$data['ui_function'] = $ui_function;
 		
+		$ui_function = $session_data['ui_function'];
+		$data['ui_function'] = $ui_function;
+		
 		$nipp = $session_data['ui_nipp'];
 		$data['nipp'] = $nipp;
 		
 		$email = $session_data['ui_email'];
 		$data['email'] = $email;
-		
-		
-		
+			
 		# set error message  
 		$data['error'] ='';
 		

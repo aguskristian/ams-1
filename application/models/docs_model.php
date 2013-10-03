@@ -23,6 +23,7 @@ class Docs_model extends CI_Model
 		'docs_subject'	=>	 $docs_subject,	 	 	 	 	 	 	
 		'docs_description'	=>	 $docs_description,	 	 	 	 	 	 	
 		'docs_update_by' =>  $docs_update_by,
+		
 		);
 		$this->db->insert('docs', $data);
 		return $this->db->insert_id();
